@@ -1,52 +1,898 @@
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>JeonHoon | Portfolio</title>
-    <meta
-      name="description"
-      content="JeonHoon portfolio homepage with demo reel, projects, learning notes, about, and contact pages."
-    />
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <a class="logo" href="./index.html" aria-current="page">JeonHoon</a>
-      <nav class="nav" aria-label="Main menu">
-        <a href="./demo-reel.html">DEMO REEL</a>
-        <a href="./projects.html">PROJECTS</a>
-        <a href="./learning.html">LEARNING</a>
-        <a href="./about.html">ABOUT</a>
-        <a href="./contact.html">Contact</a>
-      </nav>
-    </header>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JeonHoon Sound Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #06101c;
+      --navy-2: #0a1422;
+      --green: #063613;
+      --green-2: #063613;
+      --paper: #d9d9d9;
+      --card: #f2f2f2;
+      --text: #f5f7fb;
+      --ink: #151b28;
+      --muted: #98a3b3;
+      --soft: #cfd4dc;
+      --line: rgba(255, 255, 255, .12);
+    }
 
-    <main>
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">Portfolio</p>
-          <h1>JeonHoon</h1>
-          <p class="lead">
-            영상, 웹, 자동화, 제품 아이디어를 실험하며 결과물로 정리하는 포트폴리오입니다.
-            데모 릴과 프로젝트, 배운 것들을 개별 페이지에서 차분하게 볼 수 있도록 구성했습니다.
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="./demo-reel.html">DEMO REEL</a>
-            <a class="button secondary" href="./projects.html">PROJECTS</a>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: #000;
+      color: var(--text);
+      font-family: "Inter", "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      line-height: 1.6;
+      letter-spacing: 0;
+      zoom: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(6, 16, 28, .98);
+      backdrop-filter: blur(0);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: background .22s ease, backdrop-filter .22s ease, border-color .22s ease;
+    }
+
+    .site-header.is-scrolled {
+      background: rgba(6, 16, 28, .6);
+      backdrop-filter: blur(40px);
+      border-bottom-color: rgba(255,255,255,.12);
+    }
+
+    .nav-wrap {
+      max-width: 1180px;
+      height: 64px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .logo-mark {
+      width: 58px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .footer-brand .logo-mark {
+      width: 104px;
+    }
+
+    .footer-brand-name {
+      display: block;
+      margin-top: 11px;
+      color: #fff;
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      color: #c7ced8;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .date-pill {
+      min-width: 118px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 8px;
+      color: #d6dde8;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    section {
+      padding: 88px 28px;
+    }
+
+    .dark-section {
+      background: var(--navy);
+    }
+
+    .paper-section {
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .green-section {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .section-kicker {
+      margin: 0 0 8px;
+      color: #7d8997;
+      font-size: 20px;
+      font-weight: 400;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .paper-section .section-kicker { color: #6f7885; }
+    .green-section .section-kicker { color: rgba(255,255,255,.68); }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 32px;
+      text-align: center;
+      font-size: 36px;
+      line-height: 1.08;
+      font-weight: 600;
+    }
+
+    h2 {
+      margin-bottom: 34px;
+      text-align: center;
+      font-size: 36px;
+      line-height: 1.15;
+      font-weight: 600;
+    }
+
+    .reel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .video-card {
+      overflow: hidden;
+      min-width: 0;
+      background: #0b1624;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 4px;
+    }
+
+    .video-frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #111;
+    }
+
+    .video-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-meta {
+      padding: 12px 12px 14px;
+    }
+
+    .video-meta strong {
+      display: block;
+      overflow: hidden;
+      color: #fff;
+      font-size: 14px;
+      line-height: 1.35;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .video-meta span {
+      color: #9ca8b8;
+      font-size: 12px;
+    }
+
+    .center-action {
+      display: flex;
+      justify-content: center;
+      margin-top: 46px;
+    }
+
+    .button {
+      min-width: 188px;
+      height: 62px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      border-radius: 12px;
+      border: 0;
+      color: #fff;
+      background: var(--green-2);
+      font-size: 24px;
+      font-weight: 400;
+    }
+
+    .button::after {
+      content: "→";
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .project-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .94fr) minmax(0, 1fr);
+      gap: 44px;
+      align-items: center;
+    }
+
+    .project-collage {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .project-collage .wide {
+      grid-column: 1 / -1;
+      aspect-ratio: 16 / 7.5;
+      object-fit: cover;
+    }
+
+    .project-collage img {
+      width: 100%;
+      height: 100%;
+      min-height: 110px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+
+    .project-copy > p {
+      margin-bottom: 28px;
+      color: #25303c;
+      font-size: 17px;
+      font-weight: 400;
+      word-break: keep-all;
+    }
+
+    .feature-item {
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+    }
+
+    .feature-item h3 {
+      margin-bottom: 4px;
+      font-size: 27px;
+      line-height: 1.12;
+      font-weight: 600;
+    }
+
+    .feature-item p {
+      margin: 0;
+      color: #48515f;
+      font-size: 15px;
+      word-break: keep-all;
+    }
+
+    .learning-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .learning-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 34px;
+    }
+
+    .learning-title .section-kicker,
+    .learning-title h2 {
+      text-align: left;
+      margin-inline: 0;
+    }
+
+    .learning-title h2 {
+      margin-bottom: 0;
+    }
+
+    .learning-card {
+      min-height: 230px;
+      padding: 34px;
+      color: #1d2631;
+      background: #d9d9d9;
+      border-radius: 12px;
+    }
+
+    .learning-image-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      margin-bottom: 20px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .learning-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .learning-card p {
+      color: #283342;
+      font-size: 15px;
+      font-weight: 400;
+      word-break: keep-all;
+    }
+
+    .profile {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(360px, .85fr);
+      gap: 0 76px;
+      align-items: stretch;
+    }
+
+    .profile-head {
+      grid-column: 1 / -1;
+      margin-bottom: 0;
+    }
+
+    .profile h2,
+    .profile .section-kicker {
+      text-align: center;
+    }
+
+    .profile-copy {
+      align-self: stretch;
+    }
+
+    .profile p {
+      color: #c7d0dc;
+      font-size: 15px;
+      word-break: keep-all;
+    }
+
+    .portrait {
+      min-height: 100%;
+      border-radius: 32% 0 32% 0;
+      background:
+        linear-gradient(135deg, rgba(6,16,28,.05), rgba(6,16,28,.3)),
+        url("assets/profile-jeonhoon.png") center top / cover no-repeat,
+        url("project-strip-2.png") center / cover no-repeat;
+      filter: saturate(.85);
+    }
+
+    .stack-band {
+      padding: 26px 28px;
+      background: var(--green);
+      border-top: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .stack-row {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 30px;
+      align-items: center;
+    }
+
+    .stack-title span {
+      display: block;
+      color: rgba(255,255,255,.62);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .stack-title strong {
+      display: block;
+      color: #fff;
+      font-size: 21px;
+    }
+
+    .stack-list {
+      display: flex;
+      justify-content: flex-end;
+      gap: clamp(18px, 4vw, 50px);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .stack-list span::before {
+      content: "";
+      display: block;
+      width: 76px;
+      height: 76px;
+      margin: 0 auto;
+      background: var(--stack-icon) center / contain no-repeat;
+    }
+
+    .stack-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .skill-card {
+      min-height: 206px;
+      padding: 30px 24px;
+      text-align: center;
+      border: 1px solid #cfd1d4;
+      background: transparent;
+      color: var(--ink);
+      transition: background-color .22s ease, border-color .22s ease, color .22s ease;
+    }
+
+    .skill-card:hover,
+    .skill-card:focus-within {
+      color: #fff;
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .skill-card h3 {
+      margin-bottom: 16px;
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .skill-card p {
+      color: #535c69;
+      font-size: 16px;
+      font-weight: 400;
+      word-break: keep-all;
+      transition: color .22s ease;
+    }
+
+    .skill-card:hover p,
+    .skill-card:focus-within p {
+      color: rgba(255,255,255,.78);
+    }
+
+    .skill-link {
+      display: inline-flex;
+      margin-top: 20px;
+      color: inherit;
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .footer {
+      padding: 25px 28px;
+      background: var(--navy);
+    }
+
+    .footer-grid {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.45fr .72fr .8fr 1.9fr;
+      gap: 72px;
+      color: #b8c1ce;
+      align-items: start;
+    }
+
+    .footer h3 {
+      color: #fff;
+      font-size: 24px;
+      line-height: 1.1;
+      margin-bottom: 26px;
+    }
+
+    .footer p,
+    .footer a {
+      color: #a5afbd;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .footer-contact {
+      margin-top: 44px;
+      margin-bottom: 0;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 13px;
+    }
+
+    .social-row {
+      display: flex;
+      align-items: center;
+      gap: 54px;
+      margin-top: 48px;
+    }
+
+    .social-row img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      opacity: .78;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .social-row a:hover img,
+    .social-row a:focus-visible img {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+
+    .contact-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 170px;
+      gap: 0;
+      overflow: hidden;
+      background: #1d2533;
+      border-radius: 14px;
+    }
+
+    .contact-form input {
+      width: 100%;
+      min-height: 72px;
+      padding: 0 24px;
+      color: #fff;
+      background: transparent;
+      border: 0;
+      font-size: 18px;
+    }
+
+    .contact-form button {
+      min-height: 72px;
+      color: #fff;
+      background: var(--green-2);
+      border: 0;
+      border-radius: 10px;
+      margin: 8px;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links,
+      .date-pill {
+        display: none;
+      }
+
+      section {
+        padding: 64px 20px;
+      }
+
+      .reel-grid,
+      .project-layout,
+      .learning-grid,
+      .profile,
+      .stack-row,
+      .skills-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stack-list {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+
+      .learning-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .project-collage {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .project-collage .wide {
+        grid-column: 1 / -1;
+      }
+
+      .portrait {
+        min-height: 420px;
+      }
+
+      .profile-head {
+        margin-bottom: 24px;
+      }
+
+      .contact-form {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="logo" href="#top" aria-label="JeonHoon home">
+        <img class="logo-mark" src="assets/logo-jh.png" alt="JeonHoon">
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#demo">Demo Reel</a>
+        <a href="#projects">Projects</a>
+        <a href="#learning">Learning</a>
+        <a href="#about">About</a>
+      </nav>
+      <span class="date-pill" id="today-date">Date 2026.05.08</span>
+    </div>
+  </header>
+
+  <main id="top">
+    <section id="demo" class="dark-section">
+      <div class="wrap">
+        <p class="section-kicker">Demo Reel</p>
+        <h1>Sound Design Portfolio</h1>
+        <div class="reel-grid">
+          <article class="video-card">
+            <div class="video-frame"><iframe src="https://www.youtube.com/embed/F3lNKCKbV18" title="Anime Vivy sound redesign portfolio" allowfullscreen loading="lazy"></iframe></div>
+            <div class="video-meta"><strong>2026 애니메이션 Vivy 전투씬 사운드 리디자인</strong><span>Foley Recording · Combat Design</span></div>
+          </article>
+          <article class="video-card">
+            <div class="video-frame"><iframe src="https://www.youtube.com/embed/q8ia_bmtQbk" title="Forspoken sound design portfolio" allowfullscreen loading="lazy"></iframe></div>
+            <div class="video-meta"><strong>포스포큰 원소 마법 사운드 디자인</strong><span>Magic SFX · Elemental Tone</span></div>
+          </article>
+          <article class="video-card">
+            <div class="video-frame"><iframe src="https://www.youtube.com/embed/UOyXOPzXLCk" title="Zenless Zone Zero sound redesign portfolio" allowfullscreen loading="lazy"></iframe></div>
+            <div class="video-meta"><strong>젠레스 존 제로 이블린 캐릭터 사운드 디자인</strong><span>Impact · Speed · Style Analysis</span></div>
+          </article>
+          <article class="video-card">
+            <div class="video-frame"><iframe src="https://www.youtube.com/embed/ouDMPZsXMMk" title="Assassin's Creed Valhalla trailer sound redesign" allowfullscreen loading="lazy"></iframe></div>
+            <div class="video-meta"><strong>어쌔신크리드 발할라 트레일러 사운드 디자인</strong><span>Trailer Sound · Foley</span></div>
+          </article>
+          <article class="video-card">
+            <div class="video-frame"><iframe src="https://www.youtube.com/embed/MRmu8VdbMWo" title="Final Fantasy 14 trailer sound redesign" allowfullscreen loading="lazy"></iframe></div>
+            <div class="video-meta"><strong>파이널 판타지 14 트레일러 사운드 리디자인</strong><span>Long-form Trailer · Scale</span></div>
+          </article>
+          <article class="video-card">
+            <div class="video-frame"><iframe src="https://www.youtube.com/embed/vhVLFamdRqc" title="Blue Archive in-game sound portfolio" allowfullscreen loading="lazy"></iframe></div>
+            <div class="video-meta"><strong>블루아카이브 인게임 사운드 포트폴리오</strong><span>Synth · Mobile Game Tone</span></div>
+          </article>
+        </div>
+        <div class="center-action"><a class="button" href="sound-portfolio.html">View more</a></div>
+      </div>
+    </section>
+
+    <section id="projects" class="paper-section">
+      <div class="wrap">
+        <p class="section-kicker">Projects</p>
+        <h2>Featured Releases</h2>
+        <div class="project-layout">
+          <div class="project-collage" aria-label="Featured project images">
+            <img class="wide" src="assets/project-warhaven.png" alt="Warhaven">
+            <img src="assets/project-archeage.png" alt="ArcheAge">
+            <img src="assets/project-moonlight.png" alt="달빛조각사">
+            <img src="assets/project-archeage-begins.png" alt="ArcheAge Begins">
+            <img src="assets/project-civilization-online.png" alt="Civilization Online">
+          </div>
+          <div class="project-copy">
+            <p>
+              다양한 프로젝트의 사운드 제작 및 구현 작업에 참여<br>
+              PC MMORPG, Mobile RPG, 액션 PvP 장르 외에 미출시 프로젝트까지<br>
+              다양한 장르를 경험하며 오디오 파이프라인을 구축하고 최적화하는 업무 진행
+            </p>
+            <div class="feature-item">
+              <img class="feature-icon" src="assets/icon-music-note.png" alt="">
+              <div>
+                <h3>Game Audio Implementation</h3>
+                <p>
+                  Unreal 과 Wwise 기반의 오디오 시스템 구현 작업을 담당했습니다.<br>
+                  환경음, 스킬 사운드, 보이스, 인터랙션 사운드 등 실제 플레이 환경에 맞는 사운드 로직과 연출을 제작했습니다.
+                </p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <img class="feature-icon" src="assets/icon-pencil.png" alt="">
+              <div>
+                <h3>Sound Design & Direction</h3>
+                <p>
+                  게임의 장르와 전투 흐름에 맞는 사운드 방향성을 설계하고,<br>
+                  타격감·공간감·몰입감을 강화하기 위한 사운드 컨셉 및 보이스 디렉팅 작업을 진행했습니다.
+                </p>
+              </div>
+            </div>
+            <a class="button" href="career-profile.html">Read more</a>
           </div>
         </div>
-        <div class="hero-panel" aria-label="Profile summary">
-          <span class="status-dot"></span>
-          <p>Last uploaded</p>
-          <strong id="last-uploaded">Checking upload time</strong>
-        </div>
-      </section>
-    </main>
+      </div>
+    </section>
 
-    <footer class="site-footer">
-      <p>© 2026 JeonHoon. Built with GitHub Pages.</p>
-    </footer>
-    <script src="./header-scroll.js"></script>
-  </body>
+    <section id="learning" class="green-section">
+      <div class="wrap">
+        <div class="learning-head">
+          <div class="learning-title">
+            <p class="section-kicker">Learning</p>
+            <h2>What I keep studying</h2>
+          </div>
+          <a class="button" href="#learning-detail">Read More</a>
+        </div>
+        <div class="learning-grid">
+          <article class="learning-card">
+            <div class="learning-image-frame">
+              <img class="learning-image" src="assets/learning_Loudness Standards.png" alt="Loudness standards research">
+            </div>
+            <p>
+              플레이어에게 일관되고 쾌적한 청취 경험을 제공하기 위한 가이드라인<br>
+              기존 게임들을 데이터를 얻기 전 가이드라인에 대해 조사
+            </p>
+            <strong>출시게임 표준음압</strong>
+          </article>
+          <article class="learning-card">
+            <div class="learning-image-frame">
+              <img class="learning-image" src="assets/learning_animalese.png" alt="Animalese research">
+            </div>
+            <p>다양한 게임들에서 동물어같은 인공어를 어떻게 연출하고있는지 궁금증에서 출발하여 R&D</p>
+            <strong>동물어 (Aniamlese) 분석</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="dark-section">
+      <div class="wrap profile">
+        <div class="profile-head">
+          <p class="section-kicker">About</p>
+          <h2>Jeon Hoon</h2>
+        </div>
+        <div class="profile-copy">
+          <p>게임 사운드를 만드는 전훈이라고 합니다.</p>
+          <p>저는 게임, 영상 사운드 작업을 하는 사운드 디자이너입니다. 창작의 영역 뿐 아니라, 파이프라인 구축, 최적화 및 디버깅 까지 다양한 부분에서 흥미와 열정을 가진 디자이너입니다. 제한된 상황보다 다양한 시도를 할 수 있는 환경을 추구합니다.</p>
+          <p>환경음과 폴리 분야에 관심이 높고, 그것을 통해 몰입감과 완성도를 높여가는 과정은 제가 많은 관심과 애정을 쏟는 일 중 하나입니다.</p>
+          <p>저는 현재 넥슨코리아에 재직중인 사운드 디자이너입니다. 워헤이븐과 다양한 프로토타입을 작업하며 사운드디자인, 캐릭터 음성작업, 몰입형 사운드 설계 그리고 프로젝트에 적합한 기능구현을 위한 R&D를 하고 있습니다.</p>
+          <p>엑스엘게임즈에서는 문명온라인, 아키에이지, 달빛조각사, 아키에이지 비긴즈에 참여하여, 리소스 제작 및 엔진 적용, 팀원들과 업무 분담 및 검수 등 다양한 작업에 참여했습니다.</p>
+          <p>팀 내 최장기 근속 팀원으로서, 안정적인 업무처리를 인정 받아 신규프로젝트 사운드 작업을 주로 진행하며, 초기 기획단계부터 완성까지 전 과정에 걸친 폭넓은 경험을 쌓았습니다.</p>
+          <p>저는 커뮤니케이션과 세미나 같은 것들도 좋아합니다. 도움을 드린 취업준비생분들께서 게임회사에 입사하여, 안부인사를 종종 받기도 할 때 게임 산업에 이바지한 느낌을 받기도하고, 동시에 성취감도 얻고 있습니다.</p>
+        </div>
+        <div class="portrait" role="img" aria-label="Jeon Hoon portrait"></div>
+      </div>
+    </section>
+
+    <div class="stack-band">
+      <div class="stack-row">
+        <div class="stack-title"><span>My Creative Stack</span><strong>Workflow</strong></div>
+        <div class="stack-list">
+          <span style="--stack-icon: url('assets/icon-wwise.png')"><span class="stack-label">Wwise</span></span>
+          <span style="--stack-icon: url('assets/icon-unreal.png')"><span class="stack-label">Unreal</span></span>
+          <span style="--stack-icon: url('assets/icon-unity.png')"><span class="stack-label">Unity</span></span>
+          <span style="--stack-icon: url('assets/icon-reaper.png')"><span class="stack-label">Reaper</span></span>
+          <span style="--stack-icon: url('assets/icon-notion.png')"><span class="stack-label">Notion</span></span>
+          <span style="--stack-icon: url('assets/icon-github.png')"><span class="stack-label">GitHub</span></span>
+          <span style="--stack-icon: url('assets/icon-chatgpt.png')"><span class="stack-label">ChatGPT</span></span>
+        </div>
+      </div>
+    </div>
+
+    <section class="paper-section">
+      <div class="wrap">
+        <p class="section-kicker">My Skills</p>
+        <h2>Game Audio Design</h2>
+        <div class="skills-grid">
+          <article class="skill-card">
+            <h3>Implementation</h3>
+            <p>Engine management, integration profiling and debugging, system design</p>
+            <a class="skill-link" href="career-profile.html">View details 〉</a>
+          </article>
+          <article class="skill-card">
+            <h3>Sound Creation</h3>
+            <p>Based on Reaper and Protools, Foley recording, synthesis, library based editing</p>
+            <a class="skill-link" href="sound-portfolio.html">View details 〉</a>
+          </article>
+          <article class="skill-card">
+            <h3>Voice Direction</h3>
+            <p>From casting and recording direction to asset editing, optimization, scheduling</p>
+            <a class="skill-link" href="career-profile.html">View details 〉</a>
+          </article>
+          <article class="skill-card">
+            <h3>Idea, R&D</h3>
+            <p>Project-fit practical design, prototyping and memorable experience</p>
+            <a class="skill-link" href="career-profile.html">View details 〉</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <a class="logo footer-brand" href="#top" aria-label="JeonHoon home"><img class="logo-mark" src="assets/logo-jh.png" alt=""></a>
+        <span class="footer-brand-name">JeonHoon</span>
+        <p class="footer-contact">Jeonhoon528@gmail.com<br>Phone : 010-5181-2579</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/jeonhoon528/" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><img src="assets/social-instagram.png" alt=""></a>
+          <a href="https://www.linkedin.com/in/jeonhoon528" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img src="assets/social-linkedin.png" alt=""></a>
+          <a href="https://www.youtube.com/@jeonhoon" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><img src="assets/social-youtube.png" alt=""></a>
+          <a href="https://jeonhoon.notion.site/202103" aria-label="Notion" target="_blank" rel="noopener noreferrer"><img src="assets/social-notion.png" alt=""></a>
+        </div>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <div class="footer-links">
+          <a href="#demo">DEMO REEL</a>
+          <a href="#projects">PROJECTS</a>
+          <a href="#learning">LEARNING</a>
+          <a href="#about">ABOUT</a>
+        </div>
+      </div>
+      <div>
+        <h3>Resources</h3>
+        <div class="footer-links">
+          <a href="sound-portfolio.html">Portfolio</a>
+          <a href="career-profile.html">Career Profile</a>
+        </div>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <form class="contact-form" action="mailto:Jeonhoon528@gmail.com" method="post" enctype="text/plain">
+          <input type="email" name="email" placeholder="name@domain.com" aria-label="Email address">
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const header = document.querySelector(".site-header");
+    const dateEl = document.querySelector("#today-date");
+
+    function syncHeaderState() {
+      header.classList.toggle("is-scrolled", window.scrollY > 12);
+    }
+
+    function syncDate() {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = String(now.getMonth() + 1).padStart(2, "0");
+      const dd = String(now.getDate()).padStart(2, "0");
+      dateEl.textContent = `Date ${yyyy}.${mm}.${dd}`;
+    }
+
+    syncHeaderState();
+    syncDate();
+    window.addEventListener("scroll", syncHeaderState, { passive: true });
+  </script>
+</body>
 </html>

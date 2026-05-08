@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>전훈 경력기술서</title>
+  <style>
+    :root {
+      --ink: #1d2529;
+      --muted: #65727a;
+      --line: #dce4e7;
+      --panel: #ffffff;
+      --band: #f4f7f4;
+      --accent: #0e6b5d;
+      --accent-2: #b9472f;
+      --accent-3: #c69b3b;
+      --soft: #eef5f2;
+      --shadow: 0 18px 48px rgba(29, 37, 41, .10);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #fbfcfb;
+      font-family: "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      line-height: 1.65;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 14px clamp(20px, 5vw, 72px);
+      background: rgba(251, 252, 251, .92);
+      border-bottom: 1px solid rgba(220, 228, 231, .9);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      color: #fff;
+      background: var(--ink);
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav a {
+      padding: 8px 10px;
+      border-radius: 6px;
+    }
+
+    .nav a:hover {
+      color: var(--ink);
+      background: var(--soft);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 620px;
+      display: grid;
+      align-items: end;
+      padding: 96px clamp(20px, 5vw, 72px) 64px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(18, 28, 30, .88) 0%, rgba(18, 28, 30, .74) 42%, rgba(18, 28, 30, .18) 100%),
+        url("project-strip-1.png") center 23% / cover no-repeat;
+      color: #fff;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 132px;
+      background: linear-gradient(0deg, #fbfcfb 0%, rgba(251, 252, 251, 0) 100%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: #b8dbd3;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(42px, 7vw, 88px);
+      line-height: 1.05;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      margin: 26px 0 0;
+      color: rgba(255, 255, 255, .86);
+      font-size: clamp(18px, 2.2vw, 24px);
+      word-break: keep-all;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border: 1px solid rgba(255, 255, 255, .35);
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 800;
+      background: rgba(255, 255, 255, .10);
+    }
+
+    .button.primary {
+      color: var(--ink);
+      background: #fff;
+      border-color: #fff;
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+    }
+
+    section {
+      padding: 82px clamp(20px, 5vw, 72px);
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(280px, .28fr);
+      gap: 34px;
+      align-items: end;
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .section-note {
+      margin: 0;
+      color: var(--muted);
+      word-break: keep-all;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: -32px;
+    }
+
+    .stat {
+      min-height: 132px;
+      padding: 22px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .capability {
+      padding: 24px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .capability h3,
+    .role h3,
+    .project h3 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      line-height: 1.35;
+    }
+
+    .capability p,
+    .project p,
+    .role p {
+      margin: 0;
+      color: var(--muted);
+      word-break: keep-all;
+    }
+
+    .band {
+      background: var(--band);
+      border-block: 1px solid var(--line);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 18px;
+    }
+
+    .role {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 28px;
+      padding: 28px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .date {
+      color: var(--accent);
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .company {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    ul {
+      margin: 16px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .project {
+      min-height: 100%;
+      padding: 26px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      color: var(--accent);
+      background: var(--soft);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .image-band {
+      min-height: 320px;
+      background: url("project-strip-2.png") center / cover no-repeat;
+      border-block: 1px solid var(--line);
+    }
+
+    .skill-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .skill-box {
+      padding: 20px;
+      min-height: 132px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .skill-box b {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .skill-box span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .statement {
+      display: grid;
+      grid-template-columns: minmax(0, .38fr) minmax(0, .62fr);
+      gap: 42px;
+      align-items: start;
+      padding: 44px;
+      background: #172224;
+      color: #fff;
+      border-radius: 8px;
+    }
+
+    .statement h2 {
+      color: #fff;
+    }
+
+    .statement p {
+      margin: 0;
+      color: rgba(255, 255, 255, .78);
+      font-size: 18px;
+      word-break: keep-all;
+    }
+
+    footer {
+      padding: 28px clamp(20px, 5vw, 72px);
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .nav {
+        display: none;
+      }
+
+      .hero {
+        min-height: 560px;
+        background-position: 42% 50%;
+      }
+
+      .section-head,
+      .role,
+      .statement {
+        grid-template-columns: 1fr;
+      }
+
+      .stats,
+      .grid-3,
+      .projects,
+      .skill-list {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        margin-top: 0;
+      }
+
+      section {
+        padding-block: 58px;
+      }
+
+      .statement {
+        padding: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="전훈 경력기술서 맨 위로">
+      <span class="brand-mark">JH</span>
+      <span>전훈 경력기술서</span>
+    </a>
+    <nav class="nav" aria-label="페이지 이동">
+      <a href="#summary">요약</a>
+      <a href="#career">경력</a>
+      <a href="#projects">프로젝트</a>
+      <a href="#skills">역량</a>
+      <a href="#statement">방향성</a>
+    </nav>
+  </header>
+
+  <div id="top" class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Game Sound Designer · Audio Implementation · Foley & Ambience</p>
+      <h1>전훈<br>게임 사운드 디자이너</h1>
+      <p class="hero-copy">
+        다양한 장르와 엔진 환경에서 사운드 리소스 제작, 엔진 적용, 실시간 프로파일링, 보이스 디렉팅까지 수행해 온 10년차 게임 사운드 디자이너입니다.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="#career">경력 보기</a>
+        <a class="button" href="#projects">프로젝트 기여 보기</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section id="summary">
+      <div class="wrap">
+        <div class="stats">
+          <div class="stat">
+            <strong>10년차</strong>
+            <span>게임 및 영상 사운드 기반의 실무 경험</span>
+          </div>
+          <div class="stat">
+            <strong>9+</strong>
+            <span>워헤이븐, 아키에이지, 문명 온라인 등 참여 프로젝트</span>
+          </div>
+          <div class="stat">
+            <strong>5+</strong>
+            <span>Wwise, FMOD, Unity, Unreal, CryEngine 등 구현 환경 경험</span>
+          </div>
+          <div class="stat">
+            <strong>End-to-End</strong>
+            <span>기획 초기부터 제작, 적용, 검수, 이슈 대응까지 수행</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <h2>사운드로 플레이 감각과 세계관을 연결합니다.</h2>
+          <p class="section-note">
+            강점은 Foley와 Ambience의 디테일, 타격 시스템의 피드백 설계, 그리고 팀과의 협업 속에서 품질을 안정적으로 끌어올리는 실행력입니다.
+          </p>
+        </div>
+        <div class="grid-3">
+          <article class="capability">
+            <h3>Gameplay Feedback</h3>
+            <p>중세 근접 전투, 타격, 이동, 인터랙션 등 플레이어가 즉시 체감하는 사운드 피드백을 제작하고 시스템에 맞게 적용했습니다.</p>
+          </article>
+          <article class="capability">
+            <h3>World & Narrative</h3>
+            <p>공간의 분위기와 감정을 전달하는 Ambience, Foley, Monster Voice, Dialogue를 통해 장면의 설득력을 높였습니다.</p>
+          </article>
+          <article class="capability">
+            <h3>Implementation & Collaboration</h3>
+            <p>Wwise, FMOD, Unity, Unreal, CryEngine 환경에서 사운드 적용, 버그 처리, 리소스 관리, 프로파일링을 수행했습니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="career" class="band">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>경력 타임라인</h2>
+          <p class="section-note">회사와 프로젝트 환경이 달라져도 빠르게 적응하며, 초기 기획부터 라이브 대응까지 사운드 파이프라인 전반을 경험했습니다.</p>
+        </div>
+        <div class="timeline">
+          <article class="role">
+            <div class="date">2022.01 - 재직 중<span class="company">넥슨 코리아</span></div>
+            <div>
+              <h3>신규 타이틀 및 프로토타입 사운드 제작/구현</h3>
+              <p>워헤이븐과 신규 프로젝트에서 전투, 공간감, 보이스, 시스템 사운드 작업을 담당했습니다.</p>
+              <ul>
+                <li>언리얼 엔진 4와 Wwise 기반의 복잡한 타격 시스템, 동적 믹싱, 실시간 프로파일링 참여</li>
+                <li>Ambience, SFX, Foley를 종합 설계해 게임의 몰입감과 공간감을 강화</li>
+                <li>성우 캐스팅, 톤 디렉팅, 계약 등 보이스 디렉팅 업무 참여</li>
+                <li>괴력난신 프로젝트에서 신규 사운드 기능을 위한 시스템 개발 R&D 수행</li>
+                <li>Anima Robota 프로젝트에서 AI 활용 사운드 워크플로우와 Synth 기반 로봇 레트로 사운드 연구</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="role">
+            <div class="date">2017.04 - 2022.01<span class="company">엑스엘 게임즈</span></div>
+            <div>
+              <h3>다중 프로젝트 사운드 디자인 및 엔진 적용</h3>
+              <p>문명 온라인, 아키에이지, 아키에이지 비긴즈, 달빛조각사, 아키에이지2 등에서 프로젝트별 개발 방식에 맞춰 실무를 수행했습니다.</p>
+              <ul>
+                <li>FMOD, Unity, CryEngine, Unreal Engine 환경에서 사운드 적용과 버그 이슈 처리</li>
+                <li>신규 프로젝트 사운드 작업을 주로 전담하며 초기 기획부터 완성 단계까지 경험</li>
+                <li>아키에이지2 극초기 기획 단계에서 오디오 시스템 프로세스와 사운드 리소스 관리 설계</li>
+                <li>사운드팀 내 장기 근속 구성원으로 업무 분담, 검수, 일정 대응을 안정적으로 수행</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="role">
+            <div class="date">2015.06 - 2015.08<span class="company">라이브톤</span></div>
+            <div>
+              <h3>영화 음향 후반작업</h3>
+              <p>ADR, Dialogue, Foley 등 영상 음향 후반작업 공정을 경험하며 게임 사운드에 응용 가능한 녹음과 편집 감각을 축적했습니다.</p>
+              <ul>
+                <li>영화 사도, 탐정: 더 비기닝 등 후반작업 참여</li>
+                <li>대사 톤 정리, 밸런싱, Foley 리소스 녹음 공정 학습</li>
+                <li>Monster Voice와 Foley 제작에 연결되는 실무적 기반 확보</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="role">
+            <div class="date">2014.08 - 2015.04<span class="company">예음녹음실</span></div>
+            <div>
+              <h3>레코딩 어시스턴트</h3>
+              <p>다양한 세션 녹음 현장에서 안정적인 레코딩을 위한 기본기를 다졌습니다.</p>
+              <ul>
+                <li>24인 밴드, 뮤지컬, 재즈, 국악 등 세션 녹음 보조</li>
+                <li>마이크 셋업과 녹음 보조 엔지니어 역할 수행</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="image-band" aria-label="참여 프로젝트 이미지"></div>
+
+    <section id="projects">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>주요 프로젝트 기여</h2>
+          <p class="section-note">제작만으로 끝내지 않고, 엔진 적용과 협업 문서화, 이슈 대응까지 이어지는 실무형 사운드 디자인을 수행했습니다.</p>
+        </div>
+        <div class="projects">
+          <article class="project">
+            <h3>워헤이븐</h3>
+            <p>중세 근접 전투의 몰입감을 높이기 위해 Foley, 타격 시스템, 공간감 표현, 보이스 디렉팅에 참여했습니다.</p>
+            <div class="tag-row">
+              <span class="tag">Unreal Engine 4</span>
+              <span class="tag">Wwise</span>
+              <span class="tag">Foley</span>
+              <span class="tag">Combat SFX</span>
+            </div>
+          </article>
+          <article class="project">
+            <h3>신규 프로토타입</h3>
+            <p>신규 타이틀 검토 과정에서 리소스 제작, 엔진 적용, 사운드 연출 실험, 시스템 R&D를 진행했습니다.</p>
+            <div class="tag-row">
+              <span class="tag">Prototype</span>
+              <span class="tag">R&D</span>
+              <span class="tag">Sound System</span>
+            </div>
+          </article>
+          <article class="project">
+            <h3>문명 온라인 · 아키에이지 · 달빛조각사</h3>
+            <p>프로젝트별 엔진과 개발 스타일에 맞춰 사운드 적용, 버그 처리, 업무 분담, 검수를 수행했습니다.</p>
+            <div class="tag-row">
+              <span class="tag">FMOD</span>
+              <span class="tag">Unity</span>
+              <span class="tag">CryEngine</span>
+              <span class="tag">Live Issue</span>
+            </div>
+          </article>
+          <article class="project">
+            <h3>아키에이지2</h3>
+            <p>극초기 기획 단계에서 오디오 시스템 프로세스와 사운드 리소스 관리 방향을 설계했습니다.</p>
+            <div class="tag-row">
+              <span class="tag">Pre-production</span>
+              <span class="tag">Pipeline</span>
+              <span class="tag">Resource Management</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="band">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>실무 역량</h2>
+          <p class="section-note">사운드 제작 능력과 구현 환경 이해, 협업 툴 운용 경험을 함께 갖추고 있습니다.</p>
+        </div>
+        <div class="skill-list">
+          <div class="skill-box"><b>Audio Middleware</b><span>Wwise, FMOD 기반 이벤트 구성, 적용, 믹싱, 프로파일링</span></div>
+          <div class="skill-box"><b>Game Engine</b><span>Unreal Engine, Unity, CryEngine 환경에서 리소스 적용과 이슈 대응</span></div>
+          <div class="skill-box"><b>Sound Design</b><span>Foley, Ambience, SFX, Monster Voice, Dialogue, Combat Feedback</span></div>
+          <div class="skill-box"><b>Collaboration</b><span>Git, SVN, Plastic SCM, Perforce, Jira, Confluence 기반 협업</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="statement">
+      <div class="wrap">
+        <div class="statement">
+          <h2>앞으로의 방향</h2>
+          <p>
+            단순히 사운드를 만드는 디자이너를 넘어, 직관적인 재미를 만들어내는 사운드 연출자로 일하고자 합니다. 사운드만 들어도 어떤 게임인지 떠올릴 수 있는 브랜드 사운드를 팀과 함께 만들고, 유저의 기억에 남는 경험으로 남기는 것이 목표입니다.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">전훈 경력기술서 · 2026</div>
+  </footer>
+</body>
+</html>
