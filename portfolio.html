@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>더 많은 포트폴리오 | JeonHoon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #06101c;
+      --green: #063613;
+      --paper: #d9d9d9;
+      --text: #f5f7fb;
+      --ink: #151b28;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--navy);
+      color: var(--text);
+      font-family: "Inter", "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      line-height: 1.6;
+      letter-spacing: 0;
+      zoom: 1.2;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(6, 16, 28, .98);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: background .22s ease, backdrop-filter .22s ease, border-color .22s ease;
+    }
+
+    .site-header.is-scrolled {
+      background: rgba(6, 16, 28, .6);
+      backdrop-filter: blur(40px);
+      border-bottom-color: rgba(255,255,255,.12);
+    }
+
+    .nav-wrap {
+      max-width: 1180px;
+      height: 64px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo { display: inline-flex; align-items: center; color: #fff; }
+    .logo-mark { width: 58px; height: auto; object-fit: contain; }
+    .footer-brand .logo-mark { width: 104px; }
+    .footer-brand-name {
+      display: block;
+      margin-top: 11px;
+      color: #fff;
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      color: #c7ced8;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .date-pill {
+      min-width: 118px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 8px;
+      color: #d6dde8;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    section { padding: 88px 28px; }
+    .dark-section { background: var(--navy); }
+    .paper-section { background: var(--paper); color: var(--ink); }
+    .wrap { max-width: 1180px; margin: 0 auto; }
+    .section-kicker {
+      margin: 0 0 8px;
+      color: #7d8997;
+      font-size: 20px;
+      font-weight: 400;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin-bottom: 22px;
+      text-align: center;
+      font-size: 36px;
+      line-height: 1.08;
+      font-weight: 600;
+    }
+
+    h2 {
+      margin-bottom: 26px;
+      text-align: left;
+      font-size: 30px;
+      line-height: 1.15;
+      font-weight: 600;
+    }
+
+    .portfolio-intro {
+      max-width: 760px;
+      margin: 0 auto 44px;
+      color: #aeb8c6;
+      text-align: center;
+      word-break: keep-all;
+    }
+
+    .portfolio-group + .portfolio-group { margin-top: 70px; }
+
+    .reel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .video-card {
+      position: relative;
+      overflow: hidden;
+      min-width: 0;
+      background: #0b1624;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform .22s ease, border-color .22s ease;
+    }
+
+    .video-card:hover,
+    .video-card:focus-visible {
+      border-color: rgba(255,255,255,.24);
+      transform: translateY(-2px);
+      outline: 0;
+    }
+
+    .video-frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #111;
+    }
+
+    .video-frame img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: 0;
+      transition: filter .22s ease, opacity .22s ease, transform .22s ease;
+    }
+
+    .video-card:hover .video-frame img,
+    .video-card:focus-visible .video-frame img {
+      filter: grayscale(.35) blur(2px);
+      opacity: .58;
+      transform: scale(1.03);
+    }
+
+    .video-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(178, 184, 192, .22);
+      opacity: 0;
+      transition: opacity .22s ease;
+    }
+
+    .video-card:hover .video-frame::after,
+    .video-card:focus-visible .video-frame::after { opacity: 1; }
+    .video-meta { padding: 12px 12px 14px; }
+    .video-meta strong {
+      display: block;
+      overflow: hidden;
+      color: #fff;
+      font-size: 14px;
+      line-height: 1.35;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .video-meta span { color: #9ca8b8; font-size: 12px; }
+
+    .footer {
+      padding: 25px 28px;
+      background: var(--navy);
+    }
+
+    .footer-grid {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.45fr .72fr .8fr 1.9fr;
+      gap: 72px;
+      color: #b8c1ce;
+      align-items: start;
+    }
+
+    .footer h3 {
+      color: #fff;
+      font-size: 24px;
+      line-height: 1.1;
+      margin-bottom: 26px;
+    }
+
+    .footer p,
+    .footer a {
+      color: #a5afbd;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .footer-contact { margin-top: 44px; margin-bottom: 0; }
+    .footer-links { display: grid; gap: 13px; }
+    .social-row {
+      display: flex;
+      align-items: center;
+      gap: 54px;
+      margin-top: 48px;
+    }
+
+    .social-row img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      opacity: .78;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .social-row a:hover img,
+    .social-row a:focus-visible img { opacity: 1; transform: translateY(-2px); }
+
+    .contact-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 102px;
+      gap: 0;
+      overflow: hidden;
+      max-width: 60%;
+      background: #1d2533;
+      border-radius: 14px;
+    }
+
+    .contact-form input {
+      width: 100%;
+      min-height: 43px;
+      padding: 0 24px;
+      color: #fff;
+      background: transparent;
+      border: 0;
+      font-size: 18px;
+    }
+
+    .contact-form button {
+      min-height: 43px;
+      margin: 5px;
+      color: #fff;
+      background: var(--green);
+      border: 0;
+      border-radius: 10px;
+      font-weight: 400;
+      font-size: 18px;
+    }
+
+    .reel-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      background: rgba(0, 0, 0, .66);
+      backdrop-filter: blur(10px);
+    }
+
+    .reel-modal.is-open { display: flex; }
+    .reel-dialog {
+      position: relative;
+      width: min(1180px, 94vw);
+      max-height: 86vh;
+      display: grid;
+      grid-template-columns: 7fr 3fr;
+      overflow: hidden;
+      background: #07111e;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 10px;
+      box-shadow: 0 28px 90px rgba(0,0,0,.45);
+    }
+
+    .reel-modal-frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      min-height: 360px;
+      background: #000;
+    }
+
+    .reel-modal-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .reel-modal-copy {
+      padding: 34px 30px;
+      color: #d7dee8;
+      overflow-y: auto;
+    }
+
+    .reel-modal-copy h3 {
+      margin-bottom: 14px;
+      color: #fff;
+      font-size: 24px;
+      line-height: 1.28;
+    }
+
+    .reel-modal-copy p {
+      margin-bottom: 0;
+      color: #aeb8c6;
+      font-size: 15px;
+      word-break: keep-all;
+      white-space: pre-line;
+    }
+
+    .reel-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(0,0,0,.45);
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links, .date-pill { display: none; }
+      section { padding: 64px 20px; }
+      .reel-grid, .footer-grid { grid-template-columns: 1fr; }
+      .contact-form { grid-template-columns: 1fr; max-width: 100%; }
+      .reel-dialog { grid-template-columns: 1fr; }
+      .reel-modal-frame { min-height: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="logo" href="index.html#top" aria-label="JeonHoon home">
+        <img class="logo-mark" src="assets/logo-jh.png" alt="JeonHoon">
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="index.html#demo">Demo Reel</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#learning">Learning</a>
+        <a href="index.html#about">About</a>
+      </nav>
+      <span class="date-pill" id="today-date">Date 2026.05.08</span>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="dark-section">
+      <div class="wrap">
+        <p class="section-kicker">Demo Reel</p>
+        <h1>더 많은 포트폴리오 보기</h1>
+        <p class="portfolio-intro">워헤이븐 프로젝트 참여 영상과 개인 사운드 리디자인 작업을 한 곳에서 확인할 수 있도록 정리했습니다.</p>
+
+        <div class="portfolio-group">
+          <h2>워헤이븐 프로젝트 포트폴리오</h2>
+          <div class="reel-grid">
+            <article class="video-card" tabindex="0" role="button" data-video="UYjxlb0pB0E" data-title="인게임 하이라이트 인트로 컷씬" data-description="워헤이븐 프로젝트 포트폴리오">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/UYjxlb0pB0E/hqdefault.jpg" alt="인게임 하이라이트 인트로 컷씬"></div>
+              <div class="video-meta"><strong>인게임 하이라이트 인트로 컷씬</strong><span>Warhaven</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="xRDTuWdtKko" data-title="쟁탈전 비행정비소 모드 가이드" data-description="워헤이븐 프로젝트 포트폴리오">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/xRDTuWdtKko/hqdefault.jpg" alt="쟁탈전 비행정비소 모드 가이드"></div>
+              <div class="video-meta"><strong>쟁탈전 비행정비소 모드 가이드</strong><span>Warhaven</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="bz7fa_ravmE" data-title="캐릭터 소개영상 가디언" data-description="워헤이븐 프로젝트 포트폴리오">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/bz7fa_ravmE/hqdefault.jpg" alt="캐릭터 소개영상 가디언"></div>
+              <div class="video-meta"><strong>캐릭터 소개영상 가디언</strong><span>Warhaven</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="ifJN6Ghp5Pw" data-title="캐릭터 소개영상 허시" data-description="워헤이븐 프로젝트 포트폴리오">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/ifJN6Ghp5Pw/hqdefault.jpg" alt="캐릭터 소개영상 허시"></div>
+              <div class="video-meta"><strong>캐릭터 소개영상 허시</strong><span>Warhaven</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="4j5Bgcllyqs" data-title="캐릭터 소개영상 스파이크" data-description="워헤이븐 프로젝트 포트폴리오">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/4j5Bgcllyqs/hqdefault.jpg" alt="캐릭터 소개영상 스파이크"></div>
+              <div class="video-meta"><strong>캐릭터 소개영상 스파이크</strong><span>Warhaven</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="7-c8XV8SvRo" data-title="캐릭터 소개영상 오해머" data-description="워헤이븐 프로젝트 포트폴리오">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/7-c8XV8SvRo/hqdefault.jpg" alt="캐릭터 소개영상 오해머"></div>
+              <div class="video-meta"><strong>캐릭터 소개영상 오해머</strong><span>Warhaven</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="cZcSZ0ijWrA" data-title="캐릭터 소개영상 스모크" data-description="워헤이븐 프로젝트 포트폴리오">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/cZcSZ0ijWrA/hqdefault.jpg" alt="캐릭터 소개영상 스모크"></div>
+              <div class="video-meta"><strong>캐릭터 소개영상 스모크</strong><span>Warhaven</span></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="portfolio-group">
+          <h2>개인 작업 포트폴리오 2022 ~ 2026</h2>
+          <div class="reel-grid">
+            <article class="video-card" tabindex="0" role="button" data-video="F3lNKCKbV18" data-title="애니메이션 비비 전투씬 2026년 작업" data-description="두 캐릭터의 Foley를 직접 녹음하여 작업">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/F3lNKCKbV18/hqdefault.jpg" alt="애니메이션 비비 전투씬"></div>
+              <div class="video-meta"><strong>애니메이션 비비 전투씬 2026년 작업</strong><span>Personal Work</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="vhVLFamdRqc" data-title="게임 블루아카이브 인게임 포트폴리오 2025년 작업" data-description="서브컬쳐 장르 모바일 게임&#10;신스를 적극적으로 활용하여 작업">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/vhVLFamdRqc/hqdefault.jpg" alt="블루아카이브 인게임 포트폴리오"></div>
+              <div class="video-meta"><strong>게임 블루아카이브 인게임 포트폴리오</strong><span>Personal Work</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="UOyXOPzXLCk" data-title="게임 젠레스 존 제로 이블린 캐릭터 영상 2025년 작업" data-description="젠레스 존 제로 게임의 사운드에 흥미를 느껴 작업&#10;타격감과 속도감 있는 느낌을 분석하고서 작업">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/UOyXOPzXLCk/hqdefault.jpg" alt="젠레스 존 제로 이블린 캐릭터 영상"></div>
+              <div class="video-meta"><strong>게임 젠레스 존 제로 이블린 캐릭터 영상</strong><span>Personal Work</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="q8ia_bmtQbk" data-title="게임 포스포큰 인게임 포트폴리오 2024년 작업" data-description="불, 전기, 얼음, 물 등 다양한 원소 마법 작업&#10;워헤이븐 작업 이후 마법 연출적인 사운드작업을 해본지 오래되어 작업">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/q8ia_bmtQbk/hqdefault.jpg" alt="포스포큰 인게임 포트폴리오"></div>
+              <div class="video-meta"><strong>게임 포스포큰 인게임 포트폴리오</strong><span>Personal Work</span></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="portfolio-group">
+          <h2>개인 작업 포트폴리오 2017 ~ 2022</h2>
+          <div class="reel-grid">
+            <article class="video-card" tabindex="0" role="button" data-video="ouDMPZsXMMk" data-title="어쌔신크리드 발할라 트레일러 2021년 작업" data-description="일부 사운드 Foley 직접 녹음하여 작업&#10;영상의 맥락, 연출적인 부분에 신경을 쓴 작업">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/ouDMPZsXMMk/hqdefault.jpg" alt="어쌔신크리드 발할라 트레일러"></div>
+              <div class="video-meta"><strong>어쌔신크리드 발할라 트레일러</strong><span>Personal Work</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="UxaEcneKJis" data-title="디비전2 환경음 포트폴리오 2020년 작업" data-description="3가지 테마의 환경에서 해당 환경에 맞는 톤앤매너 컨셉을 잡아 디자인">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/UxaEcneKJis/hqdefault.jpg" alt="디비전2 환경음 포트폴리오"></div>
+              <div class="video-meta"><strong>디비전2 환경음 포트폴리오</strong><span>Personal Work</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="0lGh8sMWuPs" data-title="리니지 2M 캐릭터 영상 고스트헌터 2020년 작업" data-description="캐릭터 테마의 느낌을 살려 작업">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/0lGh8sMWuPs/hqdefault.jpg" alt="리니지 2M 고스트헌터"></div>
+              <div class="video-meta"><strong>리니지 2M 캐릭터 영상 고스트헌터</strong><span>Personal Work</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="7ecEuU115QQ" data-title="리니지 2M 캐릭터 영상 레지나 2020년 작업" data-description="캐릭터의 테마의 느낌을 살려 작업">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/7ecEuU115QQ/hqdefault.jpg" alt="리니지 2M 레지나"></div>
+              <div class="video-meta"><strong>리니지 2M 캐릭터 영상 레지나</strong><span>Personal Work</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="t7y8rcX_Pes" data-title="천투 온라인 2020년 작업" data-description="당시에 속도감 있는 연출의 영상 작업을 시도">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/t7y8rcX_Pes/hqdefault.jpg" alt="천투 온라인"></div>
+              <div class="video-meta"><strong>천투 온라인 2020년 작업</strong><span>Personal Work</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="MRmu8VdbMWo" data-title="파이널 판타지 14 트레일러 2019년 작업" data-description="규모감과 다양양 기승전결 장면에 맞는 영상 사운드작업&#10;8분 7초라는 긴 분량으로 트레일러에 감명을 받아, 리스펙의 의미로 작업">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/MRmu8VdbMWo/hqdefault.jpg" alt="파이널 판타지 14 트레일러"></div>
+              <div class="video-meta"><strong>파이널 판타지 14 트레일러</strong><span>Personal Work</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="GfKGRuQBzx4" data-title="블리자드 시공의 용 트레일러 2018년 작업" data-description="캐릭터들의 직업요소, 폴리사운드를 중점적으로 디자인">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/GfKGRuQBzx4/hqdefault.jpg" alt="블리자드 시공의 용 트레일러"></div>
+              <div class="video-meta"><strong>블리자드 시공의 용 트레일러</strong><span>Personal Work</span></div>
+            </article>
+            <article class="video-card" tabindex="0" role="button" data-video="MDBNyhRma7M" data-title="오버워치 솜브라 트레일러 - 2017년 작업" data-description="캐릭터의 발소리, 옷소리, 프랍일부를 직접 녹음하여 작업&#10;https://jeonhoon.tistory.com/14">
+              <div class="video-frame"><img src="https://img.youtube.com/vi/MDBNyhRma7M/hqdefault.jpg" alt="오버워치 솜브라 트레일러"></div>
+              <div class="video-meta"><strong>오버워치 솜브라 트레일러</strong><span>Personal Work</span></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="reel-modal" id="reel-modal" aria-hidden="true">
+    <div class="reel-dialog" role="dialog" aria-modal="true" aria-labelledby="reel-modal-title">
+      <button class="reel-close" type="button" aria-label="팝업 닫기">×</button>
+      <div class="reel-modal-frame" id="reel-modal-frame"></div>
+      <div class="reel-modal-copy">
+        <h3 id="reel-modal-title"></h3>
+        <p id="reel-modal-description"></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <a class="logo footer-brand" href="index.html#top" aria-label="JeonHoon home"><img class="logo-mark" src="assets/logo-jh.png" alt=""></a>
+        <span class="footer-brand-name">JeonHoon</span>
+        <p class="footer-contact">Jeonhoon528@gmail.com<br>Phone : 010-5181-2579</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/jeonhoon528/" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><img src="assets/social-instagram.png" alt=""></a>
+          <a href="https://www.linkedin.com/in/jeonhoon528" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img src="assets/social-linkedin.png" alt=""></a>
+          <a href="https://www.youtube.com/@jeonhoon" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><img src="assets/social-youtube.png" alt=""></a>
+          <a href="https://jeonhoon.notion.site/202103" aria-label="Notion" target="_blank" rel="noopener noreferrer"><img src="assets/social-notion.png" alt=""></a>
+        </div>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <div class="footer-links">
+          <a href="index.html#demo">DEMO REEL</a>
+          <a href="index.html#projects">PROJECTS</a>
+          <a href="index.html#learning">LEARNING</a>
+          <a href="index.html#about">ABOUT</a>
+        </div>
+      </div>
+      <div>
+        <h3>Resources</h3>
+        <div class="footer-links">
+          <a href="portfolio.html">Portfolio</a>
+          <a href="career-profile.html">Career Profile</a>
+        </div>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <form class="contact-form" action="mailto:Jeonhoon528@gmail.com" method="post" enctype="text/plain">
+          <input type="email" name="email" placeholder="name@domain.com" aria-label="Email address">
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.querySelector(".site-header");
+    const dateEl = document.querySelector("#today-date");
+    const reelModal = document.querySelector("#reel-modal");
+    const reelFrame = document.querySelector("#reel-modal-frame");
+    const reelTitle = document.querySelector("#reel-modal-title");
+    const reelDescription = document.querySelector("#reel-modal-description");
+    const reelClose = document.querySelector(".reel-close");
+
+    function syncHeaderState() {
+      header.classList.toggle("is-scrolled", window.scrollY > 12);
+    }
+
+    function syncDate() {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = String(now.getMonth() + 1).padStart(2, "0");
+      const dd = String(now.getDate()).padStart(2, "0");
+      dateEl.textContent = `Date ${yyyy}.${mm}.${dd}`;
+    }
+
+    function openReel(card) {
+      const videoId = card.dataset.video;
+      reelTitle.textContent = card.dataset.title || "";
+      reelDescription.textContent = card.dataset.description || "";
+      reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+      reelModal.classList.add("is-open");
+      reelModal.setAttribute("aria-hidden", "false");
+      reelClose.focus();
+    }
+
+    function closeReel() {
+      reelModal.classList.remove("is-open");
+      reelModal.setAttribute("aria-hidden", "true");
+      reelFrame.innerHTML = "";
+    }
+
+    document.querySelectorAll(".video-card[data-video]").forEach((card) => {
+      card.addEventListener("click", () => openReel(card));
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openReel(card);
+        }
+      });
+    });
+
+    reelClose.addEventListener("click", closeReel);
+    reelModal.addEventListener("click", (event) => {
+      if (event.target === reelModal) closeReel();
+    });
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && reelModal.classList.contains("is-open")) {
+        closeReel();
+      }
+    });
+
+    syncHeaderState();
+    syncDate();
+    window.addEventListener("scroll", syncHeaderState, { passive: true });
+  </script>
+</body>
+</html>

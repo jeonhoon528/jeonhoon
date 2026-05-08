@@ -32,7 +32,7 @@
       font-family: "Inter", "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
       line-height: 1.6;
       letter-spacing: 0;
-      zoom: 1.5;
+      zoom: 1.2;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -175,11 +175,21 @@
     }
 
     .video-card {
+      position: relative;
       overflow: hidden;
       min-width: 0;
       background: #0b1624;
       border: 1px solid rgba(255,255,255,.1);
       border-radius: 4px;
+      cursor: pointer;
+      transition: transform .22s ease, border-color .22s ease;
+    }
+
+    .video-card:hover,
+    .video-card:focus-visible {
+      border-color: rgba(255,255,255,.24);
+      transform: translateY(-2px);
+      outline: 0;
     }
 
     .video-frame {
@@ -188,12 +198,39 @@
       background: #111;
     }
 
+    .video-frame img,
     .video-frame iframe {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       border: 0;
+    }
+
+    .video-frame img {
+      object-fit: cover;
+      transition: filter .22s ease, opacity .22s ease, transform .22s ease;
+    }
+
+    .video-card:hover .video-frame img,
+    .video-card:focus-visible .video-frame img {
+      filter: grayscale(.35) blur(2px);
+      opacity: .58;
+      transform: scale(1.03);
+    }
+
+    .video-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(178, 184, 192, .22);
+      opacity: 0;
+      transition: opacity .22s ease;
+    }
+
+    .video-card:hover .video-frame::after,
+    .video-card:focus-visible .video-frame::after {
+      opacity: 1;
     }
 
     .video-meta {
@@ -240,6 +277,10 @@
       content: "→";
       font-size: 24px;
       line-height: 1;
+    }
+
+    .button.no-arrow::after {
+      content: none;
     }
 
     .project-layout {
@@ -329,6 +370,9 @@
     }
 
     .learning-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       min-height: 230px;
       padding: 34px;
       color: #1d2631;
@@ -357,6 +401,18 @@
       font-size: 15px;
       font-weight: 400;
       word-break: keep-all;
+    }
+
+    .learning-card .button {
+      min-width: 146px;
+      height: 46px;
+      margin-top: auto;
+      font-size: 17px;
+      border-radius: 8px;
+    }
+
+    .learning-card .button::after {
+      font-size: 17px;
     }
 
     .profile {
@@ -566,16 +622,17 @@
 
     .contact-form {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 170px;
+      grid-template-columns: minmax(0, 1fr) 102px;
       gap: 0;
       overflow: hidden;
       background: #1d2533;
       border-radius: 14px;
+      max-width: 60%;
     }
 
     .contact-form input {
       width: 100%;
-      min-height: 72px;
+      min-height: 43px;
       padding: 0 24px;
       color: #fff;
       background: transparent;
@@ -584,14 +641,95 @@
     }
 
     .contact-form button {
-      min-height: 72px;
+      min-height: 43px;
       color: #fff;
       background: var(--green-2);
       border: 0;
       border-radius: 10px;
-      margin: 8px;
-      font-weight: 800;
+      margin: 5px;
+      font-weight: 400;
       font-size: 18px;
+    }
+
+    .reel-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      background: rgba(0, 0, 0, .66);
+      backdrop-filter: blur(10px);
+    }
+
+    .reel-modal.is-open {
+      display: flex;
+    }
+
+    .reel-dialog {
+      position: relative;
+      width: min(1180px, 94vw);
+      max-height: 86vh;
+      display: grid;
+      grid-template-columns: 7fr 3fr;
+      gap: 0;
+      overflow: hidden;
+      background: #07111e;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 10px;
+      box-shadow: 0 28px 90px rgba(0,0,0,.45);
+    }
+
+    .reel-modal-frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      min-height: 360px;
+      background: #000;
+    }
+
+    .reel-modal-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .reel-modal-copy {
+      padding: 34px 30px;
+      color: #d7dee8;
+      overflow-y: auto;
+    }
+
+    .reel-modal-copy h3 {
+      margin-bottom: 14px;
+      color: #fff;
+      font-size: 24px;
+      line-height: 1.28;
+    }
+
+    .reel-modal-copy p {
+      margin-bottom: 0;
+      color: #aeb8c6;
+      font-size: 15px;
+      word-break: keep-all;
+    }
+
+    .reel-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(0,0,0,.45);
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
     }
 
     @media (max-width: 900px) {
@@ -642,6 +780,15 @@
 
       .contact-form {
         grid-template-columns: 1fr;
+        max-width: 100%;
+      }
+
+      .reel-dialog {
+        grid-template-columns: 1fr;
+      }
+
+      .reel-modal-frame {
+        min-height: 0;
       }
     }
   </style>
@@ -668,32 +815,32 @@
         <p class="section-kicker">Demo Reel</p>
         <h1>Sound Design Portfolio</h1>
         <div class="reel-grid">
-          <article class="video-card">
-            <div class="video-frame"><iframe src="https://www.youtube.com/embed/F3lNKCKbV18" title="Anime Vivy sound redesign portfolio" allowfullscreen loading="lazy"></iframe></div>
+          <article class="video-card" tabindex="0" role="button" data-video="F3lNKCKbV18" data-title="2026 애니메이션 Vivy 전투씬 사운드 리디자인" data-description="두 캐릭터의 Foley를 직접 녹음하여 작업한 전투 장면 사운드 리디자인입니다. 움직임, 충돌감, 장면 흐름을 중심으로 사운드를 구성했습니다.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/F3lNKCKbV18/hqdefault.jpg" alt="Anime Vivy sound redesign portfolio"></div>
             <div class="video-meta"><strong>2026 애니메이션 Vivy 전투씬 사운드 리디자인</strong><span>Foley Recording · Combat Design</span></div>
           </article>
-          <article class="video-card">
-            <div class="video-frame"><iframe src="https://www.youtube.com/embed/q8ia_bmtQbk" title="Forspoken sound design portfolio" allowfullscreen loading="lazy"></iframe></div>
+          <article class="video-card" tabindex="0" role="button" data-video="q8ia_bmtQbk" data-title="포스포큰 원소 마법 사운드 디자인" data-description="불, 전기, 얼음, 물 등 다양한 원소 마법의 질감과 에너지를 중심으로 구성한 인게임 사운드 포트폴리오입니다.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/q8ia_bmtQbk/hqdefault.jpg" alt="Forspoken sound design portfolio"></div>
             <div class="video-meta"><strong>포스포큰 원소 마법 사운드 디자인</strong><span>Magic SFX · Elemental Tone</span></div>
           </article>
-          <article class="video-card">
-            <div class="video-frame"><iframe src="https://www.youtube.com/embed/UOyXOPzXLCk" title="Zenless Zone Zero sound redesign portfolio" allowfullscreen loading="lazy"></iframe></div>
+          <article class="video-card" tabindex="0" role="button" data-video="UOyXOPzXLCk" data-title="젠레스 존 제로 이블린 캐릭터 사운드 디자인" data-description="타격감과 속도감 있는 느낌을 분석하고, 캐릭터 액션의 리듬과 스타일이 살아나도록 작업한 사운드 디자인입니다.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/UOyXOPzXLCk/hqdefault.jpg" alt="Zenless Zone Zero sound redesign portfolio"></div>
             <div class="video-meta"><strong>젠레스 존 제로 이블린 캐릭터 사운드 디자인</strong><span>Impact · Speed · Style Analysis</span></div>
           </article>
-          <article class="video-card">
-            <div class="video-frame"><iframe src="https://www.youtube.com/embed/ouDMPZsXMMk" title="Assassin's Creed Valhalla trailer sound redesign" allowfullscreen loading="lazy"></iframe></div>
+          <article class="video-card" tabindex="0" role="button" data-video="ouDMPZsXMMk" data-title="어쌔신크리드 발할라 트레일러 사운드 디자인" data-description="일부 Foley를 직접 녹음하고 영상의 맥락과 연출 흐름을 중심으로 재구성한 트레일러 사운드 리디자인입니다.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/ouDMPZsXMMk/hqdefault.jpg" alt="Assassin's Creed Valhalla trailer sound redesign"></div>
             <div class="video-meta"><strong>어쌔신크리드 발할라 트레일러 사운드 디자인</strong><span>Trailer Sound · Foley</span></div>
           </article>
-          <article class="video-card">
-            <div class="video-frame"><iframe src="https://www.youtube.com/embed/MRmu8VdbMWo" title="Final Fantasy 14 trailer sound redesign" allowfullscreen loading="lazy"></iframe></div>
+          <article class="video-card" tabindex="0" role="button" data-video="MRmu8VdbMWo" data-title="파이널 판타지 14 트레일러 사운드 리디자인" data-description="긴 분량의 트레일러 안에서 규모감과 다양한 기승전결 장면에 맞춰 작업한 사운드 리디자인입니다.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/MRmu8VdbMWo/hqdefault.jpg" alt="Final Fantasy 14 trailer sound redesign"></div>
             <div class="video-meta"><strong>파이널 판타지 14 트레일러 사운드 리디자인</strong><span>Long-form Trailer · Scale</span></div>
           </article>
-          <article class="video-card">
-            <div class="video-frame"><iframe src="https://www.youtube.com/embed/vhVLFamdRqc" title="Blue Archive in-game sound portfolio" allowfullscreen loading="lazy"></iframe></div>
+          <article class="video-card" tabindex="0" role="button" data-video="vhVLFamdRqc" data-title="블루아카이브 인게임 사운드 포트폴리오" data-description="서브컬쳐 장르 모바일 게임의 톤앤매너를 기반으로 신스를 적극적으로 활용해 작업한 인게임 사운드 포트폴리오입니다.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/vhVLFamdRqc/hqdefault.jpg" alt="Blue Archive in-game sound portfolio"></div>
             <div class="video-meta"><strong>블루아카이브 인게임 사운드 포트폴리오</strong><span>Synth · Mobile Game Tone</span></div>
           </article>
         </div>
-        <div class="center-action"><a class="button" href="sound-portfolio.html">View more</a></div>
+        <div class="center-action"><a class="button no-arrow" href="portfolio.html">더 많은 포트폴리오 보기</a></div>
       </div>
     </section>
 
@@ -748,7 +895,6 @@
             <p class="section-kicker">Learning</p>
             <h2>What I keep studying</h2>
           </div>
-          <a class="button" href="#learning-detail">Read More</a>
         </div>
         <div class="learning-grid">
           <article class="learning-card">
@@ -760,6 +906,7 @@
               기존 게임들을 데이터를 얻기 전 가이드라인에 대해 조사
             </p>
             <strong>출시게임 표준음압</strong>
+            <a class="button" href="https://jeonhoon.notion.site/standard-loudness" target="_blank" rel="noopener noreferrer">Read More</a>
           </article>
           <article class="learning-card">
             <div class="learning-image-frame">
@@ -767,6 +914,7 @@
             </div>
             <p>다양한 게임들에서 동물어같은 인공어를 어떻게 연출하고있는지 궁금증에서 출발하여 R&D</p>
             <strong>동물어 (Aniamlese) 분석</strong>
+            <a class="button" href="https://www.notion.so/Animalese-2397fc5aba0780658914e47e04c87413?pvs=21" target="_blank" rel="noopener noreferrer">Read More</a>
           </article>
         </div>
       </div>
@@ -836,6 +984,17 @@
     </section>
   </main>
 
+  <div class="reel-modal" id="reel-modal" aria-hidden="true">
+    <div class="reel-dialog" role="dialog" aria-modal="true" aria-labelledby="reel-modal-title">
+      <button class="reel-close" type="button" aria-label="팝업 닫기">×</button>
+      <div class="reel-modal-frame" id="reel-modal-frame"></div>
+      <div class="reel-modal-copy">
+        <h3 id="reel-modal-title"></h3>
+        <p id="reel-modal-description"></p>
+      </div>
+    </div>
+  </div>
+
   <footer class="footer">
     <div class="footer-grid">
       <div>
@@ -893,6 +1052,48 @@
     syncHeaderState();
     syncDate();
     window.addEventListener("scroll", syncHeaderState, { passive: true });
+
+    const reelModal = document.querySelector("#reel-modal");
+    const reelFrame = document.querySelector("#reel-modal-frame");
+    const reelTitle = document.querySelector("#reel-modal-title");
+    const reelDescription = document.querySelector("#reel-modal-description");
+    const reelClose = document.querySelector(".reel-close");
+
+    function openReel(card) {
+      const videoId = card.dataset.video;
+      reelTitle.textContent = card.dataset.title || "";
+      reelDescription.textContent = card.dataset.description || "";
+      reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+      reelModal.classList.add("is-open");
+      reelModal.setAttribute("aria-hidden", "false");
+      reelClose.focus();
+    }
+
+    function closeReel() {
+      reelModal.classList.remove("is-open");
+      reelModal.setAttribute("aria-hidden", "true");
+      reelFrame.innerHTML = "";
+    }
+
+    document.querySelectorAll(".video-card[data-video]").forEach((card) => {
+      card.addEventListener("click", () => openReel(card));
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openReel(card);
+        }
+      });
+    });
+
+    reelClose.addEventListener("click", closeReel);
+    reelModal.addEventListener("click", (event) => {
+      if (event.target === reelModal) closeReel();
+    });
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && reelModal.classList.contains("is-open")) {
+        closeReel();
+      }
+    });
   </script>
 </body>
 </html>
