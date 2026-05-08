@@ -258,6 +258,12 @@
       margin-top: 46px;
     }
 
+    .center-action .button {
+      height: 50px;
+      min-width: 220px;
+      font-size: 20px;
+    }
+
     .button {
       min-width: 188px;
       height: 62px;
@@ -352,17 +358,14 @@
     }
 
     .learning-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 24px;
+      display: block;
       margin-bottom: 34px;
     }
 
     .learning-title .section-kicker,
     .learning-title h2 {
-      text-align: left;
-      margin-inline: 0;
+      text-align: center;
+      margin-inline: auto;
     }
 
     .learning-title h2 {
@@ -406,6 +409,7 @@
     .learning-card .button {
       min-width: 146px;
       height: 46px;
+      align-self: flex-end;
       margin-top: auto;
       font-size: 17px;
       border-radius: 8px;
@@ -651,44 +655,64 @@
       font-size: 18px;
     }
 
-    .reel-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
+    .reel-showcase {
+      position: sticky;
+      top: 64px;
+      z-index: 18;
       display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 32px;
-      background: rgba(0, 0, 0, .66);
-      backdrop-filter: blur(10px);
+      padding: 0 28px;
+      overflow: hidden;
+      background: rgba(6, 16, 28, .86);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 18px 50px rgba(0,0,0,.22);
+      transform: translateY(52px);
+      opacity: 0;
     }
 
-    .reel-modal.is-open {
-      display: flex;
+    .reel-showcase.is-open,
+    .reel-showcase.is-closing {
+      display: block;
     }
 
-    .reel-dialog {
+    .reel-showcase.is-open {
+      animation: reelSlideUp .36s ease forwards;
+    }
+
+    .reel-showcase.is-closing {
+      animation: reelSlideDown .28s ease forwards;
+    }
+
+    @keyframes reelSlideUp {
+      from { transform: translateY(52px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes reelSlideDown {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(52px); opacity: 0; }
+    }
+
+    .reel-panel {
       position: relative;
-      width: min(1180px, 94vw);
-      max-height: 86vh;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 0;
       display: grid;
       grid-template-columns: 7fr 3fr;
-      gap: 0;
-      overflow: hidden;
-      background: #07111e;
-      border: 1px solid rgba(255,255,255,.18);
-      border-radius: 10px;
-      box-shadow: 0 28px 90px rgba(0,0,0,.45);
+      gap: 24px;
+      align-items: stretch;
     }
 
-    .reel-modal-frame {
+    .reel-panel-frame {
       position: relative;
       aspect-ratio: 16 / 9;
-      min-height: 360px;
+      min-height: 300px;
       background: #000;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
-    .reel-modal-frame iframe {
+    .reel-panel-frame iframe {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -696,20 +720,20 @@
       border: 0;
     }
 
-    .reel-modal-copy {
-      padding: 34px 30px;
+    .reel-panel-copy {
+      padding: 30px 44px 30px 0;
       color: #d7dee8;
       overflow-y: auto;
     }
 
-    .reel-modal-copy h3 {
+    .reel-panel-copy h3 {
       margin-bottom: 14px;
       color: #fff;
       font-size: 24px;
       line-height: 1.28;
     }
 
-    .reel-modal-copy p {
+    .reel-panel-copy p {
       margin-bottom: 0;
       color: #aeb8c6;
       font-size: 15px;
@@ -718,8 +742,8 @@
 
     .reel-close {
       position: absolute;
-      top: 12px;
-      right: 12px;
+      top: 24px;
+      right: 0;
       z-index: 2;
       width: 38px;
       height: 38px;
@@ -758,8 +782,7 @@
       }
 
       .learning-head {
-        align-items: flex-start;
-        flex-direction: column;
+        display: block;
       }
 
       .project-collage {
@@ -783,12 +806,17 @@
         max-width: 100%;
       }
 
-      .reel-dialog {
+      .reel-panel {
         grid-template-columns: 1fr;
+        gap: 16px;
       }
 
-      .reel-modal-frame {
+      .reel-panel-frame {
         min-height: 0;
+      }
+
+      .reel-panel-copy {
+        padding: 0 48px 24px 0;
       }
     }
   </style>
@@ -810,6 +838,17 @@
   </header>
 
   <main id="top">
+    <section class="reel-showcase" id="reel-showcase" aria-hidden="true">
+      <div class="reel-panel">
+        <button class="reel-close" type="button" aria-label="유튜브 섹션 닫기">×</button>
+        <div class="reel-panel-frame" id="reel-panel-frame"></div>
+        <div class="reel-panel-copy">
+          <h3 id="reel-panel-title"></h3>
+          <p id="reel-panel-description"></p>
+        </div>
+      </div>
+    </section>
+
     <section id="demo" class="dark-section">
       <div class="wrap">
         <p class="section-kicker">Demo Reel</p>
@@ -959,22 +998,22 @@
         <p class="section-kicker">My Skills</p>
         <h2>Game Audio Design</h2>
         <div class="skills-grid">
-          <article class="skill-card">
+          <article class="skill-card" data-ko-title="구현" data-ko-text="엔진 관리, 통합 프로파일링과 디버깅, 오디오 시스템 설계">
             <h3>Implementation</h3>
             <p>Engine management, integration profiling and debugging, system design</p>
             <a class="skill-link" href="career-profile.html">View details 〉</a>
           </article>
-          <article class="skill-card">
+          <article class="skill-card" data-ko-title="사운드 제작" data-ko-text="Reaper와 Pro Tools 기반 편집, Foley 녹음, 신시사이징, 라이브러리 기반 사운드 제작">
             <h3>Sound Creation</h3>
             <p>Based on Reaper and Protools, Foley recording, synthesis, library based editing</p>
             <a class="skill-link" href="sound-portfolio.html">View details 〉</a>
           </article>
-          <article class="skill-card">
+          <article class="skill-card" data-ko-title="보이스 디렉션" data-ko-text="캐스팅과 녹음 디렉션부터 에셋 편집, 최적화, 일정 관리까지 진행">
             <h3>Voice Direction</h3>
             <p>From casting and recording direction to asset editing, optimization, scheduling</p>
             <a class="skill-link" href="career-profile.html">View details 〉</a>
           </article>
-          <article class="skill-card">
+          <article class="skill-card" data-ko-title="아이디어와 R&D" data-ko-text="프로젝트에 맞는 실용적인 설계, 프로토타이핑, 기억에 남는 경험을 위한 연구">
             <h3>Idea, R&D</h3>
             <p>Project-fit practical design, prototyping and memorable experience</p>
             <a class="skill-link" href="career-profile.html">View details 〉</a>
@@ -983,17 +1022,6 @@
       </div>
     </section>
   </main>
-
-  <div class="reel-modal" id="reel-modal" aria-hidden="true">
-    <div class="reel-dialog" role="dialog" aria-modal="true" aria-labelledby="reel-modal-title">
-      <button class="reel-close" type="button" aria-label="팝업 닫기">×</button>
-      <div class="reel-modal-frame" id="reel-modal-frame"></div>
-      <div class="reel-modal-copy">
-        <h3 id="reel-modal-title"></h3>
-        <p id="reel-modal-description"></p>
-      </div>
-    </div>
-  </div>
 
   <footer class="footer">
     <div class="footer-grid">
@@ -1053,10 +1081,10 @@
     syncDate();
     window.addEventListener("scroll", syncHeaderState, { passive: true });
 
-    const reelModal = document.querySelector("#reel-modal");
-    const reelFrame = document.querySelector("#reel-modal-frame");
-    const reelTitle = document.querySelector("#reel-modal-title");
-    const reelDescription = document.querySelector("#reel-modal-description");
+    const reelShowcase = document.querySelector("#reel-showcase");
+    const reelFrame = document.querySelector("#reel-panel-frame");
+    const reelTitle = document.querySelector("#reel-panel-title");
+    const reelDescription = document.querySelector("#reel-panel-description");
     const reelClose = document.querySelector(".reel-close");
 
     function openReel(card) {
@@ -1064,15 +1092,18 @@
       reelTitle.textContent = card.dataset.title || "";
       reelDescription.textContent = card.dataset.description || "";
       reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
-      reelModal.classList.add("is-open");
-      reelModal.setAttribute("aria-hidden", "false");
+      reelShowcase.classList.remove("is-closing");
+      reelShowcase.classList.add("is-open");
+      reelShowcase.setAttribute("aria-hidden", "false");
+      reelShowcase.scrollIntoView({ behavior: "smooth", block: "start" });
       reelClose.focus();
     }
 
     function closeReel() {
-      reelModal.classList.remove("is-open");
-      reelModal.setAttribute("aria-hidden", "true");
-      reelFrame.innerHTML = "";
+      if (!reelShowcase.classList.contains("is-open")) return;
+      reelShowcase.classList.remove("is-open");
+      reelShowcase.classList.add("is-closing");
+      reelShowcase.setAttribute("aria-hidden", "true");
     }
 
     document.querySelectorAll(".video-card[data-video]").forEach((card) => {
@@ -1086,13 +1117,38 @@
     });
 
     reelClose.addEventListener("click", closeReel);
-    reelModal.addEventListener("click", (event) => {
-      if (event.target === reelModal) closeReel();
+    reelShowcase.addEventListener("animationend", () => {
+      if (reelShowcase.classList.contains("is-closing")) {
+        reelShowcase.classList.remove("is-closing");
+        reelFrame.innerHTML = "";
+      }
     });
     window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && reelModal.classList.contains("is-open")) {
+      if (event.key === "Escape" && reelShowcase.classList.contains("is-open")) {
         closeReel();
       }
+    });
+
+    document.querySelectorAll(".skill-card").forEach((card) => {
+      const title = card.querySelector("h3");
+      const body = card.querySelector("p");
+      const originalTitle = title.textContent;
+      const originalBody = body.textContent;
+
+      function showKorean() {
+        title.textContent = card.dataset.koTitle || originalTitle;
+        body.textContent = card.dataset.koText || originalBody;
+      }
+
+      function showEnglish() {
+        title.textContent = originalTitle;
+        body.textContent = originalBody;
+      }
+
+      card.addEventListener("mouseenter", showKorean);
+      card.addEventListener("focusin", showKorean);
+      card.addEventListener("mouseleave", showEnglish);
+      card.addEventListener("focusout", showEnglish);
     });
   </script>
 </body>
