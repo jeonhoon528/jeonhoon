@@ -66,9 +66,44 @@
       gap: 24px;
     }
 
-    .logo { display: inline-flex; align-items: center; color: #fff; }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      color: #fff;
+      background: rgba(217, 217, 217, .3);
+      border: 1px solid rgba(217, 217, 217, .45);
+      border-radius: 50%;
+      transition: background .22s ease, border-color .22s ease, transform .22s ease;
+    }
+
+    .logo:hover,
+    .logo:focus-visible {
+      background: rgba(217, 217, 217, .42);
+      border-color: rgba(217, 217, 217, .68);
+      transform: translateY(-1px);
+      outline: 0;
+    }
+
     .logo-mark { width: 58px; height: auto; object-fit: contain; }
+    .site-header .logo-mark { width: 40px; }
     .footer-brand .logo-mark { width: 104px; }
+    .footer-brand {
+      width: auto;
+      height: auto;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+    }
+
+    .footer-brand:hover,
+    .footer-brand:focus-visible {
+      background: transparent;
+      border-color: transparent;
+      transform: none;
+    }
     .footer-brand-name {
       display: block;
       margin-top: 11px;
@@ -83,9 +118,9 @@
       align-items: center;
       gap: 36px;
       color: #c7ced8;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
-      text-transform: uppercase;
+      text-transform: none;
     }
 
     .nav-links a {
@@ -547,11 +582,10 @@
       <a class="logo" href="index.html#top" aria-label="JeonHoon home">
         <img class="logo-mark" src="assets/logo-jh.png" alt="JeonHoon">
       </a>
-      <nav class="nav-links" aria-label="Main navigation">
-        <a href="index.html#demo">Demo Reel</a>
-        <a href="index.html#projects">Projects</a>
-        <a href="index.html#learning">Learning</a>
-        <a href="index.html#about">About</a>
+      <nav class="nav-links" aria-label="Portfolio navigation">
+        <a href="#warhaven-portfolio">워헤이븐 프로젝트 포트폴리오</a>
+        <a href="#personal-2022-2026">개인 작업 포트폴리오 2022 ~ 2026</a>
+        <a href="#personal-2016-2022">개인 작업 포트폴리오 2016 ~ 2022</a>
       </nav>
       <span class="date-pill" id="today-date">Date 2026.05.08</span>
     </div>
@@ -571,7 +605,7 @@
       </div>
     </section>
 
-    <section class="portfolio-section portfolio-section--warhaven">
+    <section class="portfolio-section portfolio-section--warhaven" id="warhaven-portfolio">
       <div class="wrap">
         <p class="section-kicker">Warhaven Project</p>
         <h1>워헤이븐 프로젝트 포트폴리오</h1>
@@ -609,7 +643,7 @@
       </div>
     </section>
 
-    <section class="portfolio-section portfolio-section--recent">
+    <section class="portfolio-section portfolio-section--recent" id="personal-2022-2026">
       <div class="wrap">
         <p class="section-kicker">Personal Work</p>
         <h1>개인 작업 포트폴리오 2022 ~ 2026</h1>
@@ -634,7 +668,7 @@
       </div>
     </section>
 
-    <section class="portfolio-section portfolio-section--archive">
+    <section class="portfolio-section portfolio-section--archive" id="personal-2016-2022">
       <div class="wrap">
         <p class="section-kicker">Personal Work</p>
         <h1>개인 작업 포트폴리오 2016 ~ 2022</h1>
@@ -907,6 +941,7 @@
 
     const navLinks = Array.from(document.querySelectorAll(".nav-links a"));
     const portfolioSections = Array.from(document.querySelectorAll(".portfolio-section:not([hidden])"));
+    let isSectionSnapping = false;
 
     function syncActiveNav() {
       if (!navLinks.length || !portfolioSections.length) return;
@@ -926,6 +961,48 @@
 
     syncActiveNav();
     window.addEventListener("scroll", syncActiveNav, { passive: true });
+
+    function getCurrentSectionIndex() {
+      return portfolioSections.reduce((active, section, index) => {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.abs(rect.top - 72);
+        if (!active || distance < active.distance) {
+          return { index, distance };
+        }
+        return active;
+      }, null)?.index ?? 0;
+    }
+
+    function scrollToPortfolioSection(index) {
+      const target = portfolioSections[Math.max(0, Math.min(index, portfolioSections.length - 1))];
+      if (!target) return;
+      isSectionSnapping = true;
+      const headerHeight = header?.offsetHeight || 64;
+      const targetTop = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+      window.setTimeout(() => {
+        isSectionSnapping = false;
+        syncActiveNav();
+      }, 760);
+    }
+
+    window.addEventListener("wheel", (event) => {
+      if (!portfolioSections.length) return;
+      if (event.target.closest(".reel-showcase")) return;
+      if (Math.abs(event.deltaY) < 10 || isSectionSnapping) {
+        event.preventDefault();
+        return;
+      }
+
+      const currentIndex = getCurrentSectionIndex();
+      const nextIndex = currentIndex + (event.deltaY > 0 ? 1 : -1);
+      if (nextIndex < 0 || nextIndex >= portfolioSections.length) {
+        return;
+      }
+
+      event.preventDefault();
+      scrollToPortfolioSection(nextIndex);
+    }, { passive: false });
   </script>
 </body>
 </html>
