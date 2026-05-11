@@ -611,8 +611,8 @@
     }
 
     .social-row img {
-      width: 22px;
-      height: 22px;
+      width: 55px;
+      height: 55px;
       object-fit: contain;
       opacity: .78;
       transition: opacity .25s ease, transform .25s ease;
@@ -660,7 +660,7 @@
       top: 64px;
       z-index: 18;
       display: none;
-      padding: 0 28px;
+      padding: 0 8px;
       overflow: hidden;
       background: rgba(6, 16, 28, .86);
       border-bottom: 1px solid rgba(255,255,255,.12);
@@ -694,7 +694,7 @@
 
     .reel-panel {
       position: relative;
-      max-width: 1180px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 28px 0;
       display: grid;
@@ -731,6 +731,26 @@
       color: #fff;
       font-size: 24px;
       line-height: 1.28;
+    }
+
+    .reel-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .reel-tags span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      color: #dce6ef;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 400;
     }
 
     .reel-panel-copy p {
@@ -844,6 +864,7 @@
         <div class="reel-panel-frame" id="reel-panel-frame"></div>
         <div class="reel-panel-copy">
           <h3 id="reel-panel-title"></h3>
+          <div class="reel-tags" id="reel-panel-tags" aria-label="Video tags"></div>
           <p id="reel-panel-description"></p>
         </div>
       </div>
@@ -854,27 +875,27 @@
         <p class="section-kicker">Demo Reel</p>
         <h1>Sound Design Portfolio</h1>
         <div class="reel-grid">
-          <article class="video-card" tabindex="0" role="button" data-video="F3lNKCKbV18" data-title="2026 애니메이션 Vivy 전투씬 사운드 리디자인" data-description="두 캐릭터의 Foley를 직접 녹음하여 작업한 전투 장면 사운드 리디자인입니다. 움직임, 충돌감, 장면 흐름을 중심으로 사운드를 구성했습니다.">
+          <article class="video-card" tabindex="0" role="button" data-video="F3lNKCKbV18" data-tags="Foley Recording,Combat Design,Animation" data-title="2026 애니메이션 Vivy 전투씬 사운드 리디자인" data-description="두 캐릭터의 Foley를 직접 녹음하여 작업한 전투 장면 사운드 리디자인입니다. 움직임, 충돌감, 장면 흐름을 중심으로 사운드를 구성했습니다.">
             <div class="video-frame"><img src="https://img.youtube.com/vi/F3lNKCKbV18/hqdefault.jpg" alt="Anime Vivy sound redesign portfolio"></div>
             <div class="video-meta"><strong>2026 애니메이션 Vivy 전투씬 사운드 리디자인</strong><span>Foley Recording · Combat Design</span></div>
           </article>
-          <article class="video-card" tabindex="0" role="button" data-video="q8ia_bmtQbk" data-title="포스포큰 원소 마법 사운드 디자인" data-description="불, 전기, 얼음, 물 등 다양한 원소 마법의 질감과 에너지를 중심으로 구성한 인게임 사운드 포트폴리오입니다.">
+          <article class="video-card" tabindex="0" role="button" data-video="q8ia_bmtQbk" data-tags="Magic SFX,Elemental Tone,In-game" data-title="포스포큰 원소 마법 사운드 디자인" data-description="불, 전기, 얼음, 물 등 다양한 원소 마법의 질감과 에너지를 중심으로 구성한 인게임 사운드 포트폴리오입니다.">
             <div class="video-frame"><img src="https://img.youtube.com/vi/q8ia_bmtQbk/hqdefault.jpg" alt="Forspoken sound design portfolio"></div>
             <div class="video-meta"><strong>포스포큰 원소 마법 사운드 디자인</strong><span>Magic SFX · Elemental Tone</span></div>
           </article>
-          <article class="video-card" tabindex="0" role="button" data-video="UOyXOPzXLCk" data-title="젠레스 존 제로 이블린 캐릭터 사운드 디자인" data-description="타격감과 속도감 있는 느낌을 분석하고, 캐릭터 액션의 리듬과 스타일이 살아나도록 작업한 사운드 디자인입니다.">
+          <article class="video-card" tabindex="0" role="button" data-video="UOyXOPzXLCk" data-tags="Impact,Speed,Character Action" data-title="젠레스 존 제로 이블린 캐릭터 사운드 디자인" data-description="타격감과 속도감 있는 느낌을 분석하고, 캐릭터 액션의 리듬과 스타일이 살아나도록 작업한 사운드 디자인입니다.">
             <div class="video-frame"><img src="https://img.youtube.com/vi/UOyXOPzXLCk/hqdefault.jpg" alt="Zenless Zone Zero sound redesign portfolio"></div>
             <div class="video-meta"><strong>젠레스 존 제로 이블린 캐릭터 사운드 디자인</strong><span>Impact · Speed · Style Analysis</span></div>
           </article>
-          <article class="video-card" tabindex="0" role="button" data-video="ouDMPZsXMMk" data-title="어쌔신크리드 발할라 트레일러 사운드 디자인" data-description="일부 Foley를 직접 녹음하고 영상의 맥락과 연출 흐름을 중심으로 재구성한 트레일러 사운드 리디자인입니다.">
+          <article class="video-card" tabindex="0" role="button" data-video="ouDMPZsXMMk" data-tags="Trailer Sound,Foley,Story Flow" data-title="어쌔신크리드 발할라 트레일러 사운드 디자인" data-description="일부 Foley를 직접 녹음하고 영상의 맥락과 연출 흐름을 중심으로 재구성한 트레일러 사운드 리디자인입니다.">
             <div class="video-frame"><img src="https://img.youtube.com/vi/ouDMPZsXMMk/hqdefault.jpg" alt="Assassin's Creed Valhalla trailer sound redesign"></div>
             <div class="video-meta"><strong>어쌔신크리드 발할라 트레일러 사운드 디자인</strong><span>Trailer Sound · Foley</span></div>
           </article>
-          <article class="video-card" tabindex="0" role="button" data-video="MRmu8VdbMWo" data-title="파이널 판타지 14 트레일러 사운드 리디자인" data-description="긴 분량의 트레일러 안에서 규모감과 다양한 기승전결 장면에 맞춰 작업한 사운드 리디자인입니다.">
+          <article class="video-card" tabindex="0" role="button" data-video="MRmu8VdbMWo" data-tags="Long-form Trailer,Scale,Fantasy" data-title="파이널 판타지 14 트레일러 사운드 리디자인" data-description="긴 분량의 트레일러 안에서 규모감과 다양한 기승전결 장면에 맞춰 작업한 사운드 리디자인입니다.">
             <div class="video-frame"><img src="https://img.youtube.com/vi/MRmu8VdbMWo/hqdefault.jpg" alt="Final Fantasy 14 trailer sound redesign"></div>
             <div class="video-meta"><strong>파이널 판타지 14 트레일러 사운드 리디자인</strong><span>Long-form Trailer · Scale</span></div>
           </article>
-          <article class="video-card" tabindex="0" role="button" data-video="vhVLFamdRqc" data-title="블루아카이브 인게임 사운드 포트폴리오" data-description="서브컬쳐 장르 모바일 게임의 톤앤매너를 기반으로 신스를 적극적으로 활용해 작업한 인게임 사운드 포트폴리오입니다.">
+          <article class="video-card" tabindex="0" role="button" data-video="vhVLFamdRqc" data-tags="Synth,Mobile Game,Subculture" data-title="블루아카이브 인게임 사운드 포트폴리오" data-description="서브컬쳐 장르 모바일 게임의 톤앤매너를 기반으로 신스를 적극적으로 활용해 작업한 인게임 사운드 포트폴리오입니다.">
             <div class="video-frame"><img src="https://img.youtube.com/vi/vhVLFamdRqc/hqdefault.jpg" alt="Blue Archive in-game sound portfolio"></div>
             <div class="video-meta"><strong>블루아카이브 인게임 사운드 포트폴리오</strong><span>Synth · Mobile Game Tone</span></div>
           </article>
@@ -986,6 +1007,7 @@
           <span style="--stack-icon: url('assets/icon-unreal.png')"><span class="stack-label">Unreal</span></span>
           <span style="--stack-icon: url('assets/icon-unity.png')"><span class="stack-label">Unity</span></span>
           <span style="--stack-icon: url('assets/icon-reaper.png')"><span class="stack-label">Reaper</span></span>
+          <span style="--stack-icon: url('assets/icon-protools.png')"><span class="stack-label">Pro Tools</span></span>
           <span style="--stack-icon: url('assets/icon-notion.png')"><span class="stack-label">Notion</span></span>
           <span style="--stack-icon: url('assets/icon-github.png')"><span class="stack-label">GitHub</span></span>
           <span style="--stack-icon: url('assets/icon-chatgpt.png')"><span class="stack-label">ChatGPT</span></span>
@@ -1084,12 +1106,19 @@
     const reelShowcase = document.querySelector("#reel-showcase");
     const reelFrame = document.querySelector("#reel-panel-frame");
     const reelTitle = document.querySelector("#reel-panel-title");
+    const reelTags = document.querySelector("#reel-panel-tags");
     const reelDescription = document.querySelector("#reel-panel-description");
     const reelClose = document.querySelector(".reel-close");
 
     function openReel(card) {
       const videoId = card.dataset.video;
       reelTitle.textContent = card.dataset.title || "";
+      reelTags.innerHTML = "";
+      (card.dataset.tags || "").split(",").map((tag) => tag.trim()).filter(Boolean).forEach((tag) => {
+        const tagEl = document.createElement("span");
+        tagEl.textContent = tag;
+        reelTags.appendChild(tagEl);
+      });
       reelDescription.textContent = card.dataset.description || "";
       reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
       reelShowcase.classList.remove("is-closing");
