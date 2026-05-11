@@ -896,7 +896,7 @@
         reelDescription.appendChild(document.createTextNode("\n"));
         reelDescription.appendChild(link);
       }
-      reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+      reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&vq=highres" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
       reelShowcase.classList.remove("is-closing");
       reelShowcase.classList.add("is-open");
       reelShowcase.setAttribute("aria-hidden", "false");
