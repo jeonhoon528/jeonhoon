@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --navy: #06101c;
+      --navy: #000816;
       --green: #063613;
       --paper: #d9d9d9;
       --text: #f5f7fb;
@@ -17,7 +17,16 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+    }
     body {
       margin: 0;
       background: var(--navy);
@@ -35,13 +44,13 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(6, 16, 28, .98);
+      background: rgba(0, 8, 22, .98);
       border-bottom: 1px solid rgba(255,255,255,.06);
       transition: background .22s ease, backdrop-filter .22s ease, border-color .22s ease;
     }
 
     .site-header.is-scrolled {
-      background: rgba(6, 16, 28, .6);
+      background: rgba(0, 8, 22, .6);
       backdrop-filter: blur(40px);
       border-bottom-color: rgba(255,255,255,.12);
     }
@@ -79,6 +88,16 @@
       text-transform: uppercase;
     }
 
+    .nav-links a {
+      transition: font-size .32s ease, color .32s ease, text-shadow .32s ease;
+    }
+
+    .nav-links a.is-active {
+      color: #fff;
+      font-size: 15px;
+      text-shadow: 0 4px 4px rgba(0, 0, 0, .35);
+    }
+
     .date-pill {
       min-width: 118px;
       height: 34px;
@@ -95,6 +114,10 @@
     section { padding: 88px 28px; }
     .dark-section { background: var(--navy); }
     .paper-section { background: var(--paper); color: var(--ink); }
+    .portfolio-section { padding: 88px 28px; }
+    .portfolio-section--warhaven { background: var(--green); color: #fff; }
+    .portfolio-section--recent { background: #000816; color: #fff; }
+    .portfolio-section--archive { background: var(--paper); color: var(--ink); }
     .wrap { max-width: 1180px; margin: 0 auto; }
     .section-kicker {
       margin: 0 0 8px;
@@ -103,6 +126,17 @@
       font-weight: 400;
       text-align: center;
       text-transform: uppercase;
+    }
+
+    .portfolio-section--warhaven .section-kicker,
+    .portfolio-section--recent .section-kicker {
+      color: rgba(255,255,255,.68);
+    }
+
+    .portfolio-section--archive .section-kicker,
+    .portfolio-section--archive h1,
+    .portfolio-section--archive h2 {
+      color: var(--ink);
     }
 
     h1, h2, h3, p { margin-top: 0; }
@@ -130,7 +164,14 @@
       word-break: keep-all;
     }
 
-    .portfolio-group + .portfolio-group { margin-top: 70px; }
+    .portfolio-section--warhaven .portfolio-intro,
+    .portfolio-section--recent .portfolio-intro {
+      color: #c9d2de;
+    }
+
+    .portfolio-section--archive .portfolio-intro {
+      color: #48515f;
+    }
 
     .reel-grid {
       display: grid;
@@ -142,7 +183,7 @@
       position: relative;
       overflow: hidden;
       min-width: 0;
-      background: #0b1624;
+      background: #07111e;
       border: 1px solid rgba(255,255,255,.1);
       border-radius: 4px;
       cursor: pointer;
@@ -203,9 +244,49 @@
 
     .video-meta span { color: #9ca8b8; font-size: 12px; }
 
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .card-tags span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      color: #dce6ef;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 400;
+    }
+
+    .portfolio-section--archive .video-card {
+      background: #f2f2f2;
+      border-color: #c2c8d0;
+    }
+
+    .portfolio-section--archive .video-meta strong {
+      color: var(--ink);
+    }
+
+    .portfolio-section--archive .video-meta span {
+      color: #4b5563;
+    }
+
+    .portfolio-section--archive .card-tags span {
+      color: var(--green);
+      background: rgba(6,54,19,.08);
+      border-color: rgba(6,54,19,.18);
+    }
+
     .footer {
       padding: 25px 28px;
       background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,.08);
     }
 
     .footer-grid {
@@ -232,18 +313,23 @@
       line-height: 1.45;
     }
 
-    .footer-contact { margin-top: 44px; margin-bottom: 0; }
+    .footer-contact { margin-top: 24px; margin-bottom: 0; }
     .footer-links { display: grid; gap: 13px; }
     .social-row {
       display: flex;
       align-items: center;
-      gap: 54px;
-      margin-top: 48px;
+      gap: 15px;
+      margin-top: 24px;
+    }
+
+    .social-row a,
+    .social-row img {
+      flex-shrink: 0;
     }
 
     .social-row img {
-      width: 22px;
-      height: 22px;
+      width: 40px;
+      height: 40px;
       object-fit: contain;
       opacity: .78;
       transition: opacity .25s ease, transform .25s ease;
@@ -280,43 +366,75 @@
       border: 0;
       border-radius: 10px;
       font-weight: 400;
-      font-size: 18px;
+      font-size: 16px;
     }
 
-    .reel-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
+    .reel-showcase {
+      position: sticky;
+      top: 64px;
+      z-index: 18;
       display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 32px;
-      background: rgba(0, 0, 0, .66);
-      backdrop-filter: blur(10px);
+      padding: 0 8px;
+      overflow: hidden;
+      background: rgba(0, 8, 22, .86);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 18px 50px rgba(0,0,0,.22);
+      transform: translateY(52px);
+      opacity: 0;
+      backdrop-filter: blur(0);
+      transition: background .22s ease, backdrop-filter .22s ease, border-color .22s ease;
     }
 
-    .reel-modal.is-open { display: flex; }
-    .reel-dialog {
+    .reel-showcase.is-scrolled {
+      background: rgba(0, 8, 22, .62);
+      backdrop-filter: blur(6px);
+      border-bottom-color: rgba(255,255,255,.12);
+    }
+
+    .reel-showcase.is-open,
+    .reel-showcase.is-closing {
+      display: block;
+    }
+
+    .reel-showcase.is-open {
+      animation: reelSlideUp .36s ease forwards;
+    }
+
+    .reel-showcase.is-closing {
+      animation: reelSlideDown .28s ease forwards;
+    }
+
+    @keyframes reelSlideUp {
+      from { transform: translateY(52px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes reelSlideDown {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(52px); opacity: 0; }
+    }
+
+    .reel-panel {
       position: relative;
-      width: min(1180px, 94vw);
-      max-height: 86vh;
+      max-width: 1650px;
+      margin: 0 auto;
+      padding: 28px 0;
       display: grid;
       grid-template-columns: 7fr 3fr;
-      overflow: hidden;
-      background: #07111e;
-      border: 1px solid rgba(255,255,255,.18);
-      border-radius: 10px;
-      box-shadow: 0 28px 90px rgba(0,0,0,.45);
+      gap: 24px;
+      align-items: stretch;
     }
 
-    .reel-modal-frame {
+    .reel-panel-frame {
       position: relative;
       aspect-ratio: 16 / 9;
-      min-height: 360px;
+      min-height: 300px;
       background: #000;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
-    .reel-modal-frame iframe {
+    .reel-panel-frame iframe {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -324,20 +442,42 @@
       border: 0;
     }
 
-    .reel-modal-copy {
-      padding: 34px 30px;
+    .reel-panel-copy {
+      padding: 30px 44px 30px 0;
+      display: flex;
+      flex-direction: column;
       color: #d7dee8;
       overflow-y: auto;
     }
 
-    .reel-modal-copy h3 {
+    .reel-panel-copy h3 {
       margin-bottom: 14px;
       color: #fff;
       font-size: 24px;
       line-height: 1.28;
     }
 
-    .reel-modal-copy p {
+    .reel-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .reel-tags span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      color: #dce6ef;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    .reel-panel-copy p {
       margin-bottom: 0;
       color: #aeb8c6;
       font-size: 15px;
@@ -345,10 +485,39 @@
       white-space: pre-line;
     }
 
+    .reel-panel-copy p a {
+      display: inline-flex;
+      margin-top: 14px;
+      color: #d9d9d9;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .reel-escape-button {
+      min-width: 160px;
+      height: 42px;
+      align-self: flex-end;
+      margin-top: auto;
+      border: 1px solid rgba(217,217,217,.48);
+      border-radius: 8px;
+      color: #06101c;
+      background: #d9d9d9;
+      font-size: 16px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .reel-escape-button:hover,
+    .reel-escape-button:focus-visible {
+      opacity: .88;
+      transform: translateY(-1px);
+    }
+
     .reel-close {
       position: absolute;
-      top: 12px;
-      right: 12px;
+      top: 24px;
+      right: 0;
       z-index: 2;
       width: 38px;
       height: 38px;
@@ -366,8 +535,9 @@
       section { padding: 64px 20px; }
       .reel-grid, .footer-grid { grid-template-columns: 1fr; }
       .contact-form { grid-template-columns: 1fr; max-width: 100%; }
-      .reel-dialog { grid-template-columns: 1fr; }
-      .reel-modal-frame { min-height: 0; }
+      .reel-panel { grid-template-columns: 1fr; gap: 16px; }
+      .reel-panel-frame { min-height: 0; }
+      .reel-panel-copy { padding: 0 48px 24px 0; }
     }
   </style>
 </head>
@@ -388,7 +558,124 @@
   </header>
 
   <main id="top">
-    <section class="dark-section">
+    <section class="reel-showcase" id="reel-showcase" aria-hidden="true">
+      <div class="reel-panel">
+        <button class="reel-close" type="button" aria-label="유튜브 섹션 닫기">&times;</button>
+        <div class="reel-panel-frame" id="reel-panel-frame"></div>
+        <div class="reel-panel-copy">
+          <h3 id="reel-panel-title"></h3>
+          <div class="reel-tags" id="reel-panel-tags" aria-label="Video tags"></div>
+          <p id="reel-panel-description"></p>
+          <button class="reel-escape-button" type="button">ESC 눌러 닫기</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="portfolio-section portfolio-section--warhaven">
+      <div class="wrap">
+        <p class="section-kicker">Warhaven Project</p>
+        <h1>워헤이븐 프로젝트 포트폴리오</h1>
+        <p class="portfolio-intro">워헤이븐 프로젝트에서 작업한 인게임, 트레일러, 캐릭터 쇼케이스 사운드 포트폴리오입니다.</p>
+        <div class="reel-grid">
+          <article class="video-card" tabindex="0" role="button" data-video="UYjxlb0pB0E" data-title="인게임 하이라이트 인트로 컷씬" data-tags="2023,In-game Design,Foley,SFX" data-description="- 각 캐릭터의 개성에 맞는 캐릭터 사운드 디자인 작업.&#10;- 중세시대 판타지적인 느낌이 아닌 영화 같은 사운드 디자인 방식&#10;- 톤앤 매너를 지키기 위해 깔끔하고 정돈된 톤을 지향">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/UYjxlb0pB0E/hqdefault.jpg" alt="인게임 하이라이트 인트로 컷씬"></div>
+            <div class="video-meta"><strong>인게임 하이라이트 인트로 컷씬</strong><div class="card-tags"><span>2023</span><span>In-game Design</span><span>Foley</span><span>SFX</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="xRDTuWdtKko" data-title="쟁탈전 비행기 정비소 모드 가이드" data-tags="2024,Trailer,Mixing" data-description="- 성우 성완경님 나레이션, 음악, 효과음 믹싱&#10;- 영상 설명에 적합한 UI 사운드 작업 적용">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/xRDTuWdtKko/hqdefault.jpg" alt="쟁탈전 비행기 정비소 모드 가이드"></div>
+            <div class="video-meta"><strong>쟁탈전 비행기 정비소 모드 가이드</strong><div class="card-tags"><span>2024</span><span>Trailer</span><span>Mixing</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="bz7fa_ravmE" data-title="캐릭터 쇼케이스 가디언" data-tags="2023,Hero Showcase,Trailer,Mixing" data-description="- 성우 최한님 성우녹음 및 리소스 후보정 처리&#10;- 트레일러 영상 사운드 작업">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/bz7fa_ravmE/hqdefault.jpg" alt="캐릭터 쇼케이스 가디언"></div>
+            <div class="video-meta"><strong>캐릭터 쇼케이스 가디언</strong><div class="card-tags"><span>2023</span><span>Hero Showcase</span><span>Trailer</span><span>Mixing</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="ifJN6Ghp5Pw" data-title="캐릭터 쇼케이스 허시" data-tags="2023,Hero Showcase,Trailer,Mixing" data-description="- 성우 윤은서님 성우녹음 및 리소스 후보정 처리&#10;- 트레일러 영상 사운드 작업">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/ifJN6Ghp5Pw/hqdefault.jpg" alt="캐릭터 쇼케이스 허시"></div>
+            <div class="video-meta"><strong>캐릭터 쇼케이스 허시</strong><div class="card-tags"><span>2023</span><span>Hero Showcase</span><span>Trailer</span><span>Mixing</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="4j5Bgcllyqs" data-title="캐릭터 쇼케이스 스파이크" data-tags="2023,Hero Showcase,Trailer,Mixing" data-description="- 성우 김영은님 성우녹음 및 리소스 후보정 처리&#10;- 트레일러 영상 사운드 작업">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/4j5Bgcllyqs/hqdefault.jpg" alt="캐릭터 쇼케이스 스파이크"></div>
+            <div class="video-meta"><strong>캐릭터 쇼케이스 스파이크</strong><div class="card-tags"><span>2023</span><span>Hero Showcase</span><span>Trailer</span><span>Mixing</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="7-c8XV8SvRo" data-title="캐릭터 쇼케이스 오해머" data-tags="2023,Hero Showcase,Trailer,Mixing" data-description="- 성우 안장혁님 성우녹음 및 리소스 후보정 처리&#10;- 트레일러 영상 사운드 작업">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/7-c8XV8SvRo/hqdefault.jpg" alt="캐릭터 쇼케이스 오해머"></div>
+            <div class="video-meta"><strong>캐릭터 쇼케이스 오해머</strong><div class="card-tags"><span>2023</span><span>Hero Showcase</span><span>Trailer</span><span>Mixing</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="cZcSZ0ijWrA" data-title="캐릭터 쇼케이스 스모크" data-tags="2023,Hero Showcase,Trailer,Mixing" data-description="- 성우 이명호님 성우녹음 및 리소스 후보정 처리&#10;- 트레일러 영상 사운드 작업">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/cZcSZ0ijWrA/hqdefault.jpg" alt="캐릭터 쇼케이스 스모크"></div>
+            <div class="video-meta"><strong>캐릭터 쇼케이스 스모크</strong><div class="card-tags"><span>2023</span><span>Hero Showcase</span><span>Trailer</span><span>Mixing</span></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="portfolio-section portfolio-section--recent">
+      <div class="wrap">
+        <p class="section-kicker">Personal Work</p>
+        <h1>개인 작업 포트폴리오 2022 ~ 2026</h1>
+        <div class="reel-grid">
+          <article class="video-card" tabindex="0" role="button" data-video="F3lNKCKbV18" data-title="애니메이션 : 비비 전투 씬" data-tags="2026.04,SFX,Foley,Recording,Amb,Mixing,Sci-fi" data-description="- 비비(여캐), 안토니오(남캐)의 움직임관련 폴리 사운드 폴리레코딩(라이브러리와 섞어 사용)&#10;- 공상과학(Sci-fi)장르에 맞춰 사운드 컨셉 디자인">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/F3lNKCKbV18/hqdefault.jpg" alt="애니메이션 비비 전투 씬"></div>
+            <div class="video-meta"><strong>애니메이션 : 비비 전투 씬</strong><div class="card-tags"><span>2026.04</span><span>SFX</span><span>Foley</span><span>Recording</span><span>Amb</span><span>Mixing</span><span>Sci-fi</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="vhVLFamdRqc" data-title="블루아카이브 인게임" data-tags="2025.03,In-game Design,Casual,Mobile,Subculture" data-description="- 캐쥬얼, 서브컬쳐 장르 컨셉에 맞춰 디자인&#10;- Synth를 활용하여 스킬연출의 디자인 작업 진행&#10;- 피아식별을 사운드디자인 단계에서 음색(EQ) 분리로 게임의 인지적 명료도에 신경 씀&#10;- 서브컬쳐 특성상 CV가 들어갈 여력을 생각하여, 담백하게 표현하기 위해 노력">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/vhVLFamdRqc/hqdefault.jpg" alt="블루아카이브 인게임"></div>
+            <div class="video-meta"><strong>블루아카이브 인게임</strong><div class="card-tags"><span>2025.03</span><span>In-game Design</span><span>Casual</span><span>Mobile</span><span>Subculture</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="UOyXOPzXLCk" data-title="젠레스 존 제로 이블린" data-tags="2025.02,In-game Design,PC,Mobile,Subculture" data-description="- 출시 당시 기준 사운드 문법이 기존과 다른 방식으로 표현되어 있는 것에 깊은 인상을 받아 작업&#10;- 중저역대와 고역대의 강한 파열음을 기반한 타격음 디자인이 아닌, 노이즈계열의 타격음 디자인을 그대로 카피하는 방향으로 작업&#10;- 젠레스 존 제로의 빠른 전개와 숏폼같은 전투내 재미요소를 분석하여 다단히트 타격음에 신경쓰며 작업">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/UOyXOPzXLCk/hqdefault.jpg" alt="젠레스 존 제로 이블린"></div>
+            <div class="video-meta"><strong>젠레스 존 제로 이블린</strong><div class="card-tags"><span>2025.02</span><span>In-game Design</span><span>PC</span><span>Mobile</span><span>Subculture</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="q8ia_bmtQbk" data-title="포스포큰 인게임 포트폴리오" data-tags="2024.06,Skill Design,Console,Elemental Magic" data-description="- 넥슨에서 워헤이븐 프로젝트 이후 판타지적인 요소가 가미된 사운드 디자인을 안한지 몇년 되어서, 선택한 작업물&#10;- 기존 문법(레퍼런스)을 벗어나, 새로운 스타일에 대한 생각을 담아 작업&#10;- 싱글 패키지 콘솔게임에 맞춰 다중플레이 장르에선 하기 힘든 규모감과, 사운드 표현을 해보려 시도">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/q8ia_bmtQbk/hqdefault.jpg" alt="포스포큰 인게임 포트폴리오"></div>
+            <div class="video-meta"><strong>포스포큰 인게임 포트폴리오</strong><div class="card-tags"><span>2024.06</span><span>Skill Design</span><span>Console</span><span>Elemental Magic</span></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="portfolio-section portfolio-section--archive">
+      <div class="wrap">
+        <p class="section-kicker">Personal Work</p>
+        <h1>개인 작업 포트폴리오 2016 ~ 2022</h1>
+        <div class="reel-grid">
+          <article class="video-card" tabindex="0" role="button" data-video="ouDMPZsXMMk" data-title="어쌔신크리드 발할라" data-tags="2021.12,Trailer,Medieval,Recording" data-description="- 바이킹과 중세컨셉이 있는 트레일러 작업&#10;- 주인공 캐릭터의 움직임, 손동작 같은 디테일 일부를 폴리 녹음하여 진행&#10;- 영상의 기승전결 표현과, 템포가 빠르지 않아, 필름 사운드 연출적인 부분을 가미하여 작업">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/ouDMPZsXMMk/hqdefault.jpg" alt="어쌔신크리드 발할라"></div>
+            <div class="video-meta"><strong>어쌔신크리드 발할라</strong><div class="card-tags"><span>2021.12</span><span>Trailer</span><span>Medieval</span><span>Recording</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="UxaEcneKJis" data-title="디비전 환경음" data-tags="2020.06,Ambience,Recording" data-description="- 각기 다른 3가지 공간에 대한 환경음 작업을 진행&#10;- 베이스가 되는 에어톤을 이용한 분리, 각종 프랍들과 해당 공간과 비쥬얼에서 예측되는 상황 등을 고려하여 작업.&#10;- 폐허가된 건물, 도시, 공사중이던 공터에서의 형성된 생활권, 깔끔한 장비와 현대적인 복식으로 언매칭되는 공간적 배경과 캐릭터의 상황 → 무정부 상태의 디스토피아 세계관으로 컨셉을 잡고 디자인.&#10;- NPC들의 비경계 상태와 어느정도 평온한 아이들링 → 전투장비를 갖춰있으나, 행동의 패턴상 보여지는 시간대 혹은 해당 구역은 위험도 or 경계도가 낮은 지역으로 불안감이나 감정 텐션을 높이는 환경디자인은 고려대상에서 제외하여 작업.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/UxaEcneKJis/hqdefault.jpg" alt="디비전 환경음"></div>
+            <div class="video-meta"><strong>디비전 환경음</strong><div class="card-tags"><span>2020.06</span><span>Ambience</span><span>Recording</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="0lGh8sMWuPs" data-title="리니지 2M - 고스트헌터" data-tags="2020.05,SFX" data-description="- 예리한 칼날의 표현을 살리고, 칼의 무게감을 표현하는데 중점을 둠">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/0lGh8sMWuPs/hqdefault.jpg" alt="리니지 2M 고스트헌터"></div>
+            <div class="video-meta"><strong>리니지 2M - 고스트헌터</strong><div class="card-tags"><span>2020.05</span><span>SFX</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="7ecEuU115QQ" data-title="리니지 2M - 레지나" data-tags="2020.05,SFX" data-description="- 캐릭터의 비쥬얼적 컨셉과 빠른화면 전환에 맞춰 연상되는 강인함을 표현해 줄 수 있는 동물들의 소리로 캐릭터의 이미지를 형성하여 작업.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/7ecEuU115QQ/hqdefault.jpg" alt="리니지 2M 레지나"></div>
+            <div class="video-meta"><strong>리니지 2M - 레지나</strong><div class="card-tags"><span>2020.05</span><span>SFX</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="phQJqD-YVQU" data-title="천투 온라인" data-tags="2018.06,Trailer" data-description="- 이전 작업에서는 느린 템포의 작업이 많았어서, 해당작업에서는 좀 더 빠른 템포감을 만들어보기 위해 작업.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/phQJqD-YVQU/hqdefault.jpg" alt="천투 온라인"></div>
+            <div class="video-meta"><strong>천투 온라인</strong><div class="card-tags"><span>2018.06</span><span>Trailer</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="MRmu8VdbMWo" data-title="파이널판타지 14" data-tags="2019.10,8 minute,long time Trailer" data-description="- 8분이라는 긴 트레일러의 사운드 작업을 진행&#10;- 처음 접했을 때 파이널 판타니 14 트레일러를 보고 세계관에 대한 연출은 작업자 이전에 게이머로써 감동을 크게 받았던 영상&#10;- 리스펙의 의미로 포트폴리오로 접근하기보다, 팬메이드로써 작업을 시도한 영상.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/MRmu8VdbMWo/hqdefault.jpg" alt="파이널판타지 14"></div>
+            <div class="video-meta"><strong>파이널판타지 14</strong><div class="card-tags"><span>2019.10</span><span>8 minute</span><span>long time Trailer</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="GfKGRuQBzx4" data-title="블리자트 시공의 용" data-tags="2018.08,Archer & Magician" data-description="- 한조와 알렉스트라자 캐릭터 등장&#10;- 서로 다른 세계관, 서로 다른 컨셉을 분리하여 겹치지 않게 작업하려 노력">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/GfKGRuQBzx4/hqdefault.jpg" alt="블리자트 시공의 용"></div>
+            <div class="video-meta"><strong>블리자트 시공의 용</strong><div class="card-tags"><span>2018.08</span><span>Archer & Magician</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="MDBNyhRma7M" data-title="오버워치 솜브라" data-tags="2016.12,Trailer,Foley Recording" data-link="https://jeonhoon.tistory.com/14" data-description="- 폴리레코딩 채용공고에 지원하기 위해 폴리레코딩의 비중이 매우 큰 작업 결과물&#10;- 발소리, 프랍 관련, 옷소리등을 전부 폴리로 대체하여 작업">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/MDBNyhRma7M/hqdefault.jpg" alt="오버워치 솜브라"></div>
+            <div class="video-meta"><strong>오버워치 솜브라</strong><div class="card-tags"><span>2016.12</span><span>Trailer</span><span>Foley Recording</span></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-section legacy-portfolio" hidden>
       <div class="wrap">
         <p class="section-kicker">Demo Reel</p>
         <h1>더 많은 포트폴리오 보기</h1>
@@ -491,17 +778,6 @@
     </section>
   </main>
 
-  <div class="reel-modal" id="reel-modal" aria-hidden="true">
-    <div class="reel-dialog" role="dialog" aria-modal="true" aria-labelledby="reel-modal-title">
-      <button class="reel-close" type="button" aria-label="팝업 닫기">×</button>
-      <div class="reel-modal-frame" id="reel-modal-frame"></div>
-      <div class="reel-modal-copy">
-        <h3 id="reel-modal-title"></h3>
-        <p id="reel-modal-description"></p>
-      </div>
-    </div>
-  </div>
-
   <footer class="footer">
     <div class="footer-grid">
       <div>
@@ -527,8 +803,8 @@
       <div>
         <h3>Resources</h3>
         <div class="footer-links">
-          <a href="portfolio.html">Portfolio</a>
-          <a href="career-profile.html">Career Profile</a>
+                        <a href="portfolio.html">포트폴리오</a>
+                        <a href="index.html#demo">경력기술서</a>
         </div>
       </div>
       <div>
@@ -544,14 +820,18 @@
   <script>
     const header = document.querySelector(".site-header");
     const dateEl = document.querySelector("#today-date");
-    const reelModal = document.querySelector("#reel-modal");
-    const reelFrame = document.querySelector("#reel-modal-frame");
-    const reelTitle = document.querySelector("#reel-modal-title");
-    const reelDescription = document.querySelector("#reel-modal-description");
+    const reelShowcase = document.querySelector("#reel-showcase");
+    const reelFrame = document.querySelector("#reel-panel-frame");
+    const reelTitle = document.querySelector("#reel-panel-title");
+    const reelTags = document.querySelector("#reel-panel-tags");
+    const reelDescription = document.querySelector("#reel-panel-description");
     const reelClose = document.querySelector(".reel-close");
+    const reelEscapeButton = document.querySelector(".reel-escape-button");
 
     function syncHeaderState() {
-      header.classList.toggle("is-scrolled", window.scrollY > 12);
+      const isScrolled = window.scrollY > 12;
+      header.classList.toggle("is-scrolled", isScrolled);
+      reelShowcase.classList.toggle("is-scrolled", isScrolled);
     }
 
     function syncDate() {
@@ -565,17 +845,36 @@
     function openReel(card) {
       const videoId = card.dataset.video;
       reelTitle.textContent = card.dataset.title || "";
+      reelTags.innerHTML = "";
+      const fallbackTags = card.querySelector(".card-tags")?.textContent || card.querySelector(".video-meta span")?.textContent || "";
+      (card.dataset.tags || fallbackTags).split(",").map((tag) => tag.trim()).filter(Boolean).forEach((tag) => {
+        const tagEl = document.createElement("span");
+        tagEl.textContent = tag;
+        reelTags.appendChild(tagEl);
+      });
       reelDescription.textContent = card.dataset.description || "";
+      if (card.dataset.link) {
+        const link = document.createElement("a");
+        link.href = card.dataset.link;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = card.dataset.link;
+        reelDescription.appendChild(document.createTextNode("\n"));
+        reelDescription.appendChild(link);
+      }
       reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
-      reelModal.classList.add("is-open");
-      reelModal.setAttribute("aria-hidden", "false");
+      reelShowcase.classList.remove("is-closing");
+      reelShowcase.classList.add("is-open");
+      reelShowcase.setAttribute("aria-hidden", "false");
+      reelShowcase.scrollIntoView({ behavior: "smooth", block: "start" });
       reelClose.focus();
     }
 
     function closeReel() {
-      reelModal.classList.remove("is-open");
-      reelModal.setAttribute("aria-hidden", "true");
-      reelFrame.innerHTML = "";
+      if (!reelShowcase.classList.contains("is-open")) return;
+      reelShowcase.classList.remove("is-open");
+      reelShowcase.classList.add("is-closing");
+      reelShowcase.setAttribute("aria-hidden", "true");
     }
 
     document.querySelectorAll(".video-card[data-video]").forEach((card) => {
@@ -589,11 +888,15 @@
     });
 
     reelClose.addEventListener("click", closeReel);
-    reelModal.addEventListener("click", (event) => {
-      if (event.target === reelModal) closeReel();
+    reelEscapeButton.addEventListener("click", closeReel);
+    reelShowcase.addEventListener("animationend", () => {
+      if (reelShowcase.classList.contains("is-closing")) {
+        reelShowcase.classList.remove("is-closing");
+        reelFrame.innerHTML = "";
+      }
     });
     window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && reelModal.classList.contains("is-open")) {
+      if (event.key === "Escape" && reelShowcase.classList.contains("is-open")) {
         closeReel();
       }
     });
@@ -601,6 +904,28 @@
     syncHeaderState();
     syncDate();
     window.addEventListener("scroll", syncHeaderState, { passive: true });
+
+    const navLinks = Array.from(document.querySelectorAll(".nav-links a"));
+    const portfolioSections = Array.from(document.querySelectorAll(".portfolio-section:not([hidden])"));
+
+    function syncActiveNav() {
+      if (!navLinks.length || !portfolioSections.length) return;
+      const currentIndex = portfolioSections.reduce((active, section, index) => {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.abs(rect.top - 96);
+        if (!active || distance < active.distance) {
+          return { index, distance };
+        }
+        return active;
+      }, null)?.index ?? 0;
+
+      navLinks.forEach((link, index) => {
+        link.classList.toggle("is-active", index === currentIndex);
+      });
+    }
+
+    syncActiveNav();
+    window.addEventListener("scroll", syncActiveNav, { passive: true });
   </script>
 </body>
 </html>

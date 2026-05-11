@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --navy: #06101c;
+      --navy: #000816;
       --navy-2: #0a1422;
       --green: #063613;
       --green-2: #063613;
@@ -23,11 +23,20 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+    }
 
     body {
       margin: 0;
-      background: #000;
+      background: #000816;
       color: var(--text);
       font-family: "Inter", "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
       line-height: 1.6;
@@ -42,14 +51,14 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(6, 16, 28, .98);
+      background: rgba(0, 8, 22, .98);
       backdrop-filter: blur(0);
       border-bottom: 1px solid rgba(255,255,255,.06);
       transition: background .22s ease, backdrop-filter .22s ease, border-color .22s ease;
     }
 
     .site-header.is-scrolled {
-      background: rgba(6, 16, 28, .6);
+      background: rgba(0, 8, 22, .6);
       backdrop-filter: blur(40px);
       border-bottom-color: rgba(255,255,255,.12);
     }
@@ -100,6 +109,16 @@
       font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
+    }
+
+    .nav-links a {
+      transition: font-size .32s ease, color .32s ease, text-shadow .32s ease;
+    }
+
+    .nav-links a.is-active {
+      color: #fff;
+      font-size: 15px;
+      text-shadow: 0 4px 4px rgba(0, 0, 0, .35);
     }
 
     .date-pill {
@@ -178,7 +197,7 @@
       position: relative;
       overflow: hidden;
       min-width: 0;
-      background: #0b1624;
+      background: #07111e;
       border: 1px solid rgba(255,255,255,.1);
       border-radius: 4px;
       cursor: pointer;
@@ -252,6 +271,30 @@
       font-size: 12px;
     }
 
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .card-tags span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      color: #dce6ef;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 400;
+    }
+
+    .legacy-portfolio {
+      display: none !important;
+    }
+
     .center-action {
       display: flex;
       justify-content: center;
@@ -261,7 +304,8 @@
     .center-action .button {
       height: 50px;
       min-width: 220px;
-      font-size: 20px;
+      font-size: 16px;
+      font-weight: 400;
     }
 
     .button {
@@ -275,8 +319,9 @@
       border: 0;
       color: #fff;
       background: var(--green-2);
-      font-size: 24px;
+      font-size: 16px;
       font-weight: 400;
+      cursor: pointer;
     }
 
     .button::after {
@@ -411,7 +456,8 @@
       height: 46px;
       align-self: flex-end;
       margin-top: auto;
-      font-size: 17px;
+      font-size: 16px;
+      font-weight: 400;
       border-radius: 8px;
     }
 
@@ -548,6 +594,7 @@
       font-size: 16px;
       font-weight: 400;
       word-break: keep-all;
+      white-space: pre-line;
       transition: color .22s ease;
     }
 
@@ -562,6 +609,52 @@
       color: inherit;
       font-size: 16px;
       font-weight: 400;
+      position: relative;
+      border: 0;
+      background: transparent;
+      cursor: help;
+      padding: 0;
+    }
+
+    .skill-link::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 12px);
+      transform: translateX(-50%) translateY(4px);
+      min-width: max-content;
+      max-width: 220px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      color: #06101c;
+      background: #d9d9d9;
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      white-space: nowrap;
+      z-index: 5;
+    }
+
+    .skill-link::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 4px);
+      transform: translateX(-50%) translateY(4px);
+      border: 7px solid transparent;
+      border-top-color: #d9d9d9;
+      opacity: 0;
+      transition: opacity .18s ease, transform .18s ease;
+      pointer-events: none;
+    }
+
+    .skill-link:hover::after,
+    .skill-link:focus-visible::after,
+    .skill-link:hover::before,
+    .skill-link:focus-visible::before {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     .footer {
@@ -657,7 +750,7 @@
       border-radius: 10px;
       margin: 5px;
       font-weight: 400;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .reel-showcase {
@@ -667,11 +760,19 @@
       display: none;
       padding: 0 8px;
       overflow: hidden;
-      background: rgba(6, 16, 28, .86);
+      background: rgba(0, 8, 22, .86);
       border-bottom: 1px solid rgba(255,255,255,.12);
       box-shadow: 0 18px 50px rgba(0,0,0,.22);
       transform: translateY(52px);
       opacity: 0;
+      backdrop-filter: blur(0);
+      transition: background .22s ease, backdrop-filter .22s ease, border-color .22s ease;
+    }
+
+    .reel-showcase.is-scrolled {
+      background: rgba(0, 8, 22, .62);
+      backdrop-filter: blur(6px);
+      border-bottom-color: rgba(255,255,255,.12);
     }
 
     .reel-showcase.is-open,
@@ -727,6 +828,8 @@
 
     .reel-panel-copy {
       padding: 30px 44px 30px 0;
+      display: flex;
+      flex-direction: column;
       color: #d7dee8;
       overflow-y: auto;
     }
@@ -763,6 +866,28 @@
       color: #aeb8c6;
       font-size: 15px;
       word-break: keep-all;
+      white-space: pre-line;
+    }
+
+    .reel-escape-button {
+      min-width: 160px;
+      height: 42px;
+      align-self: flex-end;
+      margin-top: auto;
+      border: 1px solid rgba(217,217,217,.48);
+      border-radius: 8px;
+      color: #06101c;
+      background: #d9d9d9;
+      font-size: 16px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .reel-escape-button:hover,
+    .reel-escape-button:focus-visible {
+      opacity: .88;
+      transform: translateY(-1px);
     }
 
     .reel-close {
@@ -779,6 +904,150 @@
       font-size: 24px;
       line-height: 1;
       cursor: pointer;
+    }
+
+    .career-showcase {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 28px;
+      overflow: hidden;
+      background: transparent;
+      color: var(--ink);
+      opacity: 0;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      pointer-events: none;
+    }
+
+    .career-showcase.is-open {
+      display: flex;
+      animation: careerOverlayIn .22s ease forwards;
+    }
+
+    .career-showcase.is-closing {
+      display: flex;
+      animation: careerOverlayOut .2s ease forwards;
+    }
+
+    .career-panel {
+      position: relative;
+      width: min(1180px, 100%);
+      max-height: min(86vh, 920px);
+      padding: 34px;
+      overflow-y: auto;
+      background: rgba(217, 217, 217, .82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 12px;
+      box-shadow: 0 28px 80px rgba(0,0,0,.46);
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      pointer-events: auto;
+    }
+
+    .career-panel::-webkit-scrollbar {
+      display: none;
+    }
+
+    @keyframes careerOverlayIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes careerOverlayOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    .career-close {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 12px;
+      border: 1px solid #c5ccd5;
+      border-radius: 50%;
+      color: var(--ink);
+      background: rgba(255,255,255,.82);
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .career-panel-head {
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .career-panel-head .section-kicker {
+      color: #6f7885;
+    }
+
+    .career-panel-head h2 {
+      margin-bottom: 0;
+    }
+
+    .career-timeline {
+      display: grid;
+      gap: 16px;
+    }
+
+    .career-entry {
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      gap: 44px;
+      padding: 28px;
+      background: #f4f4f4;
+      border: 1px solid #cfd4dc;
+      border-radius: 8px;
+    }
+
+    .career-meta strong {
+      display: block;
+      color: var(--green);
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .career-meta span {
+      display: block;
+      margin-top: 8px;
+      color: #48515f;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .career-entry h3 {
+      margin-bottom: 10px;
+      color: #0d1623;
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    .career-entry p {
+      margin-bottom: 14px;
+      color: #445061;
+      font-size: 16px;
+      word-break: keep-all;
+    }
+
+    .career-entry ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #4b5563;
+      font-size: 16px;
+    }
+
+    .career-entry li + li {
+      margin-top: 8px;
     }
 
     @media (max-width: 900px) {
@@ -843,6 +1112,11 @@
       .reel-panel-copy {
         padding: 0 48px 24px 0;
       }
+
+      .career-entry {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
     }
   </style>
 </head>
@@ -871,6 +1145,7 @@
           <h3 id="reel-panel-title"></h3>
           <div class="reel-tags" id="reel-panel-tags" aria-label="Video tags"></div>
           <p id="reel-panel-description"></p>
+          <button class="reel-escape-button" type="button">ESC 눌러 닫기</button>
         </div>
       </div>
     </section>
@@ -880,6 +1155,32 @@
         <p class="section-kicker">Demo Reel</p>
         <h1>Sound Design Portfolio</h1>
         <div class="reel-grid">
+          <article class="video-card" tabindex="0" role="button" data-video="F3lNKCKbV18" data-tags="2026.04,SFX,Foley,Recording,Amb,Mixing,Sci-fi" data-title="애니메이션 : 비비 전투 씬" data-description="- 비비(여캐), 안토니오(남캐)의 움직임관련 폴리 사운드 폴리레코딩(라이브러리와 섞어 사용)&#10;- 공상과학(Sci-fi)장르에 맞춰 사운드 컨셉 디자인">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/F3lNKCKbV18/hqdefault.jpg" alt="애니메이션 비비 전투 씬"></div>
+            <div class="video-meta"><strong>애니메이션 : 비비 전투 씬</strong><div class="card-tags"><span>2026.04</span><span>SFX</span><span>Foley</span><span>Recording</span><span>Amb</span><span>Mixing</span><span>Sci-fi</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="q8ia_bmtQbk" data-tags="2024.06,Skill Design,Console,Elemental Magic" data-title="포스포큰 인게임 포트폴리오" data-description="- 넥슨에서 워헤이븐 프로젝트 이후 판타지적인 요소가 가미된 사운드 디자인을 안한지 몇년 되어서, 선택한 작업물&#10;- 기존 문법(레퍼런스)을 벗어나, 새로운 스타일에 대한 생각을 담아 작업&#10;- 싱글 패키지 콘솔게임에 맞춰 다중플레이 장르에선 하기 힘든 규모감과, 사운드 표현을 해보려 시도">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/q8ia_bmtQbk/hqdefault.jpg" alt="포스포큰 인게임 포트폴리오"></div>
+            <div class="video-meta"><strong>포스포큰 인게임 포트폴리오</strong><div class="card-tags"><span>2024.06</span><span>Skill Design</span><span>Console</span><span>Elemental Magic</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="UOyXOPzXLCk" data-tags="2025.02,In-game Design,PC,Mobile,Subculture" data-title="젠레스 존 제로 이블린" data-description="- 출시 당시 기준 사운드 문법이 기존과 다른 방식으로 표현되어 있는 것에 깊은 인상을 받아 작업&#10;- 중저역대와 고역대의 강한 파열음을 기반한 타격음 디자인이 아닌, 노이즈계열의 타격음 디자인을 그대로 카피하는 방향으로 작업&#10;- 젠레스 존 제로의 빠른 전개와 숏폼같은 전투내 재미요소를 분석하여 다단히트 타격음에 신경쓰며 작업">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/UOyXOPzXLCk/hqdefault.jpg" alt="젠레스 존 제로 이블린"></div>
+            <div class="video-meta"><strong>젠레스 존 제로 이블린</strong><div class="card-tags"><span>2025.02</span><span>In-game Design</span><span>PC</span><span>Mobile</span><span>Subculture</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="ouDMPZsXMMk" data-tags="2021.12,Trailer,Medieval,Recording" data-title="어쌔신크리드 발할라" data-description="- 바이킹과 중세컨셉이 있는 트레일러 작업&#10;- 주인공 캐릭터의 움직임, 손동작 같은 디테일 일부를 폴리 녹음하여 진행&#10;- 영상의 기승전결 표현과, 템포가 빠르지 않아, 필름 사운드 연출적인 부분을 가미하여 작업">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/ouDMPZsXMMk/hqdefault.jpg" alt="어쌔신크리드 발할라"></div>
+            <div class="video-meta"><strong>어쌔신크리드 발할라</strong><div class="card-tags"><span>2021.12</span><span>Trailer</span><span>Medieval</span><span>Recording</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="MRmu8VdbMWo" data-tags="2019.10,8 minute,long time Trailer" data-title="파이널판타지 14" data-description="- 8분이라는 긴 트레일러의 사운드 작업을 진행&#10;- 처음 접했을 때 파이널 판타니 14 트레일러를 보고 세계관에 대한 연출은 작업자 이전에 게이머로써 감동을 크게 받았던 영상&#10;- 리스펙의 의미로 포트폴리오로 접근하기보다, 팬메이드로써 작업을 시도한 영상.">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/MRmu8VdbMWo/hqdefault.jpg" alt="파이널판타지 14"></div>
+            <div class="video-meta"><strong>파이널판타지 14</strong><div class="card-tags"><span>2019.10</span><span>8 minute</span><span>long time Trailer</span></div></div>
+          </article>
+          <article class="video-card" tabindex="0" role="button" data-video="vhVLFamdRqc" data-tags="2025.03,In-game Design,Casual,Mobile,Subculture" data-title="블루아카이브 인게임" data-description="- 캐쥬얼, 서브컬쳐 장르 컨셉에 맞춰 디자인&#10;- Synth를 활용하여 스킬연출의 디자인 작업 진행&#10;- 피아식별을 사운드디자인 단계에서 음색(EQ) 분리로 게임의 인지적 명료도에 신경 씀&#10;- 서브컬쳐 특성상 CV가 들어갈 여력을 생각하여, 담백하게 표현하기 위해 노력">
+            <div class="video-frame"><img src="https://img.youtube.com/vi/vhVLFamdRqc/hqdefault.jpg" alt="블루아카이브 인게임"></div>
+            <div class="video-meta"><strong>블루아카이브 인게임</strong><div class="card-tags"><span>2025.03</span><span>In-game Design</span><span>Casual</span><span>Mobile</span><span>Subculture</span></div></div>
+          </article>
+        </div>
+        <div class="reel-grid legacy-portfolio" hidden>
           <article class="video-card" tabindex="0" role="button" data-video="F3lNKCKbV18" data-tags="Foley Recording,Combat Design,Animation" data-title="2026 애니메이션 Vivy 전투씬 사운드 리디자인" data-description="두 캐릭터의 Foley를 직접 녹음하여 작업한 전투 장면 사운드 리디자인입니다. 움직임, 충돌감, 장면 흐름을 중심으로 사운드를 구성했습니다.">
             <div class="video-frame"><img src="https://img.youtube.com/vi/F3lNKCKbV18/hqdefault.jpg" alt="Anime Vivy sound redesign portfolio"></div>
             <div class="video-meta"><strong>2026 애니메이션 Vivy 전투씬 사운드 리디자인</strong><span>Foley Recording · Combat Design</span></div>
@@ -906,6 +1207,112 @@
           </article>
         </div>
         <div class="center-action"><a class="button no-arrow" href="portfolio.html">더 많은 포트폴리오 보기</a></div>
+      </div>
+    </section>
+
+    <section class="career-showcase" id="career-showcase" aria-hidden="true">
+      <div class="career-panel">
+        <button class="career-close" type="button" aria-label="경력 기술서 닫기">×</button>
+        <div class="career-panel-head">
+          <p class="section-kicker">Career Profile</p>
+          <h2>경력 기술서</h2>
+        </div>
+        <div class="career-timeline">
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2022.01 - 재직 중</strong>
+              <span>넥슨 코리아</span>
+            </div>
+            <div>
+              <h3>워헤이븐 : 2022.01 ~ 2024.04</h3>
+              <ul>
+                <li>Wwise 기반 시스템 구축</li>
+                <li>보이스 디렉팅 보조, 성우 캐스팅 및 리소스 작업</li>
+                <li>근접전투 사운드 디자인</li>
+                <li>Foley 사운드 디자인 및 구현</li>
+                <li>최적화 및 사운드 품질 모니터링, 디버깅</li>
+                <li>각 종 영상 작업 및 믹싱</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2024.04 - 2025.12</strong>
+              <span>넥슨 코리아</span>
+            </div>
+            <div>
+              <h3>신규 프로젝트</h3>
+              <ul>
+                <li>AI활용 사운드 작업 및 시스템 구현 R&amp;D</li>
+                <li>Synth를 활용한 레트로 로봇 사운드 디자인</li>
+                <li>음성 AI 연구</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2026.01 - 현재</strong>
+              <span>넥슨 코리아</span>
+            </div>
+            <div>
+              <h3>인사발령대기</h3>
+              <ul>
+                <li>글로벌 리소스 디자인 형태 중 하나인 Phase Shifted Rumble 디자인 방식 연구</li>
+                <li>Reaper DAW 툴 최적화 작업</li>
+                <li>GDC 강연 학습</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2017.04 - 2022.01</strong>
+              <span>엑스엘게임즈</span>
+            </div>
+            <div>
+              <h3>다중 프로젝트 사운드 디자인 및 엔진 적용</h3>
+              <p>참여 프로젝트 : '문명 온라인', '아키에이지', '아키에이지 비긴즈', '달빛조각사' 등 주요 신작 프로젝트</p>
+              <p>업무 : 게임 오디오 구현 및 시스템 설계, 리소스 관리, QA</p>
+              <ul>
+                <li>다양한 엔진 개발 경험 : Unity, Unreal Engine 3, 4, Fmod</li>
+                <li>신규 개발 프로젝트의 통합 에셋 관리</li>
+                <li>사운드 구현 및 프로세스 구축 : 사내 프로토타입 프로젝트 오디오 시스템 구축</li>
+                <li>팀 협업 및 프로젝트 리딩 : 사운드 팀 내 최장기 근속자로서 안정적인 업무 수행 및 사운드 팀내 공유 문서 작업</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2015.06 - 2015.08</strong>
+              <span>라이브톤</span>
+            </div>
+            <div>
+              <h3>영화 음향 후반 작업 인턴</h3>
+              <p>작업 당시 프로젝트 : 영화 '사도', '탐정: 더 비기닝'</p>
+              <ul>
+                <li>대사 및 ADR : 동시녹음 리소스 톤 정리 및 감정, 상황의 톤 밸런싱 작업</li>
+                <li>극장 상영 플랫폼의 이해와 그에 맞는 프로세싱</li>
+                <li>폴리(Foley), 환경음(Ambience) : 전반적인 작업 경험</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2014.08 - 2015.04</strong>
+              <span>예음녹음실</span>
+            </div>
+            <div>
+              <h3>서브 어시스턴트 엔지니어</h3>
+              <p>시설 : 합주가 가능한, 메인 룸 1 / 개별 룸 4</p>
+              <ul>
+                <li>대규모 앙상블 레코딩 셋업 및 레코딩 : 24인조 풀 밴드 합주 세션 녹음 진행, 다채널 동시 녹음을 위한 마이킹 신호 패칭</li>
+                <li>뮤지컬 프로젝트 참여 : &lt;바람과 함께 사라지다&gt; 레코딩 지원</li>
+                <li>재즈, 국악, 발라드 등 보컬 및 기악 녹음</li>
+                <li>다양한 장르 대응 및 악기 레코딩에 대한 이해</li>
+                <li>아티스트, 작편곡가, 믹싱&amp;마스터링 엔지니어와의 커뮤니케이션</li>
+              </ul>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -947,7 +1354,7 @@
                 </p>
               </div>
             </div>
-            <a class="button" href="career-profile.html">Read more</a>
+            <button class="button career-trigger" type="button">경력 기술서 보기</button>
           </div>
         </div>
       </div>
@@ -1004,7 +1411,7 @@
       </div>
     </section>
 
-    <div class="stack-band">
+    <div class="stack-band" id="creative-stack">
       <div class="stack-row">
         <div class="stack-title"><span>My Creative Stack</span><strong>Workflow</strong></div>
         <div class="stack-list">
@@ -1025,25 +1432,29 @@
         <p class="section-kicker">My Skills</p>
         <h2>Game Audio Design</h2>
         <div class="skills-grid">
-          <article class="skill-card" data-ko-title="구현" data-ko-text="엔진 관리, 통합 프로파일링과 디버깅, 오디오 시스템 설계">
+          <article class="skill-card" data-ko-title="구현" data-ko-text="엔진 관리
+통합 프로파일링
+디버깅, 오디오 시스템 설계">
             <h3>Implementation</h3>
             <p>Engine management, integration profiling and debugging, system design</p>
-            <a class="skill-link" href="career-profile.html">View details 〉</a>
+            <button class="skill-link" type="button" data-tooltip="공사 중.... 입니다 📌">View details 〉</button>
           </article>
           <article class="skill-card" data-ko-title="사운드 제작" data-ko-text="Reaper와 Pro Tools 기반 편집, Foley 녹음, 신시사이징, 라이브러리 기반 사운드 제작">
             <h3>Sound Creation</h3>
             <p>Based on Reaper and Protools, Foley recording, synthesis, library based editing</p>
-            <a class="skill-link" href="sound-portfolio.html">View details 〉</a>
+            <button class="skill-link" type="button" data-tooltip="공사 중.... 입니다 📌">View details 〉</button>
           </article>
-          <article class="skill-card" data-ko-title="보이스 디렉션" data-ko-text="캐스팅과 녹음 디렉션부터 에셋 편집, 최적화, 일정 관리까지 진행">
+          <article class="skill-card" data-ko-title="보이스 디렉션" data-ko-text="캐스팅과 녹음 디렉션
+에셋 편집, 최적화
+일정 관리">
             <h3>Voice Direction</h3>
             <p>From casting and recording direction to asset editing, optimization, scheduling</p>
-            <a class="skill-link" href="career-profile.html">View details 〉</a>
+            <button class="skill-link" type="button" data-tooltip="공사 중.... 입니다 📌">View details 〉</button>
           </article>
           <article class="skill-card" data-ko-title="아이디어와 R&D" data-ko-text="프로젝트에 맞는 실용적인 설계, 프로토타이핑, 기억에 남는 경험을 위한 연구">
             <h3>Idea, R&D</h3>
             <p>Project-fit practical design, prototyping and memorable experience</p>
-            <a class="skill-link" href="career-profile.html">View details 〉</a>
+            <button class="skill-link" type="button" data-tooltip="공사 중.... 입니다 📌">View details 〉</button>
           </article>
         </div>
       </div>
@@ -1075,8 +1486,8 @@
       <div>
         <h3>Resources</h3>
         <div class="footer-links">
-          <a href="sound-portfolio.html">Portfolio</a>
-          <a href="career-profile.html">Career Profile</a>
+                        <a href="portfolio.html">포트폴리오</a>
+                        <a href="index.html#demo">경력기술서</a>
         </div>
       </div>
       <div>
@@ -1091,9 +1502,13 @@
   <script>
     const header = document.querySelector(".site-header");
     const dateEl = document.querySelector("#today-date");
+    const reelShowcase = document.querySelector("#reel-showcase");
 
     function syncHeaderState() {
-      header.classList.toggle("is-scrolled", window.scrollY > 12);
+      const isScrolled = window.scrollY > 12;
+      header.classList.toggle("is-scrolled", isScrolled);
+      reelShowcase.classList.toggle("is-scrolled", isScrolled);
+      document.querySelector("#career-showcase")?.classList.toggle("is-scrolled", isScrolled);
     }
 
     function syncDate() {
@@ -1108,18 +1523,150 @@
     syncDate();
     window.addEventListener("scroll", syncHeaderState, { passive: true });
 
-    const reelShowcase = document.querySelector("#reel-showcase");
+    const navLinks = Array.from(document.querySelectorAll(".nav-links a[href^='#']"));
+    const navSections = navLinks
+      .map((link) => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
+    const snapSections = ["#demo", "#projects", "#learning", "#about", "#creative-stack"]
+      .map((selector) => document.querySelector(selector))
+      .filter(Boolean);
+    let isSectionSnapping = false;
+
+    function syncActiveNav() {
+      if (!navLinks.length || !navSections.length) return;
+      const current = navSections.reduce((active, section) => {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.abs(rect.top - 96);
+        if (!active || distance < active.distance) {
+          return { id: section.id, distance };
+        }
+        return active;
+      }, null);
+
+      if (document.querySelector("#creative-stack")?.getBoundingClientRect().top <= 96) {
+        navLinks.forEach((link) => link.classList.remove("is-active"));
+        return;
+      }
+
+      navLinks.forEach((link) => {
+        link.classList.toggle("is-active", link.getAttribute("href") === `#${current?.id}`);
+      });
+    }
+
+    syncActiveNav();
+    window.addEventListener("scroll", syncActiveNav, { passive: true });
+
+    function getCurrentSnapIndex() {
+      return snapSections.reduce((active, section, index) => {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.abs(rect.top - 72);
+        if (!active || distance < active.distance) {
+          return { index, distance };
+        }
+        return active;
+      }, null)?.index ?? 0;
+    }
+
+    function scrollToSnapSection(index) {
+      const target = snapSections[Math.max(0, Math.min(index, snapSections.length - 1))];
+      if (!target) return;
+      isSectionSnapping = true;
+      const headerHeight = header?.offsetHeight || 64;
+      const targetTop = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+      window.setTimeout(() => {
+        isSectionSnapping = false;
+        syncActiveNav();
+      }, 760);
+    }
+
+    window.addEventListener("wheel", (event) => {
+      if (!snapSections.length) return;
+      if (event.target.closest(".career-panel, .reel-showcase")) return;
+      if (Math.abs(event.deltaY) < 10 || isSectionSnapping) {
+        event.preventDefault();
+        return;
+      }
+
+      const currentIndex = getCurrentSnapIndex();
+      const nextIndex = currentIndex + (event.deltaY > 0 ? 1 : -1);
+      if (nextIndex < 0 || nextIndex >= snapSections.length) {
+        return;
+      }
+      event.preventDefault();
+      scrollToSnapSection(nextIndex);
+    }, { passive: false });
+
     const reelFrame = document.querySelector("#reel-panel-frame");
     const reelTitle = document.querySelector("#reel-panel-title");
     const reelTags = document.querySelector("#reel-panel-tags");
     const reelDescription = document.querySelector("#reel-panel-description");
     const reelClose = document.querySelector(".reel-close");
+    const reelEscapeButton = document.querySelector(".reel-escape-button");
+    const careerShowcase = document.querySelector("#career-showcase");
+    const careerTrigger = document.querySelector(".career-trigger");
+    const careerClose = document.querySelector(".career-close");
+
+    const demoCardData = {
+      F3lNKCKbV18: {
+        title: "애니메이션 : 비비 전투 씬",
+        tags: ["2026.04", "SFX", "Foley", "Recording", "Amb", "Mixing", "Sci-fi"],
+        description: "- 비비(여캐), 안토니오(남캐)의 움직임관련 폴리 사운드 폴리레코딩(라이브러리와 섞어 사용)\n- 공상과학(Sci-fi)장르에 맞춰 사운드 컨셉 디자인"
+      },
+      q8ia_bmtQbk: {
+        title: "포스포큰 인게임 포트폴리오",
+        tags: ["2024.06", "Skill Design", "Console", "Elemental Magic"],
+        description: "- 넥슨에서 워헤이븐 프로젝트 이후 판타지적인 요소가 가미된 사운드 디자인을 안한지 몇년 되어서, 선택한 작업물\n- 기존 문법(레퍼런스)을 벗어나, 새로운 스타일에 대한 생각을 담아 작업\n- 싱글 패키지 콘솔게임에 맞춰 다중플레이 장르에선 하기 힘든 규모감과, 사운드 표현을 해보려 시도"
+      },
+      UOyXOPzXLCk: {
+        title: "젠레스 존 제로 이블린",
+        tags: ["2025.02", "In-game Design", "PC", "Mobile", "Subculture"],
+        description: "- 출시 당시 기준 사운드 문법이 기존과 다른 방식으로 표현되어 있는 것에 깊은 인상을 받아 작업\n- 중저역대와 고역대의 강한 파열음을 기반한 타격음 디자인이 아닌, 노이즈계열의 타격음 디자인을 그대로 카피하는 방향으로 작업\n- 젠레스 존 제로의 빠른 전개와 숏폼같은 전투내 재미요소를 분석하여 다단히트 타격음에 신경쓰며 작업"
+      },
+      ouDMPZsXMMk: {
+        title: "어쌔신크리드 발할라",
+        tags: ["2021.12", "Trailer", "Medieval", "Recording"],
+        description: "- 바이킹과 중세컨셉이 있는 트레일러 작업\n- 주인공 캐릭터의 움직임, 손동작 같은 디테일 일부를 폴리 녹음하여 진행\n- 영상의 기승전결 표현과, 템포가 빠르지 않아, 필름 사운드 연출적인 부분을 가미하여 작업"
+      },
+      MRmu8VdbMWo: {
+        title: "파이널판타지 14",
+        tags: ["2019.10", "8 minute", "long time Trailer"],
+        description: "- 8분이라는 긴 트레일러의 사운드 작업을 진행\n- 처음 접했을 때 파이널 판타니 14 트레일러를 보고 세계관에 대한 연출은 작업자 이전에 게이머로써 감동을 크게 받았던 영상\n- 리스펙의 의미로 포트폴리오로 접근하기보다, 팬메이드로써 작업을 시도한 영상."
+      },
+      vhVLFamdRqc: {
+        title: "블루아카이브 인게임",
+        tags: ["2025.03", "In-game Design", "Casual", "Mobile", "Subculture"],
+        description: "- 캐쥬얼, 서브컬쳐 장르 컨셉에 맞춰 디자인\n- Synth를 활용하여 스킬연출의 디자인 작업 진행\n- 피아식별을 사운드디자인 단계에서 음색(EQ) 분리로 게임의 인지적 명료도에 신경 씀\n- 서브컬쳐 특성상 CV가 들어갈 여력을 생각하여, 담백하게 표현하기 위해 노력"
+      }
+    };
+
+    document.querySelectorAll("#demo > .wrap > .reel-grid:not(.legacy-portfolio) .video-card[data-video]").forEach((card) => {
+      const data = demoCardData[card.dataset.video];
+      if (!data) return;
+
+      card.dataset.title = data.title;
+      card.dataset.tags = data.tags.join(",");
+      card.dataset.description = data.description;
+
+      const titleEl = card.querySelector(".video-meta strong");
+      const tagsEl = card.querySelector(".card-tags");
+      if (titleEl) titleEl.textContent = data.title;
+      if (tagsEl) {
+        tagsEl.innerHTML = "";
+        data.tags.forEach((tag) => {
+          const tagEl = document.createElement("span");
+          tagEl.textContent = tag;
+          tagsEl.appendChild(tagEl);
+        });
+      }
+    });
 
     function openReel(card) {
       const videoId = card.dataset.video;
       reelTitle.textContent = card.dataset.title || "";
       reelTags.innerHTML = "";
-      (card.dataset.tags || "").split(",").map((tag) => tag.trim()).filter(Boolean).forEach((tag) => {
+      const fallbackTags = card.querySelector(".card-tags")?.textContent || card.querySelector(".video-meta span")?.textContent || "";
+      (card.dataset.tags || fallbackTags).split(",").map((tag) => tag.trim()).filter(Boolean).forEach((tag) => {
         const tagEl = document.createElement("span");
         tagEl.textContent = tag;
         reelTags.appendChild(tagEl);
@@ -1140,6 +1687,22 @@
       reelShowcase.setAttribute("aria-hidden", "true");
     }
 
+    function openCareer() {
+      careerShowcase.classList.remove("is-closing");
+      careerShowcase.classList.add("is-open");
+      careerShowcase.setAttribute("aria-hidden", "false");
+      careerShowcase.scrollIntoView({ behavior: "smooth", block: "start" });
+      careerClose.focus();
+    }
+
+    function closeCareer() {
+      if (!careerShowcase.classList.contains("is-open")) return;
+      careerShowcase.classList.remove("is-open");
+      careerShowcase.classList.add("is-closing");
+      careerShowcase.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
     document.querySelectorAll(".video-card[data-video]").forEach((card) => {
       card.addEventListener("click", () => openReel(card));
       card.addEventListener("keydown", (event) => {
@@ -1151,15 +1714,62 @@
     });
 
     reelClose.addEventListener("click", closeReel);
+    reelEscapeButton.addEventListener("click", closeReel);
     reelShowcase.addEventListener("animationend", () => {
       if (reelShowcase.classList.contains("is-closing")) {
         reelShowcase.classList.remove("is-closing");
         reelFrame.innerHTML = "";
       }
     });
+
+careerTrigger.addEventListener("click", openCareer);
+if (careerShowcase) {
+    careerShowcase.style.display = "none";
+}
+
+function openCareer() {
+    if (!careerShowcase) {
+        return;
+    }
+    careerShowcase.style.display = "block";
+    careerShowcase.style.position = "fixed";
+    careerShowcase.style.left = "50%";
+    careerShowcase.style.top = "50%";
+    careerShowcase.style.transform = "translate(-50%, -50%)";
+    careerShowcase.style.width = "min(92vw, 1320px)";
+    careerShowcase.style.maxHeight = "88vh";
+    careerShowcase.style.overflow = "auto";
+    careerShowcase.style.zIndex = "1200";
+    careerShowcase.style.background = "rgba(0, 8, 22, 0.96)";
+    careerShowcase.style.backdropFilter = "blur(6px)";
+    careerShowcase.style.webkitBackdropFilter = "blur(6px)";
+    careerShowcase.style.boxShadow = "0 24px 60px rgba(0, 0, 0, 0.35)";
+    careerShowcase.style.border = "1px solid rgba(217, 217, 217, 0.12)";
+    careerShowcase.style.borderRadius = "18px";
+    careerShowcase.classList.add("is-open");
+}
+
+function closeCareer() {
+    if (!careerShowcase) {
+        return;
+    }
+    careerShowcase.classList.remove("is-open");
+    careerShowcase.style.display = "none";
+    document.body.style.overflow = "";
+}
+    careerClose.addEventListener("click", closeCareer);
+    careerShowcase.addEventListener("animationend", () => {
+      if (careerShowcase.classList.contains("is-closing")) {
+        careerShowcase.classList.remove("is-closing");
+      }
+    });
+
     window.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && reelShowcase.classList.contains("is-open")) {
         closeReel();
+      }
+      if (event.key === "Escape" && careerShowcase.classList.contains("is-open")) {
+        closeCareer();
       }
     });
 
@@ -1184,6 +1794,68 @@
       card.addEventListener("mouseleave", showEnglish);
       card.addEventListener("focusout", showEnglish);
     });
-  </script>
+</script>
+<script>
+(() => {
+    const careerShowcase = document.querySelector("#career-showcase");
+    const careerTrigger = document.querySelector(".career-trigger");
+    const careerClose = document.querySelector(".career-close");
+    const careerTriggerFresh = careerTrigger ? careerTrigger.cloneNode(true) : null;
+    const careerCloseFresh = careerClose ? careerClose.cloneNode(true) : null;
+
+    if (!careerShowcase) {
+        return;
+    }
+
+    if (careerTriggerFresh && careerTrigger?.parentNode) {
+        careerTrigger.parentNode.replaceChild(careerTriggerFresh, careerTrigger);
+    }
+    if (careerCloseFresh && careerClose?.parentNode) {
+        careerClose.parentNode.replaceChild(careerCloseFresh, careerClose);
+    }
+
+    function openCareerModal(event) {
+        if (event) {
+            event.preventDefault();
+        }
+        careerShowcase.style.display = "";
+        careerShowcase.classList.remove("is-closing");
+        careerShowcase.classList.add("is-open");
+        careerShowcase.setAttribute("aria-hidden", "false");
+        careerCloseFresh?.focus();
+    }
+
+    function closeCareerModal() {
+        if (!careerShowcase.classList.contains("is-open")) {
+            return;
+        }
+        careerShowcase.classList.remove("is-open");
+        careerShowcase.classList.add("is-closing");
+        careerShowcase.setAttribute("aria-hidden", "true");
+    }
+
+    if (careerTriggerFresh) {
+        careerTriggerFresh.addEventListener("click", openCareerModal);
+    }
+    if (careerCloseFresh) {
+        careerCloseFresh.addEventListener("click", closeCareerModal);
+    }
+    careerShowcase.addEventListener("click", (event) => {
+        if (event.target === careerShowcase) {
+            closeCareerModal();
+        }
+    });
+    careerShowcase.addEventListener("animationend", () => {
+        if (careerShowcase.classList.contains("is-closing")) {
+            careerShowcase.classList.remove("is-closing");
+        }
+    });
+    window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeCareerModal();
+        }
+    });
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Warhaven Audio Portfolio | JeonHoon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #06101c;
+      --navy-2: #0a1422;
+      --green: #063613;
+      --paper: #d9d9d9;
+      --card: #f2f2f2;
+      --text: #f5f7fb;
+      --ink: #151b28;
+      --muted: #98a3b3;
+      --line: rgba(255,255,255,.12);
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+    body {
+      margin: 0;
+      background: var(--navy);
+      color: var(--text);
+      font-family: "Inter", "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      line-height: 1.6;
+      letter-spacing: 0;
+      zoom: 1.2;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(6, 16, 28, .98);
+      backdrop-filter: blur(0);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: background .22s ease, backdrop-filter .22s ease, border-color .22s ease;
+    }
+
+    .site-header.is-scrolled {
+      background: rgba(6, 16, 28, .6);
+      backdrop-filter: blur(40px);
+      border-bottom-color: rgba(255,255,255,.12);
+    }
+
+    .nav-wrap {
+      max-width: 1180px;
+      height: 64px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo { display: inline-flex; align-items: center; color: #fff; }
+    .logo-mark { width: 58px; height: auto; object-fit: contain; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      color: #c7ced8;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      transition: font-size .32s ease, color .32s ease, text-shadow .32s ease;
+    }
+
+    .nav-links a.is-active {
+      color: #fff;
+      font-size: 15px;
+      text-shadow: 0 4px 4px rgba(0, 0, 0, .35);
+    }
+
+    .date-pill {
+      min-width: 118px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 8px;
+      color: #d6dde8;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    section { padding: 88px 28px; }
+    .dark-section { background: var(--navy); }
+    .paper-section { background: var(--paper); color: var(--ink); }
+    .green-section { background: var(--green); color: #fff; }
+    .wrap { max-width: 1180px; margin: 0 auto; }
+
+    .section-kicker {
+      margin: 0 0 8px;
+      color: #7d8997;
+      font-size: 20px;
+      font-weight: 400;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .paper-section .section-kicker { color: #6f7885; }
+    .green-section .section-kicker { color: rgba(255,255,255,.68); }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 24px;
+      font-size: 48px;
+      line-height: 1.05;
+      font-weight: 600;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin-bottom: 34px;
+      text-align: center;
+      font-size: 36px;
+      line-height: 1.15;
+      font-weight: 600;
+    }
+
+    h3 {
+      margin-bottom: 12px;
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    p {
+      color: inherit;
+      word-break: keep-all;
+    }
+
+    .hero {
+      min-height: calc(100vh - 64px);
+      display: grid;
+      align-items: end;
+      padding: 96px 28px 82px;
+      background:
+        linear-gradient(90deg, rgba(6,16,28,.94) 0%, rgba(6,16,28,.78) 46%, rgba(6,16,28,.18) 100%),
+        url("assets/project-warhaven.png") center / cover no-repeat;
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      color: rgba(245,247,251,.82);
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 34px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 12px;
+      color: #dce6ef;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .summary-card {
+      min-height: 190px;
+      padding: 28px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+    }
+
+    .summary-card p {
+      margin: 0;
+      color: #b6c0cd;
+      font-size: 15px;
+    }
+
+    .deep-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .deep-card {
+      min-height: 260px;
+      padding: 30px;
+      background: var(--card);
+      border: 1px solid #cfd1d4;
+      border-radius: 8px;
+    }
+
+    .deep-card p {
+      margin: 0;
+      color: #4b5563;
+      font-size: 16px;
+    }
+
+    .deep-card .label {
+      display: inline-flex;
+      margin-bottom: 18px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .process {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .process-step {
+      min-height: 230px;
+      padding: 28px;
+      border-right: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+    }
+
+    .process-step:last-child { border-right: 0; }
+
+    .process-step span {
+      display: block;
+      margin-bottom: 18px;
+      color: rgba(255,255,255,.46);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .process-step p {
+      margin: 0;
+      color: #b6c0cd;
+      font-size: 15px;
+    }
+
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .doc-card {
+      min-height: 150px;
+      padding: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+    }
+
+    .doc-card strong {
+      display: block;
+      margin-bottom: 10px;
+      color: #fff;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .doc-card span {
+      color: #9faabc;
+      font-size: 12px;
+    }
+
+    .button {
+      min-width: 188px;
+      height: 62px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      border-radius: 12px;
+      border: 0;
+      color: #fff;
+      background: var(--green);
+      font-size: 24px;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .button::after {
+      content: "→";
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .project-action {
+      display: flex;
+      justify-content: center;
+      margin-top: 42px;
+    }
+
+    .career-showcase {
+      position: sticky;
+      top: 64px;
+      z-index: 17;
+      display: none;
+      padding: 18px 28px;
+      overflow: hidden;
+      background: rgba(217, 217, 217, .98);
+      color: var(--ink);
+      border-bottom: 1px solid #c6ccd4;
+      box-shadow: 0 18px 50px rgba(0,0,0,.18);
+      transform: translateY(52px);
+      opacity: 0;
+    }
+
+    .career-showcase.is-open,
+    .career-showcase.is-closing {
+      display: block;
+    }
+
+    .career-showcase.is-open {
+      animation: careerSlideUp .36s ease forwards;
+    }
+
+    .career-showcase.is-closing {
+      animation: careerSlideDown .28s ease forwards;
+    }
+
+    @keyframes careerSlideUp {
+      from { transform: translateY(52px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes careerSlideDown {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(52px); opacity: 0; }
+    }
+
+    .career-panel {
+      position: relative;
+      max-width: 1180px;
+      max-height: calc(100vh - 96px);
+      margin: 0 auto;
+      padding: 28px 0 8px;
+      overflow-y: auto;
+    }
+
+    .career-close {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 12px;
+      border: 1px solid #c5ccd5;
+      border-radius: 50%;
+      color: var(--ink);
+      background: rgba(255,255,255,.82);
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .career-panel-head {
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .career-panel-head .section-kicker {
+      color: #6f7885;
+    }
+
+    .career-panel-head h2 {
+      margin-bottom: 0;
+    }
+
+    .career-timeline {
+      display: grid;
+      gap: 16px;
+    }
+
+    .career-entry {
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      gap: 44px;
+      padding: 28px;
+      background: #f4f4f4;
+      border: 1px solid #cfd4dc;
+      border-radius: 8px;
+    }
+
+    .career-meta strong {
+      display: block;
+      color: var(--green);
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .career-meta span {
+      display: block;
+      margin-top: 8px;
+      color: #48515f;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .career-entry h3 {
+      margin-bottom: 10px;
+      color: #0d1623;
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    .career-entry p,
+    .career-entry ul {
+      color: #4b5563;
+      font-size: 16px;
+      word-break: keep-all;
+    }
+
+    .career-entry p {
+      margin-bottom: 14px;
+    }
+
+    .career-entry ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .career-entry li + li {
+      margin-top: 8px;
+    }
+
+    .footer {
+      padding: 25px 28px;
+      background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .footer-grid {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.45fr .72fr .8fr 1.9fr;
+      gap: 72px;
+      color: #b8c1ce;
+      align-items: start;
+    }
+
+    .footer-brand .logo-mark { width: 104px; }
+
+    .footer-brand-name {
+      display: block;
+      margin-top: 11px;
+      color: #fff;
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+
+    .footer h3 {
+      color: #fff;
+      font-size: 24px;
+      line-height: 1.1;
+      margin-bottom: 26px;
+    }
+
+    .footer p,
+    .footer a {
+      color: #a5afbd;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .footer-contact {
+      margin-top: 44px;
+      margin-bottom: 0;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 13px;
+    }
+
+    .social-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .social-row a,
+    .social-row img {
+      flex-shrink: 0;
+    }
+
+    .social-row img {
+      width: 55px;
+      height: 55px;
+      object-fit: contain;
+      opacity: .78;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .social-row a:hover img,
+    .social-row a:focus-visible img {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+
+    .contact-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 170px;
+      gap: 0;
+      overflow: hidden;
+      background: #1d2533;
+      border-radius: 14px;
+    }
+
+    .contact-form input {
+      width: 100%;
+      min-height: 72px;
+      padding: 0 24px;
+      color: #fff;
+      background: transparent;
+      border: 0;
+      font-size: 18px;
+    }
+
+    .contact-form button {
+      min-height: 72px;
+      color: #fff;
+      background: var(--green);
+      border: 0;
+      border-radius: 10px;
+      margin: 5px;
+      font-weight: 400;
+      font-size: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links,
+      .date-pill { display: none; }
+
+      section,
+      .hero { padding-inline: 20px; }
+
+      .summary-grid,
+      .deep-grid,
+      .process,
+      .doc-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-step {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255,255,255,.12);
+      }
+
+      .process-step:last-child { border-bottom: 0; }
+
+      .career-entry {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="logo" href="index.html" aria-label="JeonHoon home">
+        <img class="logo-mark" src="assets/logo-jh.png" alt="JeonHoon">
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="index.html#demo">Demo Reel</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#learning">Learning</a>
+        <a href="index.html#about">About</a>
+      </nav>
+      <span class="date-pill" id="today-date">Date 2026.05.11</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="section-kicker" style="text-align:left;color:rgba(255,255,255,.62)">Warhaven Project</p>
+        <h1>Warhaven Audio Portfolio</h1>
+        <p class="hero-copy">
+          중세 판타지 PvP 전투의 물리적 타격감, 전장 임장감, 캐릭터 보이스, Foley와 구현 파이프라인을 종합적으로 설계한 워헤이븐 프로젝트 오디오 작업 정리입니다.
+        </p>
+        <div class="hero-meta">
+          <span class="tag">Unreal Engine</span>
+          <span class="tag">Wwise</span>
+          <span class="tag">Combat SFX</span>
+          <span class="tag">Foley</span>
+          <span class="tag">Voice Direction</span>
+          <span class="tag">Audio System Design</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="career-showcase" id="career-showcase" aria-hidden="true">
+      <div class="career-panel">
+        <button class="career-close" type="button" aria-label="경력 기술서 닫기">×</button>
+        <div class="career-panel-head">
+          <p class="section-kicker">Career Profile</p>
+          <h2>경력 기술서</h2>
+        </div>
+        <div class="career-timeline">
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2022.01 - 재직 중</strong>
+              <span>넥슨 코리아</span>
+            </div>
+            <div>
+              <h3>워헤이븐 : 2022.01 ~ 2024.04</h3>
+              <ul>
+                <li>Wwise 기반 시스템 구축</li>
+                <li>보이스 디렉팅 보조, 성우 캐스팅 및 리소스 작업</li>
+                <li>근접전투 사운드 디자인</li>
+                <li>Foley 사운드 디자인 및 구현</li>
+                <li>최적화 및 사운드 품질 모니터링, 디버깅</li>
+                <li>각 종 영상 작업 및 믹싱</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2024.04 - 2025.12</strong>
+              <span>넥슨 코리아</span>
+            </div>
+            <div>
+              <h3>신규 프로젝트</h3>
+              <ul>
+                <li>AI활용 사운드 작업 및 시스템 구현 R&amp;D</li>
+                <li>Synth를 활용한 레트로 로봇 사운드 디자인</li>
+                <li>음성 AI 연구</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2026.01 - 현재</strong>
+              <span>넥슨 코리아</span>
+            </div>
+            <div>
+              <h3>인사발령대기</h3>
+              <ul>
+                <li>글로벌 리소스 디자인 형태 중 하나인 Phase Shifted Rumble 디자인 방식 연구</li>
+                <li>Reaper DAW 툴 최적화 작업</li>
+                <li>GDC 강연 학습</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2017.04 - 2022.01</strong>
+              <span>엑스엘게임즈</span>
+            </div>
+            <div>
+              <h3>다중 프로젝트 사운드 디자인 및 엔진 적용</h3>
+              <p>참여 프로젝트 : '문명 온라인', '아키에이지', '아키에이지 비긴즈', '달빛조각사' 등 주요 신작 프로젝트</p>
+              <p>업무 : 게임 오디오 구현 및 시스템 설계, 리소스 관리, QA</p>
+              <ul>
+                <li>다양한 엔진 개발 경험 : Unity, Unreal Engine 3, 4, Fmod</li>
+                <li>신규 개발 프로젝트의 통합 에셋 관리</li>
+                <li>사운드 구현 및 프로세스 구축 : 사내 프로토타입 프로젝트 오디오 시스템 구축</li>
+                <li>팀 협업 및 프로젝트 리딩 : 사운드 팀 내 최장기 근속자로서 안정적인 업무 수행 및 사운드 팀내 공유 문서 작업</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2015.06 - 2015.08</strong>
+              <span>라이브톤</span>
+            </div>
+            <div>
+              <h3>영화 음향 후반 작업 인턴</h3>
+              <p>작업 당시 프로젝트 : 영화 '사도', '탐정: 더 비기닝'</p>
+              <ul>
+                <li>대사 및 ADR : 동시녹음 리소스 톤 정리 및 감정, 상황의 톤 밸런싱 작업</li>
+                <li>극장 상영 플랫폼의 이해와 그에 맞는 프로세싱</li>
+                <li>폴리(Foley), 환경음(Ambience) : 전반적인 작업 경험</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2014.08 - 2015.04</strong>
+              <span>예음녹음실</span>
+            </div>
+            <div>
+              <h3>서브 어시스턴트 엔지니어</h3>
+              <p>시설 : 합주가 가능한, 메인 룸 1 / 개별 룸 4</p>
+              <ul>
+                <li>대규모 앙상블 레코딩 셋업 및 레코딩 : 24인조 풀 밴드 합주 세션 녹음 진행, 다채널 동시 녹음을 위한 마이킹 신호 패칭</li>
+                <li>뮤지컬 프로젝트 참여 : &lt;바람과 함께 사라지다&gt; 레코딩 지원</li>
+                <li>재즈, 국악, 발라드 등 보컬 및 기악 녹음</li>
+                <li>다양한 장르 대응 및 악기 레코딩에 대한 이해</li>
+                <li>아티스트, 작편곡가, 믹싱&amp;마스터링 엔지니어와의 커뮤니케이션</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-section">
+      <div class="wrap">
+        <p class="section-kicker">Overview</p>
+        <h2>Project Contribution Map</h2>
+        <div class="summary-grid">
+          <article class="summary-card">
+            <h3>전투 방향성</h3>
+            <p>무기, 피격, 방어, 거리감이 전투의 정보로 읽히도록 효과음의 질감과 우선순위를 설계했습니다.</p>
+          </article>
+          <article class="summary-card">
+            <h3>시스템 구현</h3>
+            <p>타격, 원거리 프로젝타일, 재질 반응처럼 반복 재생되는 전투 이벤트를 관리 가능한 구조로 정리했습니다.</p>
+          </article>
+          <article class="summary-card">
+            <h3>Foley 제작</h3>
+            <p>중세 장비의 천, 가죽, 금속, 신체 움직임을 세분화해 캐릭터 움직임의 설득력을 높였습니다.</p>
+          </article>
+          <article class="summary-card">
+            <h3>보이스 디렉션</h3>
+            <p>캐릭터 톤, 전장 상황, 녹음 관리와 검수를 연결해 게임 안에서 쓰일 수 있는 음성 리소스를 확보했습니다.</p>
+          </article>
+        </div>
+        <div class="project-action">
+          <button class="button career-trigger" type="button">경력 기술서 보기</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="paper-section">
+      <div class="wrap">
+        <p class="section-kicker">Deep Dive</p>
+        <h2>Audio Design Case Studies</h2>
+        <div class="deep-grid">
+          <article class="deep-card">
+            <span class="label">Tone & Manner</span>
+            <h3>워헤이븐의 톤 앤 매너</h3>
+            <p>판타지적인 과장보다 실제 전장에서 느껴지는 중량감과 거친 질감을 중심으로, 금속과 신체 충돌, 장비 움직임, 전장 분위기가 하나의 톤으로 들리도록 방향을 잡았습니다.</p>
+          </article>
+          <article class="deep-card">
+            <span class="label">Combat SFX</span>
+            <h3>전투 효과음의 방향성</h3>
+            <p>타격감만 강한 사운드가 아니라 플레이어가 상황을 판단할 수 있는 사운드를 목표로, 공격의 크기, 거리, 재질, 캐릭터 액션을 구분할 수 있는 레이어를 설계했습니다.</p>
+          </article>
+          <article class="deep-card">
+            <span class="label">Hit System</span>
+            <h3>타격 시스템</h3>
+            <p>무기 충돌과 피격 반응을 반복 가능한 시스템으로 다루기 위해 공격, 방어, 충돌 재질, 강도, 상태에 따라 사운드가 변주될 수 있는 구조를 정리했습니다.</p>
+          </article>
+          <article class="deep-card">
+            <span class="label">Projectile</span>
+            <h3>원거리 프로젝타일 시스템</h3>
+            <p>발사, 비행, 근접 통과, 충돌, 피격까지 이어지는 원거리 이벤트를 단계별로 분리해 방향감과 위험 신호가 명확히 전달되도록 구성했습니다.</p>
+          </article>
+          <article class="deep-card">
+            <span class="label">Foley & Implementation</span>
+            <h3>폴리 및 구현</h3>
+            <p>녹음된 Foley 리소스를 단순 편집에 그치지 않고 재질별 움직임, 장비 소리, 발소리와 연결해 엔진 안에서 일관되게 관리될 수 있도록 정리했습니다.</p>
+          </article>
+          <article class="deep-card">
+            <span class="label">Voice Recording</span>
+            <h3>성우 녹음 관련</h3>
+            <p>캐릭터에 맞는 톤을 확보하기 위해 녹음 전 준비, 디렉팅, 리소스 정리, 검수 과정을 연결하고 실제 게임 상황에 맞는 음성 리소스 운용을 고려했습니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="green-section">
+      <div class="wrap">
+        <p class="section-kicker">Pipeline</p>
+        <h2>From Direction to Implementation</h2>
+        <div class="process">
+          <article class="process-step">
+            <span>01 Direction</span>
+            <h3>전투 사운드 기준 수립</h3>
+            <p>게임의 장르와 전투 템포에 맞춰 소리의 밀도, 질감, 정보량을 먼저 정리했습니다.</p>
+          </article>
+          <article class="process-step">
+            <span>02 Production</span>
+            <h3>Foley와 SFX 제작</h3>
+            <p>재질과 행동 단위로 리소스를 만들고, 실제 액션에 맞게 편집과 레이어링을 진행했습니다.</p>
+          </article>
+          <article class="process-step">
+            <span>03 System</span>
+            <h3>엔진 적용과 관리</h3>
+            <p>반복 재생되는 이벤트가 과밀해지지 않도록 구현 구조와 리소스 관리 기준을 함께 고려했습니다.</p>
+          </article>
+          <article class="process-step">
+            <span>04 Validation</span>
+            <h3>플레이 환경 검수</h3>
+            <p>전장 안에서 잘 들리는지, 과하게 튀지 않는지, 플레이 정보로 기능하는지 확인했습니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-section">
+      <div class="wrap">
+        <p class="section-kicker">Reference Docs</p>
+        <h2>Provided Material Index</h2>
+        <div class="doc-grid">
+          <article class="doc-card"><strong>워헤이븐의 톤 앤 매너</strong><span>프로젝트 사운드 방향성</span></article>
+          <article class="doc-card"><strong>전투 효과음의 방향성</strong><span>전투 피드백 설계</span></article>
+          <article class="doc-card"><strong>타격 시스템</strong><span>무기·피격 반응 구조</span></article>
+          <article class="doc-card"><strong>원거리 프로젝타일 시스템</strong><span>발사·비행·충돌 이벤트</span></article>
+          <article class="doc-card"><strong>전투 임장감 관련한 노력</strong><span>전장 공간감과 몰입</span></article>
+          <article class="doc-card"><strong>폴리 및 구현</strong><span>녹음·편집·구현 관리</span></article>
+          <article class="doc-card"><strong>재질별 사운드 영상</strong><span>재질에 따른 Foley 검증</span></article>
+          <article class="doc-card"><strong>폴리 테스트 녹음</strong><span>소스 확보와 테스트</span></article>
+          <article class="doc-card"><strong>구현 및 관리</strong><span>리소스 운용 기준</span></article>
+          <article class="doc-card"><strong>성우 녹음 관련</strong><span>보이스 디렉팅과 검수</span></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <a class="logo footer-brand" href="index.html" aria-label="JeonHoon home"><img class="logo-mark" src="assets/logo-jh.png" alt=""></a>
+        <span class="footer-brand-name">JeonHoon</span>
+        <p class="footer-contact">Jeonhoon528@gmail.com<br>Phone : 010-5181-2579</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/jeonhoon528/" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><img src="assets/social-instagram.png" alt=""></a>
+          <a href="https://www.linkedin.com/in/jeonhoon528" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><img src="assets/social-linkedin.png" alt=""></a>
+          <a href="https://www.youtube.com/@jeonhoon" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><img src="assets/social-youtube.png" alt=""></a>
+          <a href="https://jeonhoon.notion.site/202103" aria-label="Notion" target="_blank" rel="noopener noreferrer"><img src="assets/social-notion.png" alt=""></a>
+        </div>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <div class="footer-links">
+          <a href="index.html#demo">DEMO REEL</a>
+          <a href="index.html#projects">PROJECTS</a>
+          <a href="index.html#learning">LEARNING</a>
+          <a href="index.html#about">ABOUT</a>
+        </div>
+      </div>
+      <div>
+        <h3>Resources</h3>
+        <div class="footer-links">
+          <a href="portfolio.html">Portfolio</a>
+          <a href="career-profile.html">Career Profile</a>
+          <a href="portfolio_warhaven.html">Warhaven</a>
+        </div>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <form class="contact-form" action="mailto:Jeonhoon528@gmail.com" method="post" enctype="text/plain">
+          <input type="email" name="email" placeholder="name@domain.com" aria-label="Email address">
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.querySelector(".site-header");
+    const dateEl = document.querySelector("#today-date");
+    const careerShowcase = document.querySelector("#career-showcase");
+    const careerTrigger = document.querySelector(".career-trigger");
+    const careerClose = document.querySelector(".career-close");
+
+    function syncHeaderState() {
+      header.classList.toggle("is-scrolled", window.scrollY > 12);
+    }
+
+    function syncDate() {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = String(now.getMonth() + 1).padStart(2, "0");
+      const dd = String(now.getDate()).padStart(2, "0");
+      dateEl.textContent = `Date ${yyyy}.${mm}.${dd}`;
+    }
+
+    syncHeaderState();
+    syncDate();
+    window.addEventListener("scroll", syncHeaderState, { passive: true });
+
+    function openCareer() {
+      careerShowcase.classList.remove("is-closing");
+      careerShowcase.classList.add("is-open");
+      careerShowcase.setAttribute("aria-hidden", "false");
+      careerShowcase.scrollIntoView({ behavior: "smooth", block: "start" });
+      careerClose.focus();
+    }
+
+    function closeCareer() {
+      if (!careerShowcase.classList.contains("is-open")) return;
+      careerShowcase.classList.remove("is-open");
+      careerShowcase.classList.add("is-closing");
+      careerShowcase.setAttribute("aria-hidden", "true");
+    }
+
+    careerTrigger.addEventListener("click", openCareer);
+    careerClose.addEventListener("click", closeCareer);
+    careerShowcase.addEventListener("animationend", () => {
+      if (careerShowcase.classList.contains("is-closing")) {
+        careerShowcase.classList.remove("is-closing");
+      }
+    });
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && careerShowcase.classList.contains("is-open")) {
+        closeCareer();
+      }
+    });
+  </script>
+</body>
+</html>
