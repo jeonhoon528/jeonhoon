@@ -324,96 +324,6 @@
     .video-card:hover .video-frame::after,
     .video-card:focus-visible .video-frame::after { opacity: 1; }
 
-    .tool-frame {
-      overflow: hidden;
-      background: #1b1f23;
-    }
-
-    .tool-preview {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      background:
-        radial-gradient(circle at 18% 20%, rgba(6,54,19,.45), transparent 32%),
-        linear-gradient(135deg, #111820 0%, #1b1f23 48%, #08101a 100%);
-      transition: transform .22s ease, filter .22s ease, opacity .22s ease;
-    }
-
-    .tool-preview-board {
-      width: min(82%, 360px);
-      padding: 18px;
-      border: 1px solid rgba(217,217,217,.18);
-      border-radius: 8px;
-      background: rgba(0,8,22,.48);
-      box-shadow: 0 18px 42px rgba(0,0,0,.28);
-    }
-
-    .tool-preview-title {
-      margin-bottom: 14px;
-      color: #f5f7fa;
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: 0;
-    }
-
-    .tool-preview-meter {
-      position: relative;
-      height: 76px;
-      overflow: hidden;
-      border-radius: 6px;
-      background: linear-gradient(90deg, #063613 0 58%, #c4a72a 70%, #8d1d1d 100%);
-    }
-
-    .tool-preview-meter::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(90deg, rgba(255,255,255,.24) 0 1px, transparent 1px 28px);
-    }
-
-    .tool-preview-meter::after {
-      content: "-24 LUFS";
-      position: absolute;
-      left: 56%;
-      top: 50%;
-      padding: 3px 7px;
-      transform: translate(-50%, -50%);
-      border-radius: 999px;
-      color: #1b1f23;
-      background: #f6d55c;
-      font-size: 11px;
-      font-weight: 600;
-    }
-
-    .tool-preview-readouts {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 14px;
-      color: #dce6ef;
-      font-size: 11px;
-    }
-
-    .tool-preview-readouts p {
-      margin: 0;
-    }
-
-    .tool-preview-readouts span {
-      display: block;
-      color: #fff;
-      font-size: 17px;
-      font-weight: 600;
-    }
-
-    .video-card:hover .tool-preview,
-    .video-card:focus-visible .tool-preview {
-      filter: grayscale(.2) blur(1px);
-      opacity: .74;
-      transform: scale(1.03);
-    }
-
     .video-meta {
       position: relative;
       overflow: hidden;
@@ -609,11 +519,11 @@
 
     .reel-panel {
       position: relative;
-      max-width: 1900px;
+      max-width: 1650px;
       margin: 0 auto;
       padding: 28px 0;
       display: grid;
-      grid-template-columns: minmax(0, 7fr) minmax(600px, 3fr);
+      grid-template-columns: 7fr 3fr;
       gap: 24px;
       align-items: stretch;
     }
@@ -628,37 +538,6 @@
     }
 
     .reel-panel-frame iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .reel-showcase.has-meter .reel-panel-frame {
-      aspect-ratio: 16 / 9;
-      min-height: 0;
-      overflow: hidden;
-      background: #000;
-    }
-
-    .reel-meter-container {
-      position: relative;
-      display: none;
-      overflow: hidden;
-      height: min(43vw, 620px);
-      min-height: 430px;
-      margin-top: 26px;
-      border-radius: 8px;
-      background: #1b1f23;
-      border: 1px solid rgba(217,217,217,.14);
-    }
-
-    .reel-showcase.has-meter .reel-meter-container {
-      display: block;
-    }
-
-    .reel-meter-container iframe {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -717,21 +596,6 @@
       text-underline-offset: 4px;
     }
 
-    .reel-showcase.is-tool .reel-panel {
-      max-width: 1500px;
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
-    .reel-showcase.is-tool .reel-panel-frame {
-      min-height: min(76vh, 760px);
-      background: #1b1f23;
-    }
-
-    .reel-showcase.is-tool .reel-panel-copy {
-      padding: 0 54px 28px 0;
-    }
-
     .reel-escape-button {
       min-width: 160px;
       height: 42px;
@@ -776,7 +640,6 @@
       .contact-form { grid-template-columns: 1fr; max-width: 100%; }
       .reel-panel { grid-template-columns: 1fr; gap: 16px; }
       .reel-panel-frame { min-height: 0; }
-      .reel-meter-container { height: 520px; min-height: 420px; }
       .reel-panel-copy { padding: 0 48px 24px 0; }
     }
   </style>
@@ -805,7 +668,6 @@
           <h3 id="reel-panel-title"></h3>
           <div class="reel-tags" id="reel-panel-tags" aria-label="Video tags"></div>
           <p id="reel-panel-description"></p>
-          <div class="reel-meter-container" id="reel-panel-meter"></div>
           <button class="reel-escape-button" type="button">ESC 눌러 닫기</button>
         </div>
       </div>
@@ -869,22 +731,6 @@
           <article class="video-card" tabindex="0" role="button" data-video="q8ia_bmtQbk" data-title="포스포큰 인게임 포트폴리오" data-tags="2024.06,Skill Design,Console,Elemental Magic" data-description="- 넥슨에서 워헤이븐 프로젝트 이후 판타지적인 요소가 가미된 사운드 디자인을 안한지 몇년 되어서, 선택한 작업물&#10;- 기존 문법(레퍼런스)을 벗어나, 새로운 스타일에 대한 생각을 담아 작업&#10;- 싱글 패키지 콘솔게임에 맞춰 다중플레이 장르에선 하기 힘든 규모감과, 사운드 표현을 해보려 시도">
             <div class="video-frame"><img src="https://img.youtube.com/vi/q8ia_bmtQbk/hqdefault.jpg" alt="포스포큰 인게임 포트폴리오"></div>
             <div class="video-meta"><strong>포스포큰 인게임 포트폴리오</strong><div class="card-tags"><span>2024.06</span><span>Skill Design</span><span>Console</span><span>Elemental Magic</span></div></div>
-          </article>
-          <article class="video-card" tabindex="0" role="button" data-tool-src="lufs-meter/index.html" data-title="Web LUFS Meter R&amp;D" data-tags="2026,R&amp;D,Web Audio API,LUFS Meter" data-description="- 브라우저 탭 오디오 공유 신호를 기반으로 실시간 LUFS 미터를 구현한 R&amp;D 작업입니다.&#10;- YouTube iframe 오디오는 직접 연결할 수 없어 getDisplayMedia 기반 탭 오디오 캡처 방식으로 분석합니다.&#10;- K-weighting, 400ms block, absolute/relative gate 기반 Integrated LUFS, 3초 Short-term LUFS, LRA, Peak Max, Distribution View를 포함합니다.&#10;- True Peak는 현재 sample peak max 기반 근사이며, 코드에 oversampling TODO를 남겼습니다.">
-            <div class="video-frame tool-frame">
-              <div class="tool-preview" aria-hidden="true">
-                <div class="tool-preview-board">
-                  <div class="tool-preview-title">Realtime LUFS Meter</div>
-                  <div class="tool-preview-meter"></div>
-                  <div class="tool-preview-readouts">
-                    <p>Integrated<span>-24.0</span></p>
-                    <p>Short-term<span>-23.6</span></p>
-                    <p>LRA<span>6.4 LU</span></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="video-meta"><strong>Web LUFS Meter R&amp;D</strong><div class="card-tags"><span>2026</span><span>R&amp;D</span><span>Web Audio API</span><span>LUFS Meter</span></div></div>
           </article>
         </div>
       </div>
@@ -1081,7 +927,6 @@
     const reelTitle = document.querySelector("#reel-panel-title");
     const reelTags = document.querySelector("#reel-panel-tags");
     const reelDescription = document.querySelector("#reel-panel-description");
-    const reelMeter = document.querySelector("#reel-panel-meter");
     const reelClose = document.querySelector(".reel-close");
     const reelEscapeButton = document.querySelector(".reel-escape-button");
 
@@ -1101,8 +946,6 @@
 
     function openReel(card) {
       const videoId = card.dataset.video;
-      const toolSrc = card.dataset.toolSrc;
-      const isTool = Boolean(toolSrc);
       reelTitle.textContent = card.dataset.title || "";
       reelTags.innerHTML = "";
       const fallbackTags = card.querySelector(".card-tags")?.textContent || card.querySelector(".video-meta span")?.textContent || "";
@@ -1121,15 +964,7 @@
         reelDescription.appendChild(document.createTextNode("\n"));
         reelDescription.appendChild(link);
       }
-      reelShowcase.classList.toggle("is-tool", isTool);
-      reelShowcase.classList.toggle("has-meter", !isTool);
-      if (isTool) {
-        reelFrame.innerHTML = `<iframe src="${toolSrc}" title="${card.dataset.title || "Portfolio tool"}" allow="display-capture; microphone"></iframe>`;
-        reelMeter.innerHTML = "";
-      } else {
-        reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
-        reelMeter.innerHTML = `<iframe src="lufs-meter/index.html" title="Web LUFS Meter" allow="display-capture; microphone"></iframe>`;
-      }
+      reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
       reelShowcase.classList.remove("is-closing");
       reelShowcase.classList.add("is-open");
       reelShowcase.setAttribute("aria-hidden", "false");
@@ -1144,7 +979,7 @@
       reelShowcase.setAttribute("aria-hidden", "true");
     }
 
-    document.querySelectorAll(".video-card[data-video], .video-card[data-tool-src]").forEach((card) => {
+    document.querySelectorAll(".video-card[data-video]").forEach((card) => {
       card.addEventListener("click", () => openReel(card));
       card.addEventListener("keydown", (event) => {
         if (event.key === "Enter" || event.key === " ") {
@@ -1159,10 +994,7 @@
     reelShowcase.addEventListener("animationend", () => {
       if (reelShowcase.classList.contains("is-closing")) {
         reelShowcase.classList.remove("is-closing");
-        reelShowcase.classList.remove("is-tool");
-        reelShowcase.classList.remove("has-meter");
         reelFrame.innerHTML = "";
-        reelMeter.innerHTML = "";
       }
     });
     window.addEventListener("keydown", (event) => {
