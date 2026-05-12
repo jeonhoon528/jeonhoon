@@ -196,6 +196,7 @@
     .video-card {
       position: relative;
       overflow: hidden;
+      isolation: isolate;
       min-width: 0;
       background: #07111e;
       border: 1px solid rgba(255,255,255,.1);
@@ -204,11 +205,63 @@
       transition: transform .22s ease, border-color .22s ease;
     }
 
+    .video-card > * {
+      position: relative;
+      z-index: 2;
+    }
+
     .video-card:hover,
     .video-card:focus-visible {
       border-color: rgba(255,255,255,.24);
       transform: translateY(-2px);
       outline: 0;
+    }
+
+    .video-card.is-featured {
+      border-color: transparent;
+      box-shadow: 0 0 18px rgba(6, 54, 19, .22);
+    }
+
+    .video-card.is-featured::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      padding: 2px;
+      border-radius: inherit;
+      background: conic-gradient(
+        from 0deg,
+        rgba(217, 217, 217, 0),
+        rgba(217, 217, 217, .22),
+        rgba(6, 54, 19, .55),
+        rgba(217, 217, 217, .86),
+        rgba(6, 54, 19, .34),
+        rgba(217, 217, 217, 0)
+      );
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      animation: neonBorderSpin 5.8s linear infinite reverse;
+    }
+
+    .video-card.is-featured .video-meta::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      border-bottom-right-radius: inherit;
+      border-bottom-left-radius: inherit;
+      background:
+        linear-gradient(116deg, rgba(6, 54, 19, 0) 0 58%, rgba(6, 54, 19, .2) 63%, rgba(6, 54, 19, .52) 66%, rgba(6, 54, 19, 0) 72%),
+        linear-gradient(90deg, rgba(255,255,255,.2) 0%, rgba(255,255,255,.1) 48%, rgba(255,255,255,0) 100%);
+      pointer-events: none;
+    }
+
+    @keyframes neonBorderSpin {
+      to {
+        transform: rotate(1turn);
+      }
     }
 
     .video-frame {
@@ -253,7 +306,14 @@
     }
 
     .video-meta {
+      position: relative;
+      overflow: hidden;
       padding: 12px 12px 14px;
+    }
+
+    .video-meta > * {
+      position: relative;
+      z-index: 1;
     }
 
     .video-meta strong {
@@ -521,8 +581,7 @@
       border-radius: 32% 0 32% 0;
       background:
         linear-gradient(135deg, rgba(6,16,28,.05), rgba(6,16,28,.3)),
-        url("assets/profile-jeonhoon.png") center top / cover no-repeat,
-        url("project-strip-2.png") center / cover no-repeat;
+        url("assets/profile-jeonhoon.png") center top / cover no-repeat;
       filter: saturate(.85);
     }
 
@@ -858,6 +917,10 @@
       overflow-y: auto;
     }
 
+    .reel-panel > .career-profile-body {
+      display: none;
+    }
+
     .reel-panel-copy h3 {
       margin-bottom: 14px;
       color: #fff;
@@ -1017,9 +1080,141 @@
       margin-bottom: 0;
     }
 
+    .career-profile-body {
+      display: grid;
+      gap: 18px;
+    }
+
+    .career-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .career-stat,
+    .career-card,
+    .career-project,
+    .career-skill,
+    .career-statement {
+      background: #f4f4f4;
+      border: 1px solid #cfd4dc;
+      border-radius: 8px;
+    }
+
+    .career-stat {
+      min-height: 116px;
+      padding: 20px;
+    }
+
+    .career-stat strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--green);
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 600;
+    }
+
+    .career-stat span,
+    .career-card p,
+    .career-project p,
+    .career-skill span,
+    .career-statement p {
+      color: #445061;
+      font-size: 16px;
+      word-break: keep-all;
+    }
+
+    .career-section-title {
+      display: grid;
+      grid-template-columns: minmax(0, .66fr) minmax(260px, .34fr);
+      gap: 24px;
+      align-items: end;
+      margin-top: 12px;
+    }
+
+    .career-section-title h3 {
+      margin: 0;
+      color: #0d1623;
+      font-size: 28px;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    .career-section-title p {
+      margin: 0;
+      color: #5b6673;
+      font-size: 15px;
+      word-break: keep-all;
+    }
+
+    .career-grid-3,
+    .career-project-grid,
+    .career-skill-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .career-grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .career-project-grid,
+    .career-skill-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .career-card,
+    .career-project,
+    .career-skill,
+    .career-statement {
+      padding: 22px;
+    }
+
+    .career-card h4,
+    .career-project h4,
+    .career-skill b {
+      display: block;
+      margin: 0 0 10px;
+      color: #0d1623;
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .career-card p,
+    .career-project p,
+    .career-statement p {
+      margin: 0;
+    }
+
+    .career-project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    .career-project-tags span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      color: var(--green);
+      background: rgba(6,54,19,.08);
+      border: 1px solid rgba(6,54,19,.18);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 400;
+    }
+
     .career-timeline {
       display: grid;
       gap: 16px;
+    }
+
+    .career-timeline > .career-entry:nth-child(n+5) {
+      display: none;
     }
 
     .career-entry {
@@ -1141,6 +1336,14 @@
         grid-template-columns: 1fr;
         gap: 18px;
       }
+
+      .career-summary,
+      .career-grid-3,
+      .career-project-grid,
+      .career-skill-grid,
+      .career-section-title {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -1170,6 +1373,82 @@
           <div class="reel-tags" id="reel-panel-tags" aria-label="Video tags"></div>
           <p id="reel-panel-description"></p>
           <button class="reel-escape-button" type="button">ESC 눌러 닫기</button>
+        </div>
+        <div class="career-profile-body">
+          <div class="career-section-title">
+            <h3>주요 프로젝트 기여</h3>
+            <p>제작만으로 끝내지 않고, 엔진 적용과 협업 문서화, 이슈 대응까지 이어지는 실무형 사운드 디자인을 수행했습니다.</p>
+          </div>
+
+          <div class="career-project-grid">
+            <article class="career-project">
+              <h4>워헤이븐</h4>
+              <p>중세 근접 전투의 몰입감을 높이기 위해 Foley, 타격 시스템, 공간감 표현, 보이스 디렉팅에 참여했습니다.</p>
+              <div class="career-project-tags">
+                <span>Unreal Engine 4</span>
+                <span>Wwise</span>
+                <span>Foley</span>
+                <span>Combat SFX</span>
+              </div>
+            </article>
+            <article class="career-project">
+              <h4>신규 프로토타입</h4>
+              <p>신규 타이틀 검토 과정에서 리소스 제작, 엔진 적용, 사운드 연출 실험, 시스템 R&amp;D를 진행했습니다.</p>
+              <div class="career-project-tags">
+                <span>Prototype</span>
+                <span>R&amp;D</span>
+                <span>Sound System</span>
+              </div>
+            </article>
+            <article class="career-project">
+              <h4>문명 온라인 · 아키에이지 · 달빛조각사</h4>
+              <p>프로젝트별 엔진과 개발 스타일에 맞춰 사운드 적용, 버그 처리, 업무 분담, 검수를 수행했습니다.</p>
+              <div class="career-project-tags">
+                <span>FMOD</span>
+                <span>Unity</span>
+                <span>CryEngine</span>
+                <span>Live Issue</span>
+              </div>
+            </article>
+            <article class="career-project">
+              <h4>아키에이지2</h4>
+              <p>극초기 기획 단계에서 오디오 시스템 프로세스와 사운드 리소스 관리 방향을 설계했습니다.</p>
+              <div class="career-project-tags">
+                <span>Pre-production</span>
+                <span>Pipeline</span>
+                <span>Resource Management</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="career-section-title">
+            <h3>실무 역량</h3>
+            <p>사운드 제작 능력과 구현 환경 이해, 협업 툴 운용 경험을 함께 갖추고 있습니다.</p>
+          </div>
+
+          <div class="career-skill-grid">
+            <div class="career-skill">
+              <b>Audio Middleware</b>
+              <span>Wwise, FMOD 기반 이벤트 구성, 적용, 믹싱, 프로파일링</span>
+            </div>
+            <div class="career-skill">
+              <b>Game Engine</b>
+              <span>Unreal Engine, Unity, CryEngine 환경에서 리소스 적용과 이슈 대응</span>
+            </div>
+            <div class="career-skill">
+              <b>Sound Design</b>
+              <span>Foley, Ambience, SFX, Monster Voice, Dialogue, Combat Feedback</span>
+            </div>
+            <div class="career-skill">
+              <b>Collaboration</b>
+              <span>Git, SVN, Plastic SCM, Perforce, Jira, Confluence 기반 협업</span>
+            </div>
+          </div>
+
+          <div class="career-statement">
+            <h3>앞으로의 방향</h3>
+            <p>단순히 사운드를 만드는 디자이너를 넘어, 직관적인 재미를 만들어내는 사운드 연출자로 일하고자 합니다. 사운드만 들어도 어떤 게임인지 떠올릴 수 있는 브랜드 사운드를 팀과 함께 만들고, 유저의 기억에 남는 경험으로 남기는 것이 목표입니다.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -1241,7 +1520,115 @@
           <p class="section-kicker">Career Profile</p>
           <h2>경력 기술서</h2>
         </div>
+        <div class="career-profile-body">
+          <div class="career-summary">
+            <div class="career-stat">
+              <strong>10년차</strong>
+              <span>게임 및 영상 사운드 기반의 실무 경험</span>
+            </div>
+            <div class="career-stat">
+              <strong>9+</strong>
+              <span>상용 및 프로토타입 프로젝트 참여</span>
+            </div>
+            <div class="career-stat">
+              <strong>Wwise</strong>
+              <span>Unreal, Unity, FMOD, CryEngine 환경 경험</span>
+            </div>
+            <div class="career-stat">
+              <strong>Foley</strong>
+              <span>환경음, 타격감, 보이스, 구현까지 연결</span>
+            </div>
+          </div>
+
+          <div class="career-section-title">
+            <h3>사운드로 플레이 감각과 세계관을 연결합니다.</h3>
+            <p>강점은 Foley와 Ambience의 디테일, 타격 시스템의 피드백 설계, 그리고 팀과의 협업 속에서 품질을 안정적으로 끌어올리는 실행력입니다.</p>
+          </div>
+
+          <div class="career-grid-3">
+            <article class="career-card">
+              <h4>Gameplay Feedback</h4>
+              <p>중세 근접 전투, 타격, 이동, 인터랙션 등 플레이어가 즉시 체감하는 사운드 피드백을 제작하고 시스템에 맞게 적용했습니다.</p>
+            </article>
+            <article class="career-card">
+              <h4>World & Narrative</h4>
+              <p>공간의 분위기와 감정을 전달하는 Ambience, Foley, Monster Voice, Dialogue를 통해 장면의 설득력을 높였습니다.</p>
+            </article>
+            <article class="career-card">
+              <h4>Implementation & Collaboration</h4>
+              <p>Wwise, FMOD, Unity, Unreal, CryEngine 환경에서 사운드 적용, 버그 처리, 리소스 관리, 프로파일링을 수행했습니다.</p>
+            </article>
+          </div>
+
+          <div class="career-section-title">
+            <h3>경력 타임라인</h3>
+            <p>회사와 프로젝트 환경이 달라져도 빠르게 적응하며, 초기 기획부터 라이브 대응까지 사운드 파이프라인 전반을 경험했습니다.</p>
+          </div>
+        </div>
+
         <div class="career-timeline">
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2022.01 - 재직 중</strong>
+              <span>넥슨 코리아</span>
+            </div>
+            <div>
+              <h3>신규 타이틀 및 프로토타입 사운드 제작/구현</h3>
+              <p>워헤이븐과 신규 프로젝트에서 전투, 공간감, 보이스, 시스템 사운드 작업을 담당했습니다.</p>
+              <ul>
+                <li>언리얼 엔진 4와 Wwise 기반의 복잡한 타격 시스템, 동적 믹싱, 실시간 프로파일링 참여</li>
+                <li>Ambience, SFX, Foley를 종합 설계해 게임의 몰입감과 공간감을 강화</li>
+                <li>성우 캐스팅, 톤 디렉팅, 계약 등 보이스 디렉팅 업무 참여</li>
+                <li>괴력난신 프로젝트에서 신규 사운드 기능을 위한 시스템 개발 R&amp;D 수행</li>
+                <li>Anima Robota 프로젝트에서 AI 활용 사운드 워크플로우와 Synth 기반 로봇 레트로 사운드 연구</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2017.04 - 2022.01</strong>
+              <span>엑스엘 게임즈</span>
+            </div>
+            <div>
+              <h3>다중 프로젝트 사운드 디자인 및 엔진 적용</h3>
+              <p>문명 온라인, 아키에이지, 아키에이지 비긴즈, 달빛조각사, 아키에이지2 등에서 프로젝트별 개발 방식에 맞춰 실무를 수행했습니다.</p>
+              <ul>
+                <li>FMOD, Unity, CryEngine, Unreal Engine 환경에서 사운드 적용과 버그 이슈 처리</li>
+                <li>신규 프로젝트 사운드 작업을 주로 전담하며 초기 기획부터 완성 단계까지 경험</li>
+                <li>아키에이지2 극초기 기획 단계에서 오디오 시스템 프로세스와 사운드 리소스 관리 설계</li>
+                <li>사운드팀 내 장기 근속 구성원으로 업무 분담, 검수, 일정 대응을 안정적으로 수행</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2015.06 - 2015.08</strong>
+              <span>라이브톤</span>
+            </div>
+            <div>
+              <h3>영화 음향 후반작업</h3>
+              <p>ADR, Dialogue, Foley 등 영상 음향 후반작업 공정을 경험하며 게임 사운드에 응용 가능한 녹음과 편집 감각을 축적했습니다.</p>
+              <ul>
+                <li>영화 사도, 탐정: 더 비기닝 등 후반작업 참여</li>
+                <li>대사 톤 정리, 밸런싱, Foley 리소스 녹음 공정 학습</li>
+                <li>Monster Voice와 Foley 제작에 연결되는 실무적 기반 확보</li>
+              </ul>
+            </div>
+          </article>
+          <article class="career-entry">
+            <div class="career-meta">
+              <strong>2014.08 - 2015.04</strong>
+              <span>예음녹음실</span>
+            </div>
+            <div>
+              <h3>레코딩 어시스턴트</h3>
+              <p>다양한 세션 녹음 현장에서 안정적인 레코딩을 위한 기본기를 다졌습니다.</p>
+              <ul>
+                <li>24인 밴드, 뮤지컬, 재즈, 국악 등 세션 녹음 보조</li>
+                <li>마이크 셋업과 녹음 보조 엔지니어 역할 수행</li>
+              </ul>
+            </div>
+          </article>
           <article class="career-entry">
             <div class="career-meta">
               <strong>2022.01 - 재직 중</strong>
@@ -1336,6 +1723,82 @@
               </ul>
             </div>
           </article>
+        </div>
+        <div class="career-profile-body">
+          <div class="career-section-title">
+            <h3>주요 프로젝트 기여</h3>
+            <p>제작만으로 끝내지 않고, 엔진 적용과 협업 문서화, 이슈 대응까지 이어지는 실무형 사운드 디자인을 수행했습니다.</p>
+          </div>
+
+          <div class="career-project-grid">
+            <article class="career-project">
+              <h4>워헤이븐</h4>
+              <p>중세 근접 전투의 몰입감을 높이기 위해 Foley, 타격 시스템, 공간감 표현, 보이스 디렉팅에 참여했습니다.</p>
+              <div class="career-project-tags">
+                <span>Unreal Engine 4</span>
+                <span>Wwise</span>
+                <span>Foley</span>
+                <span>Combat SFX</span>
+              </div>
+            </article>
+            <article class="career-project">
+              <h4>신규 프로토타입</h4>
+              <p>신규 타이틀 검토 과정에서 리소스 제작, 엔진 적용, 사운드 연출 실험, 시스템 R&amp;D를 진행했습니다.</p>
+              <div class="career-project-tags">
+                <span>Prototype</span>
+                <span>R&amp;D</span>
+                <span>Sound System</span>
+              </div>
+            </article>
+            <article class="career-project">
+              <h4>문명 온라인 · 아키에이지 · 달빛조각사</h4>
+              <p>프로젝트별 엔진과 개발 스타일에 맞춰 사운드 적용, 버그 처리, 업무 분담, 검수를 수행했습니다.</p>
+              <div class="career-project-tags">
+                <span>FMOD</span>
+                <span>Unity</span>
+                <span>CryEngine</span>
+                <span>Live Issue</span>
+              </div>
+            </article>
+            <article class="career-project">
+              <h4>아키에이지2</h4>
+              <p>극초기 기획 단계에서 오디오 시스템 프로세스와 사운드 리소스 관리 방향을 설계했습니다.</p>
+              <div class="career-project-tags">
+                <span>Pre-production</span>
+                <span>Pipeline</span>
+                <span>Resource Management</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="career-section-title">
+            <h3>실무 역량</h3>
+            <p>사운드 제작 능력과 구현 환경 이해, 협업 툴 운용 경험을 함께 갖추고 있습니다.</p>
+          </div>
+
+          <div class="career-skill-grid">
+            <div class="career-skill">
+              <b>Audio Middleware</b>
+              <span>Wwise, FMOD 기반 이벤트 구성, 적용, 믹싱, 프로파일링</span>
+            </div>
+            <div class="career-skill">
+              <b>Game Engine</b>
+              <span>Unreal Engine, Unity, CryEngine 환경에서 리소스 적용과 이슈 대응</span>
+            </div>
+            <div class="career-skill">
+              <b>Sound Design</b>
+              <span>Foley, Ambience, SFX, Monster Voice, Dialogue, Combat Feedback</span>
+            </div>
+            <div class="career-skill">
+              <b>Collaboration</b>
+              <span>Git, SVN, Plastic SCM, Perforce, Jira, Confluence 기반 협업</span>
+            </div>
+          </div>
+
+          <div class="career-statement">
+            <h3>앞으로의 방향</h3>
+            <p>단순히 사운드를 만드는 디자이너를 넘어, 직관적인 재미를 만들어내는 사운드 연출자로 일하고자 합니다. 사운드만 들어도 어떤 게임인지 떠올릴 수 있는 브랜드 사운드를 팀과 함께 만들고, 유저의 기억에 남는 경험으로 남기는 것이 목표입니다.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -1634,7 +2097,7 @@
     const demoCardData = {
       F3lNKCKbV18: {
         title: "애니메이션 : 비비 전투 씬",
-        tags: ["2026.04", "SFX", "Foley", "Recording", "Amb", "Mixing", "Sci-fi"],
+        tags: ["2026.04", "SFX", "Foley", "Recording", "Mixing", "Sci-fi"],
         description: "- 비비(여캐), 안토니오(남캐)의 움직임관련 폴리 사운드 폴리레코딩(라이브러리와 섞어 사용)\n- 공상과학(Sci-fi)장르에 맞춰 사운드 컨셉 디자인"
       },
       q8ia_bmtQbk: {
@@ -1659,12 +2122,29 @@
       },
       vhVLFamdRqc: {
         title: "블루아카이브 인게임",
-        tags: ["2025.03", "In-game Design", "Casual", "Mobile", "Subculture"],
+        tags: ["2025.03", "In-game", "Casual", "Mobile", "Subculture"],
         description: "- 캐쥬얼, 서브컬쳐 장르 컨셉에 맞춰 디자인\n- Synth를 활용하여 스킬연출의 디자인 작업 진행\n- 피아식별을 사운드디자인 단계에서 음색(EQ) 분리로 게임의 인지적 명료도에 신경 씀\n- 서브컬쳐 특성상 CV가 들어갈 여력을 생각하여, 담백하게 표현하기 위해 노력"
       }
     };
 
+    const featuredVideoIds = new Set([
+      "MDBNyhRma7M",
+      "MRmu8VdbMWo",
+      "UxaEcneKJis",
+      "ouDMPZsXMMk",
+      "q8ia_bmtQbk",
+      "UOyXOPzXLCk",
+      "F3lNKCKbV18",
+      "vhVLFamdRqc",
+      "UYjxlb0pB0E",
+      "7-c8XV8SvRo",
+      "ifJN6Ghp5Pw",
+      "4j5Bgcllyqs"
+    ]);
+
     document.querySelectorAll("#demo > .wrap > .reel-grid:not(.legacy-portfolio) .video-card[data-video]").forEach((card) => {
+      card.classList.toggle("is-featured", featuredVideoIds.has(card.dataset.video));
+
       const data = demoCardData[card.dataset.video];
       if (!data) return;
 
