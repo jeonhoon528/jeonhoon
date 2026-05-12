@@ -1269,6 +1269,376 @@
       margin-top: 8px;
     }
 
+    .career-showcase {
+      inset: 64px 0 0;
+      align-items: flex-start;
+      padding: 0 22px 0;
+      background: rgba(0, 8, 22, .88);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+    }
+
+    .career-showcase.is-open {
+      animation: careerOverlayIn .28s ease forwards;
+    }
+
+    .career-showcase.is-closing {
+      animation: careerOverlayOut .24s ease forwards;
+    }
+
+    body.career-modal-open {
+      overflow: hidden;
+    }
+
+    .career-panel {
+      width: min(1420px, calc(100vw - 44px));
+      height: calc(100vh - 64px);
+      height: calc(100dvh - 64px);
+      max-height: none;
+      padding: 44px 44px 44px;
+      background: rgba(217, 217, 217, .96);
+      border-radius: 14px 14px 0 0;
+      transform: translateY(18px);
+      transition: transform .28s ease;
+      overscroll-behavior: contain;
+    }
+
+    .career-showcase.is-open .career-panel {
+      transform: translateY(0);
+    }
+
+    .career-close {
+      position: sticky;
+      top: 0;
+      z-index: 8;
+      float: right;
+      width: auto;
+      min-width: 160px;
+      height: 42px;
+      margin: 0 0 10px 18px;
+      padding: 0 22px;
+      border: 1px solid rgba(217,217,217,.48);
+      border-radius: 8px;
+      color: #06101c;
+      background: #d9d9d9;
+      box-shadow: 0 12px 28px rgba(0,0,0,.12);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .career-close:hover,
+    .career-close:focus-visible {
+      opacity: .88;
+      transform: translateY(-1px);
+      outline: 0;
+    }
+
+    .career-panel-head {
+      clear: both;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .career-panel-head .section-kicker {
+      margin-bottom: 8px;
+      color: #6f7885;
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: .02em;
+    }
+
+    .career-panel-head h2 {
+      color: #151b28;
+      font-size: 36px;
+      line-height: 1.15;
+      font-weight: 600;
+    }
+
+    .career-document {
+      display: grid;
+      gap: 18px;
+      padding-bottom: 26px;
+    }
+
+    .career-image-row {
+      display: grid;
+      gap: 18px;
+    }
+
+    .career-image-row.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .career-image-row.cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .career-image-row img {
+      width: 100%;
+      height: 222px;
+      object-fit: cover;
+      background: #bfc3c8;
+      display: block;
+    }
+
+    .career-image-row.compact img {
+      height: 222px;
+    }
+
+    .career-image-row.yeeum img {
+      height: 190px;
+    }
+
+    .career-image-row img[alt="ArcheAge Begins"] {
+      width: 150px;
+      height: 222px;
+      justify-self: center;
+    }
+
+    .career-resume-card,
+    .career-info-card {
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      gap: 48px;
+      padding: 40px;
+      background: rgba(255,255,255,.92);
+      border: 0;
+      border-radius: 18px;
+      box-shadow: 0 14px 34px rgba(0,0,0,.06);
+    }
+
+    .career-resume-meta strong {
+      display: block;
+      margin-bottom: 10px;
+      color: #063613;
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .career-resume-meta span {
+      display: block;
+      color: #48515f;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .career-resume-card h3,
+    .career-info-card h3 {
+      margin: 0 0 10px;
+      color: #0d1623;
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    .career-resume-card p,
+    .career-info-card p {
+      margin: 0 0 14px;
+      color: #4b5563;
+      font-size: 16px;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    .career-resume-card h3 + p,
+    .career-info-card h3 + p {
+      color: #050b12;
+    }
+
+    .career-resume-card h4 {
+      margin: 16px 0 4px;
+      color: #0d1623;
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .career-resume-card ul,
+    .career-info-card ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #4b5563;
+      font-size: 16px;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    .career-resume-card li + li,
+    .career-info-card li + li {
+      margin-top: 8px;
+    }
+
+    .career-bottom-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      padding-bottom: 28px;
+    }
+
+    .career-mini-card {
+      min-height: 180px;
+      padding: 28px 34px;
+      background: rgba(255,255,255,.92);
+      border-radius: 18px;
+      box-shadow: 0 14px 34px rgba(0,0,0,.05);
+    }
+
+    .career-mini-card h3 {
+      margin: 0 0 18px;
+      color: #0d1623;
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    .career-mini-card p {
+      margin: 0;
+      color: #4b5563;
+      font-size: 16px;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    .career-mini-card img {
+      width: 100%;
+      height: 132px;
+      margin-top: 12px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    /*
+      Legacy duplicated career rules below remain in the file from earlier iterations.
+      These later rules intentionally override them for the active generated modal.
+    */
+
+    .career-resume-meta strong {
+      color: #063613;
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 400;
+    }
+
+    .career-resume-meta span {
+      display: block;
+      color: #050b12;
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .career-resume-card h3,
+    .career-info-card h3 {
+      margin: 0 0 10px;
+      color: #050b12;
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .career-resume-card p,
+    .career-info-card p {
+      margin: 0 0 18px;
+      color: #303741;
+      font-size: 16px;
+      line-height: 1.55;
+      word-break: keep-all;
+    }
+
+    .career-resume-card h4 {
+      margin: 16px 0 4px;
+      color: #050b12;
+      font-size: 17px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .career-resume-card ul,
+    .career-info-card ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #050b12;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .career-bottom-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1.05fr 1.05fr .62fr;
+      gap: 18px;
+      padding-bottom: 28px;
+    }
+
+    .career-mini-card {
+      min-height: 180px;
+      padding: 28px 34px;
+      background: rgba(255,255,255,.92);
+      border-radius: 18px;
+      box-shadow: 0 14px 34px rgba(0,0,0,.05);
+    }
+
+    .career-mini-card h3 {
+      margin: 0 0 18px;
+      color: #050b12;
+      font-size: 26px;
+      line-height: 1.15;
+      font-weight: 600;
+    }
+
+    .career-mini-card p {
+      margin: 0;
+      color: #444b55;
+      font-size: 16px;
+      line-height: 1.8;
+      word-break: keep-all;
+    }
+
+    .career-resume-meta strong {
+      color: #063613;
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .career-resume-meta span {
+      color: #48515f;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .career-resume-card h3,
+    .career-info-card h3,
+    .career-mini-card h3 {
+      color: #0d1623;
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    .career-resume-card p,
+    .career-info-card p,
+    .career-resume-card ul,
+    .career-info-card ul,
+    .career-mini-card p {
+      color: #4b5563;
+      font-size: 16px;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    .career-resume-card h4 {
+      color: #0d1623;
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .career-bottom-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
     @media (max-width: 900px) {
       .nav-links,
       .date-pill {
@@ -1341,9 +1711,39 @@
       .career-grid-3,
       .career-project-grid,
       .career-skill-grid,
-      .career-section-title {
+      .career-section-title,
+      .career-resume-card,
+      .career-info-card,
+      .career-image-row.cols-3,
+      .career-image-row.cols-4,
+      .career-bottom-grid {
         grid-template-columns: 1fr;
       }
+
+      .career-panel {
+        width: calc(100vw - 28px);
+        padding: 24px 18px 32px;
+      }
+
+      .career-close {
+        min-width: 142px;
+      }
+
+      .career-image-row img,
+      .career-image-row.compact img {
+        height: 222px;
+      }
+
+      .career-image-row.yeeum img {
+        height: 190px;
+      }
+
+      .career-resume-card,
+      .career-info-card,
+      .career-mini-card {
+        padding: 24px;
+      }
+
     }
   </style>
 </head>
@@ -2359,6 +2759,198 @@ function closeCareer() {
             closeCareerModal();
         }
     });
+})();
+</script>
+<script>
+(() => {
+  const careerShowcase = document.querySelector("#career-showcase");
+  const careerPanel = careerShowcase?.querySelector(".career-panel");
+  const careerTrigger = document.querySelector(".career-trigger");
+
+  if (!careerShowcase || !careerPanel) return;
+
+  const image = (name, alt) => `<img src="assets/Career_Profile/${name}" alt="${alt}" loading="lazy">`;
+
+  careerPanel.innerHTML = `
+    <button class="career-close" type="button" aria-label="경력 기술서 닫기">ESC 눌러 닫기</button>
+    <div class="career-panel-head">
+      <p class="section-kicker">CAREER PROFILE</p>
+      <h2>경력 기술서</h2>
+    </div>
+
+    <div class="career-document">
+      <div class="career-image-row cols-3">
+        ${image("워헤이븐.png", "Warhaven")}
+        ${image("괴력난신.png", "Nahan prototype")}
+        ${image("로보타.png", "Robota prototype")}
+      </div>
+
+      <article class="career-resume-card">
+        <div class="career-resume-meta">
+          <strong>2022.01 - 재직 중</strong>
+          <span>넥슨 코리아</span>
+        </div>
+        <div>
+          <h3>워헤이븐, 신규 프로토타입 사운드 제작/구현</h3>
+          <p>워헤이븐과 신규 프로젝트에서 전투, 공간감, 보이스, 시스템 사운드 작업을 담당했습니다.</p>
+          <h4>&lt;워헤이븐&gt;</h4>
+          <ul>
+            <li>언리얼 엔진 4와 Wwise를 활용한 복잡한 타격 시스템과 동적 믹싱, 최적화 작업</li>
+            <li>한국, 영어권 해외 성우 캐스팅 및 톤 디렉팅, 계약 등 보이스 디렉팅 업무 참여</li>
+            <li>Ambience, SFX, Foley를 종합 설계해 게임의 몰입감과 공간감을 강화</li>
+          </ul>
+          <h4>&lt;Nahan&gt;</h4>
+          <ul>
+            <li>신규 사운드 기능을 위해 시스템 개발에 관련한 R&amp;D 수행</li>
+          </ul>
+          <h4>&lt;Robota&gt;</h4>
+          <ul>
+            <li>AI 활용 사운드 작업 방법 연구, Synth 기반 로봇 레트로 사운드 작업</li>
+          </ul>
+        </div>
+      </article>
+
+      <div class="career-image-row cols-4 compact">
+        ${image("아키에이지.png", "ArcheAge")}
+        ${image("아키에이지비긴즈.png.png", "ArcheAge Begins")}
+        ${image("문명온라인.png", "Civilization Online")}
+        ${image("달빛조각사.png", "Moonlight Sculptor")}
+      </div>
+
+      <article class="career-resume-card">
+        <div class="career-resume-meta">
+          <strong>2017.04 - 2022.01</strong>
+          <span>엑스엘 게임즈</span>
+        </div>
+        <div>
+          <h3>다중 프로젝트 사운드 디자인 및 엔진 적용</h3>
+          <p>문명 온라인, 아키에이지, 달빛조각사, 아키에이지 비긴즈 등에서 프로젝트별 개발 방식에 맞춰 실무를 수행했습니다.</p>
+          <ul>
+            <li>Unity, CryEngine, Unreal Engine 환경에서 사운드 적용, 버그 이슈 처리</li>
+            <li>아키에이지2 초기 테스트용 빌드를 위한 리소스 제작 및 초기 구현 요청 작업 진행</li>
+            <li>달빛 조각사 초기부터 라이브 서비스 이후 대규모 업데이트까지 전체 개발 사이클 경험 및 파이프라인 구축</li>
+            <li>사운드팀 내 장기 근속 구성원으로 업무 분담, 검수, 일정 대응을 안정적으로 수행</li>
+          </ul>
+        </div>
+      </article>
+
+      <div class="career-image-row cols-3 compact">
+        ${image("라이브톤1.png", "Livetone studio")}
+        ${image("라이브톤2.png", "Livetone recording room")}
+        ${image("라이브톤3.png", "Livetone mixing room")}
+      </div>
+
+      <article class="career-resume-card">
+        <div class="career-resume-meta">
+          <strong>2015.06 - 2015.08</strong>
+          <span>라이브톤</span>
+        </div>
+        <div>
+          <h3>영화 음향 후반작업</h3>
+          <p>ADR, Dialogue, Foley 등 사운드 후반작업 공정을 경험하며 게임 사운드에 응용 가능한 녹음과 편집 감각을 경험했습니다.</p>
+          <ul>
+            <li>영화 사도, 탐정: 더 비기닝의 실제 세션을 통해 음향 후반작업 학습</li>
+            <li>대사 톤 정리, 밸런싱, 음향 후반작업 공정 학습</li>
+            <li>인턴 과정에서 극장 표준 음향을 기반으로 하는 작업 내용 학습</li>
+            <li>음성 녹음에 대한 기술, 톤 작업, Foley 리소스 녹음 등의 게임 개발에 연결되는 실무 기반 학습</li>
+          </ul>
+        </div>
+      </article>
+
+      <div class="career-image-row cols-4 compact yeeum">
+        ${image("예음1.png", "Yeeum studio control room")}
+        ${image("예음2.png", "Yeeum recording room")}
+        ${image("예음3.png", "Yeeum ensemble room")}
+        ${image("예음4.png", "Yeeum session room")}
+      </div>
+
+      <article class="career-resume-card">
+        <div class="career-resume-meta">
+          <strong>2014.08 - 2015.04</strong>
+          <span>예음 녹음실</span>
+        </div>
+        <div>
+          <h3>레코딩 어시스턴트</h3>
+          <p>다양한 세션 녹음 현장에서 안정적인 레코딩 믹싱에 대한 기본기를 다졌습니다.</p>
+          <ul>
+            <li>24인 풀 밴드 합주 세션 녹음 진행, 드럼, 브라스, 현악기, 피아노, 리듬 섹션, 밴드 악기 등</li>
+            <li>뮤지컬 &lt;바람과 함께 사라지다&gt; 레코딩 작업 참여 (출연진, 마이클리, 바다 외 다수)</li>
+            <li>재즈, 국악, 발라드 등 보컬, 기악 녹음 참여</li>
+            <li>믹싱룸, 메인녹음룸, 드럼룸, 피아노룸, 보조녹음룸 2개 구성으로 국내에서 녹음실 규모로는 손꼽히는 스튜디오</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="career-info-card">
+        <div>
+          <h3>사용 장비</h3>
+        </div>
+        <div>
+          <p>DAW - Protools, Reaper<br>
+          Interface - RME Babyface Pro FS<br>
+          Monitor - Genelec 8030D, Sennheiser HD600<br>
+          Microphone - RODE NT5 2EA<br>
+          Recorder - Zoom H5<br>
+          Plugin - Fabfilter, Soundtoys, Softube, Oeksound, Kilohearts, Izotope, Boom, Soundtheory, DearReality, Oxford, Meldaproduct, Devious Machines, Waves, Boz digital labs, etc...</p>
+        </div>
+      </article>
+
+      <div class="career-bottom-grid">
+        <article class="career-mini-card">
+          <h3>개발 엔진</h3>
+          <p>Unreal, Unity, CryEngine<br>Wwise, Fmod 환경 경험</p>
+        </article>
+        <article class="career-mini-card">
+          <h3>참여 프로젝트</h3>
+          <p>워헤이븐 : 액션 PVP<br>아키에이지 : PC, MMORPG<br>달빛조각사 : Mobile, Casual<br>아키에이지 비긴즈 : 수집형 MMO</p>
+        </article>
+        <article class="career-mini-card">
+          <h3>강점</h3>
+          <p>감각이 아닌 수치와 구조적 확인<br>UX 관점과 네러티브적 접근<br>관찰력, 자가 피드백을 통한 분석<br>Foley, Ambience, R&amp;D</p>
+        </article>
+        <article class="career-mini-card">
+          <h3>Plugin List<br>펼쳐 보기</h3>
+          ${image("image 31.png", "Plugin List")}
+        </article>
+      </div>
+    </div>
+  `;
+
+  const closeButton = careerPanel.querySelector(".career-close");
+
+  function markOpen() {
+    document.body.classList.add("career-modal-open");
+    careerPanel.scrollTop = 0;
+    closeButton?.focus();
+  }
+
+  function closeCareer() {
+    if (!careerShowcase.classList.contains("is-open")) return;
+    careerShowcase.classList.remove("is-open");
+    careerShowcase.classList.add("is-closing");
+    careerShowcase.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("career-modal-open");
+  }
+
+  careerTrigger?.addEventListener("click", () => {
+    window.setTimeout(markOpen, 0);
+  });
+
+  closeButton?.addEventListener("click", closeCareer);
+
+  careerShowcase.addEventListener("click", (event) => {
+    if (event.target === careerShowcase) closeCareer();
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeCareer();
+  });
+
+  careerShowcase.addEventListener("animationend", () => {
+    if (careerShowcase.classList.contains("is-closing")) {
+      document.body.classList.remove("career-modal-open");
+    }
+  });
 })();
 </script>
 </body>
