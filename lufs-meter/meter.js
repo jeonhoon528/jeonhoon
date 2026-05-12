@@ -6,6 +6,8 @@
   meter. The main approximations are:
   - K-weighting is implemented with RBJ biquad high-pass/high-shelf filters,
     not the exact coefficient set used by certified meters.
+  - Browser tab audio is captured through getDisplayMedia. YouTube iframe audio
+    cannot be routed directly into Web Audio because of browser security policy.
   - Multichannel input is summed with equal channel weights.
   - True Peak currently displays sample peak max. TODO: add oversampling.
 */
@@ -278,7 +280,7 @@ function handleAudioProcess(event) {
     }
 
     // For multichannel material BS.1770 sums weighted channel energies.
-    // Mic/interface input is commonly mono or stereo; surround weights are not applied here.
+    // Captured browser/tab audio is usually mono or stereo; surround weights are not applied here.
     blockEnergySum += frameEnergy;
     blockFrameCount += 1;
     addShortTermEnergy(frameEnergy);
@@ -289,25 +291,45 @@ function handleAudioProcess(event) {
   }
 }
 
+async function requestBrowserOutputStream() {
+  if (!navigator.mediaDevices?.getDisplayMedia) {
+    throw new Error("이 브라우저는 탭/화면 오디오 공유(getDisplayMedia)를 지원하지 않습니다.");
+  }
+
+  const captureStream = await navigator.mediaDevices.getDisplayMedia({
+    video: true,
+    audio: {
+      echoCancellation: false,
+      noiseSuppression: false,
+      autoGainControl: false,
+      suppressLocalAudioPlayback: false
+    }
+  });
+
+  const audioTracks = captureStream.getAudioTracks();
+  if (!audioTracks.length) {
+    captureStream.getTracks().forEach((track) => track.stop());
+    throw new Error("공유 창에서 '탭 오디오 공유' 또는 '시스템 오디오 공유'를 선택해야 합니다.");
+  }
+
+  captureStream.getTracks().forEach((track) => {
+    track.addEventListener("ended", () => {
+      if (running) stopMeter();
+    });
+  });
+
+  return captureStream;
+}
+
 async function startMeter() {
   if (running) return;
   try {
-    if (!navigator.mediaDevices?.getUserMedia) {
-      throw new Error("이 브라우저는 getUserMedia를 지원하지 않습니다.");
-    }
-
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
     sampleRate = audioContext.sampleRate;
     blockSizeFrames = Math.round(sampleRate * BLOCK_SECONDS);
     resetAnalysis();
 
-    stream = await navigator.mediaDevices.getUserMedia({
-      audio: {
-        echoCancellation: false,
-        noiseSuppression: false,
-        autoGainControl: false
-      }
-    });
+    stream = await requestBrowserOutputStream();
 
     source = audioContext.createMediaStreamSource(stream);
 
@@ -321,10 +343,10 @@ async function startMeter() {
     running = true;
     els.start.disabled = true;
     els.stop.disabled = false;
-    setStatus("분석 중입니다. 입력 레벨에 따라 LUFS, LRA, Peak 값이 갱신됩니다.");
+    setStatus("브라우저 탭 오디오를 분석 중입니다. YouTube 재생 신호에 따라 LUFS, LRA, Peak 값이 갱신됩니다.");
   } catch (error) {
     stopMeter();
-    setStatus(`오디오 입력을 시작할 수 없습니다: ${error.message}`, true);
+    setStatus(`브라우저 오디오 공유를 시작할 수 없습니다: ${error.message}`, true);
   }
 }
 

@@ -14,14 +14,14 @@
         <h1>Web LUFS Meter</h1>
       </div>
       <div class="transport" aria-label="Meter controls">
-        <button id="startButton" type="button">Start</button>
+        <button id="startButton" type="button">Start Tab Audio</button>
         <button id="stopButton" type="button" disabled>Stop</button>
         <button id="resetButton" type="button">Reset</button>
       </div>
     </header>
 
     <section class="status-panel" aria-live="polite">
-      <span id="statusText">Start를 누르면 마이크/오디오 인터페이스 입력 권한을 요청합니다.</span>
+      <span id="statusText">Start를 누르면 브라우저 탭 오디오 공유 권한을 요청합니다. YouTube가 재생되는 현재 탭과 오디오 공유를 선택하세요.</span>
       <span class="calibration-note">Approx. ITU-R BS.1770-4 · K-weighting · 400ms blocks</span>
     </section>
 
@@ -104,7 +104,8 @@
       <article class="meter-card note-card">
         <h2>Implementation Notes</h2>
         <p>
-          이 미터는 브라우저 Web Audio API 기반의 근사 구현입니다. K-weighting은 RBJ biquad 기반의 high-pass와 high-shelf 필터로 근사했고,
+          이 미터는 브라우저 탭 오디오 캡처와 Web Audio API 기반의 근사 구현입니다. YouTube iframe 오디오는 직접 연결할 수 없어서,
+          브라우저의 탭 오디오 공유 권한을 통해 들어온 출력 신호를 분석합니다. K-weighting은 RBJ biquad 기반의 high-pass와 high-shelf 필터로 근사했고,
           Integrated LUFS는 400ms block, absolute gate -70 LUFS, relative gate를 적용합니다.
         </p>
         <p>

@@ -635,6 +635,36 @@
       border: 0;
     }
 
+    .reel-showcase.has-meter .reel-panel-frame {
+      aspect-ratio: auto;
+      min-height: 0;
+      overflow: visible;
+      background: transparent;
+    }
+
+    .reel-media-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .reel-video-slot,
+    .reel-meter-slot {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #000;
+    }
+
+    .reel-video-slot {
+      aspect-ratio: 16 / 9;
+    }
+
+    .reel-meter-slot {
+      height: 420px;
+      background: #1b1f23;
+      border: 1px solid rgba(217,217,217,.14);
+    }
+
     .reel-panel-copy {
       padding: 30px 44px 30px 0;
       display: flex;
@@ -837,7 +867,7 @@
             <div class="video-frame"><img src="https://img.youtube.com/vi/q8ia_bmtQbk/hqdefault.jpg" alt="포스포큰 인게임 포트폴리오"></div>
             <div class="video-meta"><strong>포스포큰 인게임 포트폴리오</strong><div class="card-tags"><span>2024.06</span><span>Skill Design</span><span>Console</span><span>Elemental Magic</span></div></div>
           </article>
-          <article class="video-card" tabindex="0" role="button" data-tool-src="lufs-meter/index.html" data-title="Web LUFS Meter R&amp;D" data-tags="2026,R&amp;D,Web Audio API,LUFS Meter" data-description="- 브라우저 마이크/오디오 인터페이스 입력을 기반으로 실시간 LUFS 미터를 구현한 R&amp;D 작업입니다.&#10;- K-weighting, 400ms block, absolute/relative gate 기반 Integrated LUFS, 3초 Short-term LUFS, LRA, Peak Max, Distribution View를 포함합니다.&#10;- True Peak는 현재 sample peak max 기반 근사이며, 코드에 oversampling TODO를 남겼습니다.">
+          <article class="video-card" tabindex="0" role="button" data-tool-src="lufs-meter/index.html" data-title="Web LUFS Meter R&amp;D" data-tags="2026,R&amp;D,Web Audio API,LUFS Meter" data-description="- 브라우저 탭 오디오 공유 신호를 기반으로 실시간 LUFS 미터를 구현한 R&amp;D 작업입니다.&#10;- YouTube iframe 오디오는 직접 연결할 수 없어 getDisplayMedia 기반 탭 오디오 캡처 방식으로 분석합니다.&#10;- K-weighting, 400ms block, absolute/relative gate 기반 Integrated LUFS, 3초 Short-term LUFS, LRA, Peak Max, Distribution View를 포함합니다.&#10;- True Peak는 현재 sample peak max 기반 근사이며, 코드에 oversampling TODO를 남겼습니다.">
             <div class="video-frame tool-frame">
               <div class="tool-preview" aria-hidden="true">
                 <div class="tool-preview-board">
@@ -1088,10 +1118,20 @@
         reelDescription.appendChild(link);
       }
       reelShowcase.classList.toggle("is-tool", isTool);
+      reelShowcase.classList.toggle("has-meter", !isTool);
       if (isTool) {
-        reelFrame.innerHTML = `<iframe src="${toolSrc}" title="${card.dataset.title || "Portfolio tool"}" allow="microphone"></iframe>`;
+        reelFrame.innerHTML = `<iframe src="${toolSrc}" title="${card.dataset.title || "Portfolio tool"}" allow="display-capture; microphone"></iframe>`;
       } else {
-        reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+        reelFrame.innerHTML = `
+          <div class="reel-media-stack">
+            <div class="reel-video-slot">
+              <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="reel-meter-slot">
+              <iframe src="lufs-meter/index.html" title="Web LUFS Meter" allow="display-capture; microphone"></iframe>
+            </div>
+          </div>
+        `;
       }
       reelShowcase.classList.remove("is-closing");
       reelShowcase.classList.add("is-open");
@@ -1123,6 +1163,7 @@
       if (reelShowcase.classList.contains("is-closing")) {
         reelShowcase.classList.remove("is-closing");
         reelShowcase.classList.remove("is-tool");
+        reelShowcase.classList.remove("has-meter");
         reelFrame.innerHTML = "";
       }
     });
