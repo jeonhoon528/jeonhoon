@@ -609,11 +609,11 @@
 
     .reel-panel {
       position: relative;
-      max-width: 1650px;
+      max-width: 1900px;
       margin: 0 auto;
       padding: 28px 0;
       display: grid;
-      grid-template-columns: 7fr 3fr;
+      grid-template-columns: minmax(0, 7fr) minmax(600px, 3fr);
       gap: 24px;
       align-items: stretch;
     }
@@ -636,33 +636,34 @@
     }
 
     .reel-showcase.has-meter .reel-panel-frame {
-      aspect-ratio: auto;
+      aspect-ratio: 16 / 9;
       min-height: 0;
-      overflow: visible;
-      background: transparent;
-    }
-
-    .reel-media-stack {
-      display: grid;
-      gap: 14px;
-    }
-
-    .reel-video-slot,
-    .reel-meter-slot {
-      position: relative;
       overflow: hidden;
-      border-radius: 8px;
       background: #000;
     }
 
-    .reel-video-slot {
-      aspect-ratio: 16 / 9;
-    }
-
-    .reel-meter-slot {
-      height: 420px;
+    .reel-meter-container {
+      position: relative;
+      display: none;
+      overflow: hidden;
+      height: min(43vw, 620px);
+      min-height: 430px;
+      margin-top: 26px;
+      border-radius: 8px;
       background: #1b1f23;
       border: 1px solid rgba(217,217,217,.14);
+    }
+
+    .reel-showcase.has-meter .reel-meter-container {
+      display: block;
+    }
+
+    .reel-meter-container iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
 
     .reel-panel-copy {
@@ -775,6 +776,7 @@
       .contact-form { grid-template-columns: 1fr; max-width: 100%; }
       .reel-panel { grid-template-columns: 1fr; gap: 16px; }
       .reel-panel-frame { min-height: 0; }
+      .reel-meter-container { height: 520px; min-height: 420px; }
       .reel-panel-copy { padding: 0 48px 24px 0; }
     }
   </style>
@@ -803,6 +805,7 @@
           <h3 id="reel-panel-title"></h3>
           <div class="reel-tags" id="reel-panel-tags" aria-label="Video tags"></div>
           <p id="reel-panel-description"></p>
+          <div class="reel-meter-container" id="reel-panel-meter"></div>
           <button class="reel-escape-button" type="button">ESC 눌러 닫기</button>
         </div>
       </div>
@@ -1078,6 +1081,7 @@
     const reelTitle = document.querySelector("#reel-panel-title");
     const reelTags = document.querySelector("#reel-panel-tags");
     const reelDescription = document.querySelector("#reel-panel-description");
+    const reelMeter = document.querySelector("#reel-panel-meter");
     const reelClose = document.querySelector(".reel-close");
     const reelEscapeButton = document.querySelector(".reel-escape-button");
 
@@ -1121,17 +1125,10 @@
       reelShowcase.classList.toggle("has-meter", !isTool);
       if (isTool) {
         reelFrame.innerHTML = `<iframe src="${toolSrc}" title="${card.dataset.title || "Portfolio tool"}" allow="display-capture; microphone"></iframe>`;
+        reelMeter.innerHTML = "";
       } else {
-        reelFrame.innerHTML = `
-          <div class="reel-media-stack">
-            <div class="reel-video-slot">
-              <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="reel-meter-slot">
-              <iframe src="lufs-meter/index.html" title="Web LUFS Meter" allow="display-capture; microphone"></iframe>
-            </div>
-          </div>
-        `;
+        reelFrame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="${card.dataset.title || "Demo reel"}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+        reelMeter.innerHTML = `<iframe src="lufs-meter/index.html" title="Web LUFS Meter" allow="display-capture; microphone"></iframe>`;
       }
       reelShowcase.classList.remove("is-closing");
       reelShowcase.classList.add("is-open");
@@ -1165,6 +1162,7 @@
         reelShowcase.classList.remove("is-tool");
         reelShowcase.classList.remove("has-meter");
         reelFrame.innerHTML = "";
+        reelMeter.innerHTML = "";
       }
     });
     window.addEventListener("keydown", (event) => {

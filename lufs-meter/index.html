@@ -8,7 +8,7 @@
 </head>
 <body>
   <main class="meter-app">
-    <header class="meter-header">
+    <header class="meter-toolbar">
       <div>
         <p class="eyebrow">Realtime Loudness Meter</p>
         <h1>Web LUFS Meter</h1>
@@ -22,97 +22,63 @@
 
     <section class="status-panel" aria-live="polite">
       <span id="statusText">Start를 누르면 브라우저 탭 오디오 공유 권한을 요청합니다. YouTube가 재생되는 현재 탭과 오디오 공유를 선택하세요.</span>
-      <span class="calibration-note">Approx. ITU-R BS.1770-4 · K-weighting · 400ms blocks</span>
+      <span class="calibration-note">Approx. ITU-R BS.1770-4 / K-weighting / 400ms blocks</span>
     </section>
 
-    <section class="readouts" aria-label="Loudness values">
-      <article>
-        <span>Integrated</span>
-        <strong id="integratedValue">--.-</strong>
-        <em>LUFS</em>
-      </article>
-      <article>
-        <span>Short-term</span>
-        <strong id="shortTermValue">--.-</strong>
-        <em>LUFS / 3s</em>
-      </article>
-      <article>
-        <span>LRA</span>
-        <strong id="lraValue">--.-</strong>
-        <em>LU</em>
-      </article>
-      <article>
-        <span>Peak Max</span>
-        <strong id="peakValue">--.-</strong>
-        <em>dBFS</em>
-      </article>
-    </section>
-
-    <section class="meter-layout">
-      <article class="meter-card vertical-card">
-        <div class="card-head">
-          <h2>Integrated LUFS</h2>
-          <span>Gated</span>
-        </div>
-        <div class="vertical-meter" id="integratedMeter" aria-label="Integrated LUFS vertical meter">
-          <div class="target-line" title="-24 LUFS"></div>
+    <section class="meter-stage" aria-label="LUFS meter">
+      <article class="meter-column integrated-column">
+        <h2>Integrated</h2>
+        <div class="scale-meter integrated-meter" aria-label="Integrated LUFS vertical meter">
+          <div class="target-line"></div>
           <div class="peak-zone"></div>
-          <div class="meter-fill" id="integratedFill"></div>
+          <div class="meter-fill integrated-fill" id="integratedFill"></div>
           <div class="ticks" id="integratedTicks"></div>
         </div>
-        <div class="big-number"><span id="integratedBottom">--.-</span><small>LUFS</small></div>
+        <div class="large-value"><span id="integratedBottom">--.-</span><small>LUFS</small></div>
       </article>
 
-      <article class="meter-card vertical-card">
-        <div class="card-head">
-          <h2>LRA</h2>
-          <span>Short-term distribution</span>
+      <article class="meter-column lra-column">
+        <h2>LRA</h2>
+        <div class="peak-readout">
+          <span>Peak</span>
+          <strong id="peakValue">--.-</strong>
         </div>
-        <div class="vertical-meter lra-meter" aria-label="Loudness range vertical meter">
-          <div class="meter-fill" id="lraFill"></div>
+        <div class="scale-meter lra-meter" aria-label="Loudness range vertical meter">
+          <div class="lra-peak-band"></div>
+          <div class="lra-good-band"></div>
+          <div class="meter-fill lra-fill" id="lraFill"></div>
+          <div class="lra-label">Over Watch 2</div>
           <div class="lra-ticks">
-            <span style="bottom: 0%">0</span>
-            <span style="bottom: 25%">5</span>
-            <span style="bottom: 50%">10</span>
-            <span style="bottom: 75%">15</span>
-            <span style="bottom: 100%">20</span>
+            <span style="bottom: 100%">6</span>
+            <span style="bottom: 92%">0</span>
+            <span style="bottom: 84%">-6</span>
+            <span style="bottom: 72%">-12</span>
+            <span style="bottom: 54%">-18</span>
+            <span class="target-tick" style="bottom: 46%">-24</span>
+            <span style="bottom: 38%">-27</span>
+            <span style="bottom: 26%">-36</span>
+            <span style="bottom: 12%">-45</span>
+            <span style="bottom: 0%">-54</span>
           </div>
         </div>
-        <div class="big-number"><span id="lraBottom">--.-</span><small>LU</small></div>
+        <div class="large-value"><span id="lraBottom">--.-</span><small>LU</small></div>
       </article>
 
-      <article class="meter-card distribution-card">
-        <div class="card-head">
-          <h2>Loudness Distribution</h2>
-          <span>400ms block histogram</span>
+      <article class="distribution-column">
+        <h2>Loudness Distribution</h2>
+        <div class="distribution-plot" id="distributionView" aria-label="Loudness distribution histogram"></div>
+        <div class="summary-row">
+          <p><strong>Integrated</strong><span><b id="integratedValue">--.-</b> LUFS</span></p>
+          <p><strong>LRA</strong><span><b id="lraValue">--.-</b> LU</span></p>
+          <p class="true-peak"><strong>True Peak Max</strong><span><b id="peakSummary">--.-</b> dB</span></p>
         </div>
-        <div class="distribution" id="distributionView" aria-label="Loudness distribution histogram"></div>
       </article>
     </section>
 
-    <section class="scope-row">
-      <article class="meter-card realtime-card">
-        <div class="card-head">
-          <h2>Realtime LUFS Level</h2>
-          <span id="realtimeValue">--.- LUFS</span>
-        </div>
-        <div class="horizontal-meter">
-          <div class="horizontal-target"></div>
-          <div class="horizontal-fill" id="realtimeFill"></div>
-        </div>
-      </article>
-      <article class="meter-card note-card">
-        <h2>Implementation Notes</h2>
-        <p>
-          이 미터는 브라우저 탭 오디오 캡처와 Web Audio API 기반의 근사 구현입니다. YouTube iframe 오디오는 직접 연결할 수 없어서,
-          브라우저의 탭 오디오 공유 권한을 통해 들어온 출력 신호를 분석합니다. K-weighting은 RBJ biquad 기반의 high-pass와 high-shelf 필터로 근사했고,
-          Integrated LUFS는 400ms block, absolute gate -70 LUFS, relative gate를 적용합니다.
-        </p>
-        <p>
-          True Peak는 정확한 oversampling이 필요한 영역이라 현재는 sample peak max로 표시합니다.
-          <!-- TODO: Add 4x oversampling true-peak estimation for closer BS.1770 validation. -->
-        </p>
-      </article>
+    <section class="hidden-readouts" aria-hidden="true">
+      <span id="shortTermValue">--.-</span>
+      <span id="realtimeValue">--.- LUFS</span>
+      <div class="horizontal-meter"><div class="horizontal-fill" id="realtimeFill"></div></div>
     </section>
   </main>
 

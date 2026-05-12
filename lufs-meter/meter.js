@@ -19,6 +19,8 @@ const MIN_METER_LUFS = -54;
 const MAX_METER_LUFS = 0;
 const BLOCK_SECONDS = 0.4;
 const SHORT_TERM_SECONDS = 3;
+const SHORT_TERM_RECORD_MS = 250;
+const DISPLAY_SMOOTHING = 0.32;
 const LRA_MAX = 20;
 const HISTOGRAM_MIN = -60;
 const HISTOGRAM_MAX = 0;
@@ -37,6 +39,7 @@ const els = {
   lraValue: document.querySelector("#lraValue"),
   lraBottom: document.querySelector("#lraBottom"),
   peakValue: document.querySelector("#peakValue"),
+  peakSummary: document.querySelector("#peakSummary"),
   realtimeValue: document.querySelector("#realtimeValue"),
   integratedFill: document.querySelector("#integratedFill"),
   realtimeFill: document.querySelector("#realtimeFill"),
@@ -60,12 +63,18 @@ let shortTermCount = 0;
 let shortTermEnergySum = 0;
 let shortTermHistory = [];
 let histogramBins = [];
+let distributionRows = [];
 let biquadChains = [];
 let peakMax = 0;
 let realtimeLufs = Number.NEGATIVE_INFINITY;
 let integratedLufs = Number.NEGATIVE_INFINITY;
 let shortTermLufs = Number.NEGATIVE_INFINITY;
 let lraValue = 0;
+let displayIntegratedLufs = Number.NEGATIVE_INFINITY;
+let displayShortTermLufs = Number.NEGATIVE_INFINITY;
+let displayRealtimeLufs = Number.NEGATIVE_INFINITY;
+let displayLraValue = 0;
+let displayPeakDb = Number.NEGATIVE_INFINITY;
 let running = false;
 let lastShortTermRecord = 0;
 
@@ -215,12 +224,19 @@ function resetAnalysis() {
   shortTermEnergySum = 0;
   shortTermHistory = [];
   histogramBins = Array.from({ length: Math.ceil((HISTOGRAM_MAX - HISTOGRAM_MIN) / HISTOGRAM_STEP) }, () => 0);
+  distributionRows = [];
+  els.distribution.innerHTML = "";
   biquadChains = [];
   peakMax = 0;
   realtimeLufs = Number.NEGATIVE_INFINITY;
   integratedLufs = Number.NEGATIVE_INFINITY;
   shortTermLufs = Number.NEGATIVE_INFINITY;
   lraValue = 0;
+  displayIntegratedLufs = Number.NEGATIVE_INFINITY;
+  displayShortTermLufs = Number.NEGATIVE_INFINITY;
+  displayRealtimeLufs = Number.NEGATIVE_INFINITY;
+  displayLraValue = 0;
+  displayPeakDb = Number.NEGATIVE_INFINITY;
   lastShortTermRecord = 0;
   render();
 }
@@ -382,11 +398,18 @@ function formatLufs(value) {
   return Number.isFinite(value) ? value.toFixed(1) : "--.-";
 }
 
+function smoothValue(current, target, amount = DISPLAY_SMOOTHING) {
+  if (!Number.isFinite(target)) return current;
+  if (!Number.isFinite(current)) return target;
+  return current + (target - current) * amount;
+}
+
 function renderTicks() {
   els.integratedTicks.innerHTML = "";
   TICKS.forEach((tickValue) => {
     const tick = document.createElement("div");
     tick.className = "tick";
+    if (tickValue === TARGET_LUFS) tick.classList.add("is-target");
     tick.style.bottom = `${lufsToMeterPercent(tickValue)}%`;
     tick.innerHTML = `<strong>${tickValue}</strong>`;
     els.integratedTicks.appendChild(tick);
@@ -395,21 +418,33 @@ function renderTicks() {
 
 function renderDistribution() {
   const maxCount = Math.max(1, ...histogramBins);
-  els.distribution.innerHTML = "";
+
+  if (distributionRows.length !== histogramBins.length) {
+    els.distribution.innerHTML = "";
+    distributionRows = [];
+    for (let upper = HISTOGRAM_MAX; upper > HISTOGRAM_MIN; upper -= HISTOGRAM_STEP) {
+      const lower = upper - HISTOGRAM_STEP;
+      const row = document.createElement("div");
+      row.className = "dist-row";
+      if (upper > -3) row.classList.add("is-peak");
+      if (lower <= TARGET_LUFS && TARGET_LUFS < upper) row.classList.add("is-target");
+      row.innerHTML = `
+        <div class="dist-label">${upper}</div>
+        <div class="dist-track"><div class="dist-bar"></div></div>
+        <div class="dist-label">${upper}</div>
+      `;
+      els.distribution.appendChild(row);
+      distributionRows.push(row);
+    }
+  }
 
   for (let upper = HISTOGRAM_MAX; upper > HISTOGRAM_MIN; upper -= HISTOGRAM_STEP) {
     const lower = upper - HISTOGRAM_STEP;
     const index = Math.floor((lower - HISTOGRAM_MIN) / HISTOGRAM_STEP);
     const count = histogramBins[index] || 0;
-    const row = document.createElement("div");
-    row.className = "dist-row";
-    if (upper > -3) row.classList.add("is-peak");
-    if (lower <= TARGET_LUFS && TARGET_LUFS < upper) row.classList.add("is-target");
-    row.innerHTML = `
-      <div class="dist-label">${upper}</div>
-      <div class="dist-track"><div class="dist-bar" style="width:${(count / maxCount) * 100}%"></div></div>
-    `;
-    els.distribution.appendChild(row);
+    const rowIndex = Math.floor((HISTOGRAM_MAX - upper) / HISTOGRAM_STEP);
+    const bar = distributionRows[rowIndex]?.querySelector(".dist-bar");
+    if (bar) bar.style.width = `${Math.max(1, (count / maxCount) * 100)}%`;
   }
 }
 
@@ -419,23 +454,33 @@ function render() {
   }
 
   const now = performance.now();
-  if (running && Number.isFinite(shortTermLufs) && now - lastShortTermRecord > 1000) {
+  if (running && Number.isFinite(shortTermLufs) && now - lastShortTermRecord > SHORT_TERM_RECORD_MS) {
     shortTermHistory.push(shortTermLufs);
     lastShortTermRecord = now;
     lraValue = computeLra();
   }
 
-  els.integratedValue.textContent = formatLufs(integratedLufs);
-  els.integratedBottom.textContent = formatLufs(integratedLufs);
-  els.shortTermValue.textContent = formatLufs(shortTermLufs);
-  els.realtimeValue.textContent = `${formatLufs(realtimeLufs)} LUFS`;
-  els.lraValue.textContent = lraValue ? lraValue.toFixed(1) : "--.-";
-  els.lraBottom.textContent = lraValue ? lraValue.toFixed(1) : "--.-";
-  els.peakValue.textContent = Number.isFinite(linearToDb(peakMax)) ? linearToDb(peakMax).toFixed(1) : "--.-";
+  const peakDb = linearToDb(peakMax);
+  displayIntegratedLufs = smoothValue(displayIntegratedLufs, integratedLufs);
+  displayShortTermLufs = smoothValue(displayShortTermLufs, shortTermLufs, 0.42);
+  displayRealtimeLufs = smoothValue(displayRealtimeLufs, realtimeLufs, 0.58);
+  displayLraValue = smoothValue(displayLraValue, lraValue, 0.24);
+  displayPeakDb = smoothValue(displayPeakDb, peakDb, 0.7);
 
-  els.integratedFill.style.height = `${lufsToMeterPercent(integratedLufs)}%`;
-  els.realtimeFill.style.width = `${lufsToMeterPercent(realtimeLufs)}%`;
-  els.lraFill.style.height = `${Math.min(100, (lraValue / LRA_MAX) * 100)}%`;
+  els.integratedValue.textContent = formatLufs(displayIntegratedLufs);
+  els.integratedBottom.textContent = formatLufs(displayIntegratedLufs);
+  els.shortTermValue.textContent = formatLufs(displayShortTermLufs);
+  els.realtimeValue.textContent = `${formatLufs(displayRealtimeLufs)} LUFS`;
+  els.lraValue.textContent = displayLraValue ? displayLraValue.toFixed(1) : "--.-";
+  els.lraBottom.textContent = displayLraValue ? displayLraValue.toFixed(1) : "--.-";
+  els.peakValue.textContent = Number.isFinite(displayPeakDb) ? displayPeakDb.toFixed(1) : "--.-";
+  if (els.peakSummary) {
+    els.peakSummary.textContent = Number.isFinite(displayPeakDb) ? displayPeakDb.toFixed(1) : "--.-";
+  }
+
+  els.integratedFill.style.height = `${lufsToMeterPercent(displayIntegratedLufs)}%`;
+  els.realtimeFill.style.width = `${lufsToMeterPercent(displayRealtimeLufs)}%`;
+  els.lraFill.style.height = `${Math.min(100, (displayLraValue / LRA_MAX) * 100)}%`;
   renderDistribution();
 }
 
