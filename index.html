@@ -2869,6 +2869,8 @@ function closeCareer() {
   if (!careerShowcase || !careerPanel) return;
 
   const image = (name, alt) => `<img src="assets/Career_Profile/${name}" alt="${alt}" loading="lazy">`;
+  const pageParams = new URLSearchParams(window.location.search);
+  const isCareerShortcut = pageParams.get("shortcut") === "career-modal";
 
   careerPanel.innerHTML = `
     <button class="career-close" type="button" aria-label="경력 기술서 닫기">ESC 눌러 닫기</button>
@@ -3049,11 +3051,26 @@ function closeCareer() {
     careerShowcase.classList.add("is-closing");
     careerShowcase.setAttribute("aria-hidden", "true");
     document.body.classList.remove("career-modal-open");
+    if (isCareerShortcut) {
+      window.setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 80);
+    }
   }
 
   careerTrigger?.addEventListener("click", () => {
     window.setTimeout(markOpen, 0);
   });
+
+  const shouldOpenCareerFromShortcut =
+    pageParams.get("career") === "profile" ||
+    window.location.hash === "#career-profile-modal";
+
+  if (shouldOpenCareerFromShortcut) {
+    window.setTimeout(() => {
+      careerTrigger?.click();
+    }, 120);
+  }
 
   closeButton?.addEventListener("click", closeCareer);
 
