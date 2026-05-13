@@ -1272,10 +1272,18 @@
     .career-showcase {
       inset: 64px 0 0;
       align-items: flex-start;
-      padding: 0 22px 0;
+      padding: 0 22px 96px;
+      overflow-y: auto;
       background: rgba(0, 8, 22, .88);
       backdrop-filter: blur(3px);
       -webkit-backdrop-filter: blur(3px);
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      overscroll-behavior: contain;
+    }
+
+    .career-showcase::-webkit-scrollbar {
+      display: none;
     }
 
     .career-showcase.is-open {
@@ -1292,15 +1300,17 @@
 
     .career-panel {
       width: min(1420px, calc(100vw - 44px));
-      height: calc(100vh - 64px);
-      height: calc(100dvh - 64px);
+      min-height: calc(100vh - 64px);
+      min-height: calc(100dvh - 64px);
+      height: auto;
       max-height: none;
-      padding: 44px 44px 44px;
+      padding: 44px 44px 96px;
+      overflow: visible;
       background: rgba(217, 217, 217, .96);
-      border-radius: 14px 14px 0 0;
+      border-radius: 14px;
       transform: translateY(18px);
       transition: transform .28s ease;
-      overscroll-behavior: contain;
+      flex: 0 0 auto;
     }
 
     .career-showcase.is-open .career-panel {
@@ -1375,12 +1385,25 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
+    .career-image-row.cols-4.compact:not(.yeeum) {
+      grid-template-columns: minmax(0, 1fr) 150px minmax(0, 1fr) minmax(0, 1fr);
+    }
+
     .career-image-row img {
       width: 100%;
       height: 222px;
       object-fit: cover;
       background: #bfc3c8;
       display: block;
+      border-radius: 0;
+    }
+
+    .career-image-row img:first-child {
+      border-top-left-radius: 34px;
+    }
+
+    .career-image-row img:last-child {
+      border-top-right-radius: 34px;
     }
 
     .career-image-row.compact img {
@@ -1394,7 +1417,7 @@
     .career-image-row img[alt="ArcheAge Begins"] {
       width: 150px;
       height: 222px;
-      justify-self: center;
+      justify-self: stretch;
     }
 
     .career-resume-card,
@@ -1407,6 +1430,10 @@
       border: 0;
       border-radius: 18px;
       box-shadow: 0 14px 34px rgba(0,0,0,.06);
+    }
+
+    .career-resume-card {
+      border-radius: 0 0 34px 34px;
     }
 
     .career-resume-meta strong {
@@ -1508,6 +1535,65 @@
       margin-top: 12px;
       object-fit: cover;
       border-radius: 8px;
+    }
+
+    .career-plugin-preview {
+      cursor: zoom-in;
+    }
+
+    .career-plugin-title {
+      white-space: nowrap;
+    }
+
+    .career-plugin-preview > img {
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+
+    .career-plugin-preview:hover > img,
+    .career-plugin-preview:focus-visible > img {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(0,0,0,.18);
+    }
+
+    .career-plugin-zoom {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      z-index: 3000;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      transform: translate(-50%, -50%);
+      padding: 32px;
+      background: rgba(0, 8, 22, .88);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease;
+    }
+
+    .career-plugin-zoom img {
+      width: min(96vw, 1400px);
+      height: min(92vh, 1000px);
+      height: min(92dvh, 1000px);
+      object-fit: contain;
+      margin: 0;
+      border-radius: 14px;
+      box-shadow: 0 26px 80px rgba(0,0,0,.42);
+      transform: scale(.96);
+      transition: transform .18s ease;
+    }
+
+    .career-plugin-preview:hover .career-plugin-zoom,
+    .career-plugin-preview:focus-within .career-plugin-zoom,
+    .career-plugin-zoom.is-visible {
+      opacity: 1;
+    }
+
+    .career-plugin-preview:hover .career-plugin-zoom img,
+    .career-plugin-preview:focus-within .career-plugin-zoom img,
+    .career-plugin-zoom.is-visible img {
+      transform: scale(1);
     }
 
     /*
@@ -1722,7 +1808,11 @@
 
       .career-panel {
         width: calc(100vw - 28px);
-        padding: 24px 18px 32px;
+        padding: 24px 18px 80px;
+      }
+
+      .career-showcase {
+        padding: 0 14px 80px;
       }
 
       .career-close {
@@ -1736,6 +1826,15 @@
 
       .career-image-row.yeeum img {
         height: 190px;
+      }
+
+      .career-image-row.cols-4.compact:not(.yeeum) {
+        grid-template-columns: 1fr;
+      }
+
+      .career-image-row img[alt="ArcheAge Begins"] {
+        width: 150px;
+        justify-self: start;
       }
 
       .career-resume-card,
@@ -1990,7 +2089,7 @@
               <span>엑스엘 게임즈</span>
             </div>
             <div>
-              <h3>다중 프로젝트 사운드 디자인 및 엔진 적용</h3>
+              <h3>다양한 엔진 환경과 멀티 프로젝트에서의 실무</h3>
               <p>문명 온라인, 아키에이지, 아키에이지 비긴즈, 달빛조각사, 아키에이지2 등에서 프로젝트별 개발 방식에 맞춰 실무를 수행했습니다.</p>
               <ul>
                 <li>FMOD, Unity, CryEngine, Unreal Engine 환경에서 사운드 적용과 버그 이슈 처리</li>
@@ -2080,7 +2179,7 @@
               <span>엑스엘게임즈</span>
             </div>
             <div>
-              <h3>다중 프로젝트 사운드 디자인 및 엔진 적용</h3>
+              <h3>다양한 엔진 환경과 멀티 프로젝트에서의 실무</h3>
               <p>참여 프로젝트 : '문명 온라인', '아키에이지', '아키에이지 비긴즈', '달빛조각사' 등 주요 신작 프로젝트</p>
               <p>업무 : 게임 오디오 구현 및 시스템 설계, 리소스 관리, QA</p>
               <ul>
@@ -2823,7 +2922,7 @@ function closeCareer() {
           <span>엑스엘 게임즈</span>
         </div>
         <div>
-          <h3>다중 프로젝트 사운드 디자인 및 엔진 적용</h3>
+          <h3>다양한 엔진 환경과 멀티 프로젝트에서의 실무</h3>
           <p>문명 온라인, 아키에이지, 달빛조각사, 아키에이지 비긴즈 등에서 프로젝트별 개발 방식에 맞춰 실무를 수행했습니다.</p>
           <ul>
             <li>Unity, CryEngine, Unreal Engine 환경에서 사운드 적용, 버그 이슈 처리</li>
@@ -2909,14 +3008,33 @@ function closeCareer() {
           <p>감각이 아닌 수치와 구조적 확인<br>UX 관점과 네러티브적 접근<br>관찰력, 자가 피드백을 통한 분석<br>Foley, Ambience, R&amp;D</p>
         </article>
         <article class="career-mini-card">
-          <h3>Plugin List<br>펼쳐 보기</h3>
-          ${image("image 31.png", "Plugin List")}
+          <h3 class="career-plugin-title">Plugin List 펼쳐보기</h3>
+          <div class="career-plugin-preview" tabindex="0" aria-label="Plugin List 확대 보기">
+            ${image("image 31.png", "Plugin List")}
+            <div class="career-plugin-zoom" aria-hidden="true">
+              <img src="assets/Career_Profile/내플러그인리스트.png" alt="">
+            </div>
+          </div>
         </article>
       </div>
     </div>
   `;
 
   const closeButton = careerPanel.querySelector(".career-close");
+  const pluginPreview = careerPanel.querySelector(".career-plugin-preview");
+  const pluginZoom = careerPanel.querySelector(".career-plugin-zoom");
+
+  if (pluginPreview && pluginZoom) {
+    document.body.appendChild(pluginZoom);
+
+    const showPluginZoom = () => pluginZoom.classList.add("is-visible");
+    const hidePluginZoom = () => pluginZoom.classList.remove("is-visible");
+
+    pluginPreview.addEventListener("mouseenter", showPluginZoom);
+    pluginPreview.addEventListener("mouseleave", hidePluginZoom);
+    pluginPreview.addEventListener("focusin", showPluginZoom);
+    pluginPreview.addEventListener("focusout", hidePluginZoom);
+  }
 
   function markOpen() {
     document.body.classList.add("career-modal-open");
@@ -2926,6 +3044,7 @@ function closeCareer() {
 
   function closeCareer() {
     if (!careerShowcase.classList.contains("is-open")) return;
+    pluginZoom?.classList.remove("is-visible");
     careerShowcase.classList.remove("is-open");
     careerShowcase.classList.add("is-closing");
     careerShowcase.setAttribute("aria-hidden", "true");
