@@ -324,6 +324,29 @@
     .video-card:hover .video-frame::after,
     .video-card:focus-visible .video-frame::after { opacity: 1; }
 
+    .notion-badge {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      z-index: 2;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      background: rgba(0, 0, 0, .48);
+      border: 1px solid rgba(255, 255, 255, .24);
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+    }
+
+    .notion-badge img {
+      position: static;
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      opacity: .92;
+    }
+
     .video-meta {
       position: relative;
       overflow: hidden;
@@ -680,7 +703,10 @@
         <p class="portfolio-intro">워헤이븐 프로젝트에서 작업한 인게임, 트레일러, 캐릭터 쇼케이스 사운드 포트폴리오입니다.</p>
         <div class="reel-grid">
           <a class="video-card" href="https://jeonhoon.notion.site/warhaven-portforio" target="_blank" rel="noopener noreferrer">
-            <div class="video-frame"><img src="assets/워헤이븐 기술포폴.png" alt="워헤이븐 프로젝트 기술 포트폴리오"></div>
+            <div class="video-frame">
+              <img src="assets/워헤이븐 기술포폴.png" alt="워헤이븐 프로젝트 기술 포트폴리오">
+              <span class="notion-badge" aria-hidden="true"><img src="assets/icon-notion.png" alt=""></span>
+            </div>
             <div class="video-meta">
               <strong>워헤이븐 프로젝트 기술 포트폴리오</strong>
               <div class="card-tags">
@@ -688,7 +714,6 @@
                 <span>Implementation</span>
                 <span>Tone &amp; manner</span>
                 <span>Combat</span>
-                <span>ETC</span>
               </div>
             </div>
           </a>
@@ -800,7 +825,10 @@
           <h2>워헤이븐 프로젝트 포트폴리오</h2>
           <div class="reel-grid">
             <a class="video-card" href="https://jeonhoon.notion.site/warhaven-portforio" target="_blank" rel="noopener noreferrer">
-              <div class="video-frame"><img src="assets/워헤이븐 기술포폴.png" alt="워헤이븐 프로젝트 기술 포트폴리오"></div>
+              <div class="video-frame">
+                <img src="assets/워헤이븐 기술포폴.png" alt="워헤이븐 프로젝트 기술 포트폴리오">
+                <span class="notion-badge" aria-hidden="true"><img src="assets/icon-notion.png" alt=""></span>
+              </div>
               <div class="video-meta">
                 <strong>워헤이븐 프로젝트 기술 포트폴리오</strong>
                 <div class="tag-list">
@@ -808,7 +836,6 @@
                   <span>Implementation</span>
                   <span>Tone &amp; manner</span>
                   <span>Combat</span>
-                  <span>ETC</span>
                 </div>
               </div>
             </a>
