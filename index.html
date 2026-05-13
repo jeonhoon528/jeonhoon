@@ -1545,6 +1545,41 @@
       white-space: nowrap;
     }
 
+    .career-plugin-card {
+      position: relative;
+      isolation: isolate;
+      border: 1px solid rgba(6, 54, 19, .12);
+      overflow: hidden;
+    }
+
+    .career-plugin-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      padding: 2px;
+      border-radius: inherit;
+      background: conic-gradient(
+        from 0deg,
+        rgba(6, 54, 19, 0),
+        rgba(6, 54, 19, .24),
+        rgba(217, 217, 217, .82),
+        rgba(6, 54, 19, .72),
+        rgba(217, 217, 217, .24),
+        rgba(6, 54, 19, 0)
+      );
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      animation: neonBorderSpin 5.8s linear infinite reverse;
+    }
+
+    .career-plugin-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
     .career-plugin-preview > img {
       transition: transform .22s ease, box-shadow .22s ease;
     }
@@ -3009,7 +3044,7 @@ function closeCareer() {
           <h3>강점</h3>
           <p>감각이 아닌 수치와 구조적 확인<br>UX 관점과 네러티브적 접근<br>관찰력, 자가 피드백을 통한 분석<br>Foley, Ambience, R&amp;D</p>
         </article>
-        <article class="career-mini-card">
+        <article class="career-mini-card career-plugin-card">
           <h3 class="career-plugin-title">Plugin List 펼쳐보기</h3>
           <div class="career-plugin-preview" tabindex="0" aria-label="Plugin List 확대 보기">
             ${image("image 31.png", "Plugin List")}
