@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>경력기술서 모달 바로가기</title>
+  <meta http-equiv="refresh" content="0; url=index.html?career=profile&shortcut=career-modal#projects">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      background: #000816;
+      color: #d9d9d9;
+      font-family: Inter, "Malgun Gothic", Arial, sans-serif;
+    }
+
+    a {
+      color: #d9d9d9;
+    }
+  </style>
+</head>
+<body>
+  <p>경력기술서로 이동 중입니다. 자동으로 이동하지 않으면 <a href="index.html?career=profile&shortcut=career-modal#projects">여기를 눌러주세요</a>.</p>
+  <script>
+    window.location.replace("index.html?career=profile&shortcut=career-modal#projects");
+  </script>
+</body>
+</html>
