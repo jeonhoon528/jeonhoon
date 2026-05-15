@@ -1089,6 +1089,15 @@
       card.classList.toggle("is-featured", featuredVideoIds.has(card.dataset.video));
     });
 
+    const targetVideoId = new URLSearchParams(window.location.search).get("video");
+    if (targetVideoId) {
+      const targetCard = Array.from(document.querySelectorAll(".video-card[data-video]"))
+        .find((card) => card.dataset.video === targetVideoId);
+      if (targetCard) {
+        window.setTimeout(() => openReel(targetCard), 160);
+      }
+    }
+
     function syncActiveNav() {
       if (!navLinks.length || !portfolioSections.length) return;
       const currentIndex = portfolioSections.reduce((active, section, index) => {
